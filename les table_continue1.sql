@@ -1,0 +1,1 @@
+-- Schema is now consolidated in database/schema.sql.
