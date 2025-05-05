@@ -1,0 +1,1 @@
+-- Optional demo data can be added after importing database/schema.sql.
