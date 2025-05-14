@@ -17,7 +17,11 @@ require("../connexion.php");
             <label class="form-label">Prénom</label>
             <input type="text" name="prenom" class="form-control" value="<?php echo e(''); ?>" required>
         </div>
-<div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Adresse</label>
+            <input type="text" name="adresse" class="form-control" value="<?php echo e(''); ?>">
+        </div>
+        <div class="col-md-6 mb-3">
             <label class="form-label">Téléphone</label>
             <input type="text" name="telephone" class="form-control" value="<?php echo e(''); ?>" required>
         </div>
@@ -33,7 +37,11 @@ require("../connexion.php");
             <label class="form-label">Ordonnances</label>
             <textarea name="ordonnances" class="form-control"><?php echo e(''); ?></textarea>
         </div>
-</div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Historique achats</label>
+            <textarea name="historiqueAchats" class="form-control"><?php echo e(''); ?></textarea>
+        </div>
+                </div>
                 <button class="btn btn-primary" type="submit">Enregistrer</button>
                 <a href="client-list.php" class="btn btn-secondary">Retour</a>
             </form>
