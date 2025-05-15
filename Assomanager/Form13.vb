@@ -1,7 +1,7 @@
 ﻿Imports System.Data.OleDb
 Public Class Form13
 
-    Private nombredeventements As Integer = 0
+    Private nombredocuments As Integer = 0
     Private WithEvents DataGridView13 As New DataGridView
 
     Dim con As OleDbConnection
@@ -26,7 +26,7 @@ Public Class Form13
         Me.CenterToScreen()
         dgv13.Width = Me.Width - 50
         dgv13.Height = Me.Height - 120
-        Me.Text = "Gestion des événements"  ' Changed to match the new purpose
+        Me.Text = "Gestion des documents"  ' Changed to match the new purpose
 
         dgv13.BorderStyle = BorderStyle.None
         dgv13.DefaultCellStyle.Font = New Font("Arial", 10)
@@ -36,59 +36,57 @@ Public Class Form13
         dgv13.AlternatingRowsDefaultCellStyle.BackColor = Color.Azure
         dgv13.CellBorderStyle = DataGridViewCellBorderStyle.None
 
-        ' Load events data instead of categoriedepenses
-        afficher_evenements()
+        ' Load documents data
+        afficher_documents()
 
-        nombredeventements = dgv13.Rows.Count
-        If nombredeventements = 0 Then
-            nombredeventements = 1
+        nombredocuments = dgv13.Rows.Count
+        If nombredocuments = 0 Then
+            nombredocuments = 1
         End If
 
         Controls.Add(DataGridView13)
         DataGridView13.Visible = False
-        
+
         AddHandler ToolStripButton132.Click, AddressOf ToolStripButton132_Click
         AddHandler ToolStripButton133.Click, AddressOf ToolStripButton133_Click
         AddHandler ToolStripButton134.Click, AddressOf ToolStripButton134_Click
         AddHandler dgv13.CellDoubleClick, AddressOf dgv13_CellDoubleClick
     End Sub
 
-    ' Replaced with evenements handling
-    Public Sub afficher_evenements()
+    ' Changed to handle documents
+    Public Sub afficher_documents()
         Try
             connexion()
-            ' Changed query to order by ID instead of date
-            requete = "SELECT idevenement, titre, description, datedebut, datefin, lieu FROM evenements ORDER BY idevenement ASC"
+            ' Query for documents table
+            requete = "SELECT iddocument, titre, cheminfichier, typedocument, dateajout FROM documents ORDER BY iddocument ASC"
             da = New OleDbDataAdapter(requete, con)
             ds = New DataSet()
-            da.Fill(ds, "evenements")
-            dgv13.DataSource = ds.Tables("evenements")
+            da.Fill(ds, "documents")
+            dgv13.DataSource = ds.Tables("documents")
 
             ' Set column headers with adjusted widths
-            If dgv13.Columns.Count >= 6 Then
+            If dgv13.Columns.Count >= 5 Then
                 dgv13.Columns(0).HeaderText = "ID"
-                dgv13.Columns(0).Width = 32       ' Reduced by 20% (was 40)
+                dgv13.Columns(0).Width = 32
                 dgv13.Columns(1).HeaderText = "Titre"
-                dgv13.Columns(1).Width = 105      ' Reduced by 30% (was 150)
-                dgv13.Columns(2).HeaderText = "Description"
-                dgv13.Columns(2).Width = 160      ' Reduced by 20% (was 200)
-                dgv13.Columns(3).HeaderText = "Date Début"
-                dgv13.Columns(3).Width = 100      ' Unchanged
-                dgv13.Columns(4).HeaderText = "Date Fin"
-                dgv13.Columns(4).Width = 100      ' Unchanged
-                dgv13.Columns(5).HeaderText = "Lieu"
-                dgv13.Columns(5).Width = 243      ' Increased by adding saved space (was 150)
+                dgv13.Columns(1).Width = 150
+                dgv13.Columns(2).HeaderText = "Chemin fichier"
+                dgv13.Columns(2).Width = 200
+                dgv13.Columns(3).HeaderText = "Type"
+                dgv13.Columns(3).Width = 120
+                dgv13.Columns(4).HeaderText = "Date ajout"
+                dgv13.Columns(4).Width = 100
             End If
 
             con.Close()
 
-            ' Update label with event count
+            ' Update label with document count
             Dim nombre As Integer = dgv13.Rows.Count
-            Label13.Text = "Nombre d'événements : " + nombre.ToString
+            Label13.Text = "Nombre de documents : " + nombre.ToString
             Label13.Left = Me.Width - Label13.Width - 50
 
         Catch ex As Exception
-            MsgBox("Erreur lors du chargement des événements: " & ex.Message, vbExclamation, "Erreur")
+            MsgBox("Erreur lors du chargement des documents: " & ex.Message, vbExclamation, "Erreur")
             If con.State = ConnectionState.Open Then
                 con.Close()
             End If
@@ -101,15 +99,14 @@ Public Class Form13
     End Sub
 
     Private Sub ToolStripButton131_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton131.Click
-        ' Open Form12 to add new event
-        Dim frm As New Form12()
+        Dim frm As New Form14()
         frm.IsEditMode = False
         frm.ParametreId = ""  ' Added to ensure clean state
         frm.ParametreCle = "" ' Added to ensure clean state
         frm.ShowDialog()
-        
-        ' Refresh events after return
-        afficher_evenements()
+
+        ' Refresh documents after return
+        afficher_documents()
     End Sub
 
     Private Sub dgv13_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
@@ -120,11 +117,11 @@ Public Class Form13
             Return
         End If
 
-        Dim frm As New Form12()
+        Dim frm As New Form14()
         frm.IsEditMode = True
 
-        ' Map the evenements table fields to Form12 properties
-        frm.ParametreId = dgv13.Rows(i).Cells(0).Value.ToString() ' idevenement
+        ' Map the documents table fields to Form14 properties
+        frm.ParametreId = dgv13.Rows(i).Cells(0).Value.ToString() ' iddocument
 
         If dgv13.Rows(i).Cells(1).Value IsNot Nothing Then
             frm.ParametreCle = dgv13.Rows(i).Cells(1).Value.ToString() ' titre
@@ -133,64 +130,60 @@ Public Class Form13
         End If
 
         If dgv13.Rows(i).Cells(2).Value IsNot Nothing Then
-            frm.TypeDescription = dgv13.Rows(i).Cells(2).Value.ToString() ' description
+            frm.CheminFichier = dgv13.Rows(i).Cells(2).Value.ToString() ' cheminfichier
         End If
 
         If dgv13.Rows(i).Cells(3).Value IsNot Nothing Then
-            frm.DateDebut = CDate(dgv13.Rows(i).Cells(3).Value) ' datedebut
+            frm.TypeDocument = dgv13.Rows(i).Cells(3).Value.ToString() ' typedocument
         End If
 
         If dgv13.Rows(i).Cells(4).Value IsNot Nothing Then
-            frm.DateFin = CDate(dgv13.Rows(i).Cells(4).Value) ' datefin
-        End If
-
-        If dgv13.Rows(i).Cells(5).Value IsNot Nothing Then
-            frm.Lieu = dgv13.Rows(i).Cells(5).Value.ToString() ' lieu
+            frm.DateAjout = CDate(dgv13.Rows(i).Cells(4).Value) ' dateajout
         End If
 
         frm.ShowDialog()
 
-        ' Refresh events after return
-        afficher_evenements()
+        ' Refresh documents after return
+        afficher_documents()
     End Sub
 
     Private Sub ToolStripButton132_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If (dgv13.Rows.Count = 0) Then
-            MsgBox("Aucun événement disponible...", vbExclamation, "Message")
+            MsgBox("Aucun document disponible...", vbExclamation, "Message")
         Else
             Dim rep As MsgBoxResult
-            rep = MsgBox("Êtes-vous sûr de vouloir supprimer cet événement ?", vbQuestion + vbYesNo, "Message")
+            rep = MsgBox("Êtes-vous sûr de vouloir supprimer ce document ?", vbQuestion + vbYesNo, "Message")
             If (rep = vbYes) Then
                 connexion()
                 Dim i As Integer
                 i = dgv13.CurrentCell.RowIndex
                 Dim id As Integer
                 If Integer.TryParse(dgv13.Rows(i).Cells(0).Value.ToString(), id) Then
-                    requete = "DELETE FROM evenements WHERE idevenement = " & id
+                    requete = "DELETE FROM documents WHERE iddocument = " & id
                     cmdsql()
                     cmd.ExecuteNonQuery()
-                    MsgBox("Événement supprimé avec succès", vbInformation)
+                    MsgBox("Document supprimé avec succès", vbInformation)
                 Else
-                    MsgBox("ID de l'événement invalide", vbExclamation)
+                    MsgBox("ID du document invalide", vbExclamation)
                 End If
                 con.Close()
-                afficher_evenements()
+                afficher_documents()
             End If
         End If
     End Sub
 
     Private Sub ToolStripButton133_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        ' Refresh events list
-        afficher_evenements()
+        ' Refresh documents list
+        afficher_documents()
     End Sub
 
     Private Sub ToolStripButton134_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim titreachercher As String
-        titreachercher = InputBox("Entrez le titre de l'événement à chercher", "Rechercher par titre", "")
+        titreachercher = InputBox("Entrez le titre du document à chercher", "Rechercher par titre", "")
         If String.IsNullOrEmpty(titreachercher) Then Return
 
-        ' Also update the search query to order by ID
-        requete = "SELECT * FROM evenements WHERE titre LIKE '%" & titreachercher & "%' ORDER BY idevenement ASC"
+        ' Update the search query for documents
+        requete = "SELECT * FROM documents WHERE titre LIKE '%" & titreachercher & "%' ORDER BY iddocument ASC"
         connexion()
         Dim da As New OleDbDataAdapter
         da = New OleDbDataAdapter(requete, con)
@@ -199,7 +192,7 @@ Public Class Form13
         dgv13.DataSource = dt.DefaultView
 
         If (dgv13.Rows.Count = 0) Then
-            MsgBox("Cet événement est introuvable.", vbExclamation, "Message")
+            MsgBox("Ce document est introuvable.", vbExclamation, "Message")
         End If
         con.Close()
     End Sub
@@ -219,7 +212,7 @@ Public Class Form13
                 nomCategorie = DataGridView13.Rows(e.RowIndex).Cells(1).Value.ToString()
             End If
 
-            Dim frm As New Form12()
+            Dim frm As New Form14()
             frm.ParametreId = categorieId
             frm.ParametreCle = nomCategorie
             frm.ShowDialog()
@@ -240,7 +233,7 @@ Public Class Form13
         DataGridView13.DataSource = dt.DefaultView
         con.Close()
 
-        nombredeventements = DataGridView13.Rows.Count
+        nombredocuments = DataGridView13.Rows.Count
     End Sub
 
     Private Sub dgv13_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv13.CellContentClick
@@ -262,32 +255,46 @@ Public Class Form13
             e.Graphics.DrawImage(imageToPrint, 40, 40, 40, 40)
         End If
 
-        e.Graphics.DrawString("Liste des catégories de dépenses", fontTitre, Brushes.Black, 90, 50)
+        e.Graphics.DrawString("Liste des documents", fontTitre, Brushes.Black, 90, 50)
         Dim ligne As New Pen(Color.Black)
         ln = ln + 30
 
         With e.Graphics
             .DrawString("ID", fontTColonne, Brushes.Black, cl, ln)
-            .DrawString("Nom", fontTColonne, Brushes.Black, cl + 150, ln)
+            .DrawString("Titre", fontTColonne, Brushes.Black, cl + 50, ln)
+            .DrawString("Type", fontTColonne, Brushes.Black, cl + 250, ln)
+            .DrawString("Date d'ajout", fontTColonne, Brushes.Black, cl + 400, ln)
         End With
 
         ln = ln + 30
 
         connexion()
-        Dim cmd As New OleDbCommand("SELECT idcategoriedepense, nomcategoriedepense FROM categoriedepenses", con)
+        Dim cmd As New OleDbCommand("SELECT iddocument, titre, typedocument, dateajout FROM documents", con)
         Dim reader As OleDbDataReader = cmd.ExecuteReader()
 
         While reader.Read()
-            Dim id As String = reader("idcategoriedepense").ToString()
-            Dim nom As String = ""
+            Dim id As String = reader("iddocument").ToString()
+            Dim titre As String = ""
+            Dim type As String = ""
+            Dim date_ajout As String = ""
 
             If Not reader.IsDBNull(1) Then
-                nom = reader("nomcategoriedepense").ToString()
+                titre = reader("titre").ToString()
+            End If
+
+            If Not reader.IsDBNull(2) Then
+                type = reader("typedocument").ToString()
+            End If
+
+            If Not reader.IsDBNull(3) Then
+                date_ajout = CDate(reader("dateajout")).ToString("dd/MM/yyyy")
             End If
 
             With e.Graphics
                 .DrawString(id, fontColonne, Brushes.Black, cl, ln)
-                .DrawString(nom, fontTColonne, Brushes.Black, cl + 150, ln)
+                .DrawString(titre, fontColonne, Brushes.Black, cl + 50, ln)
+                .DrawString(type, fontColonne, Brushes.Black, cl + 250, ln)
+                .DrawString(date_ajout, fontColonne, Brushes.Black, cl + 400, ln)
             End With
 
             ln = ln + 30
@@ -295,7 +302,7 @@ Public Class Form13
 
         reader.Close()
         con.Close()
-        e.Graphics.DrawString("Entreprise | Liste des catégories de dépenses", fontTitre, Brushes.Black, cl, 1100)
+        e.Graphics.DrawString("Association | Liste des documents", fontTitre, Brushes.Black, cl, 1100)
     End Sub
 
     Private Sub ToolStripDropDownButton131_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripDropDownButton131.Click
