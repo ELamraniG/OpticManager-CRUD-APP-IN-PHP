@@ -59,19 +59,19 @@ Partial Class Form15
         Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AllowUserToDeleteRows = False
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(26, 67)
-        Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DataGridView2.Location = New System.Drawing.Point(35, 82)
+        Me.DataGridView2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowTemplate.Height = 28
-        Me.DataGridView2.Size = New System.Drawing.Size(342, 166)
+        Me.DataGridView2.Size = New System.Drawing.Size(456, 204)
         Me.DataGridView2.TabIndex = 16
         Me.DataGridView2.Visible = False
         '
         'ImprimerTousLesServicesToolStripMenuItem
         '
         Me.ImprimerTousLesServicesToolStripMenuItem.Name = "ImprimerTousLesServicesToolStripMenuItem"
-        Me.ImprimerTousLesServicesToolStripMenuItem.Size = New System.Drawing.Size(281, 22)
+        Me.ImprimerTousLesServicesToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
         Me.ImprimerTousLesServicesToolStripMenuItem.Text = "Imprimer tous les utilisateurs"
         '
         'Imprimer
@@ -87,23 +87,23 @@ Partial Class Form15
         'ToolStripSeparator5
         '
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(278, 6)
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(336, 6)
         '
         'ImprimerListeDesEmployésDunServiceToolStripMenuItem
         '
         Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Name = "ImprimerListeDesEmployésDunServiceToolStripMenuItem"
-        Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Size = New System.Drawing.Size(281, 22)
+        Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
         Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Text = "Imprimer liste des utilisateurs par rôle"
         '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(278, 6)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(336, 6)
         '
         'ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem
         '
         Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Name = "ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem"
-        Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Size = New System.Drawing.Size(281, 22)
+        Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
         Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Text = "Imprimer liste des utilisateurs par statut"
         '
         'Actualiser
@@ -131,12 +131,12 @@ Partial Class Form15
         Me.DataGridView1.AllowUserToResizeColumns = False
         Me.DataGridView1.AllowUserToResizeRows = False
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(9, 34)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DataGridView1.Location = New System.Drawing.Point(12, 42)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowTemplate.Height = 28
-        Me.DataGridView1.Size = New System.Drawing.Size(525, 244)
+        Me.DataGridView1.Size = New System.Drawing.Size(700, 300)
         Me.DataGridView1.TabIndex = 13
         '
         'ToolStripSeparator4
@@ -147,23 +147,23 @@ Partial Class Form15
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 291)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 360)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 9, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(543, 22)
+        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 12, 0)
+        Me.StatusStrip1.Size = New System.Drawing.Size(724, 25)
         Me.StatusStrip1.TabIndex = 15
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(116, 17)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(147, 20)
         Me.ToolStripStatusLabel1.Text = "La paie du personnel"
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(118, 17)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(149, 20)
         Me.ToolStripStatusLabel2.Text = "| Gestion des services"
         '
         'Supprimer
@@ -204,7 +204,7 @@ Partial Class Form15
         Me.toolbar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator1, Me.Ajouter, Me.Supprimer, Me.ToolStripSeparator2, Me.Rechercher, Me.ToolStripSeparator3, Me.Actualiser, Me.ToolStripSeparator4, Me.Imprimer, Me.cpt})
         Me.toolbar.Location = New System.Drawing.Point(0, 0)
         Me.toolbar.Name = "toolbar"
-        Me.toolbar.Size = New System.Drawing.Size(543, 31)
+        Me.toolbar.Size = New System.Drawing.Size(724, 31)
         Me.toolbar.TabIndex = 14
         Me.toolbar.Text = "Rechercher par le nom du service"
         '
@@ -216,7 +216,7 @@ Partial Class Form15
         'cpt
         '
         Me.cpt.Name = "cpt"
-        Me.cpt.Size = New System.Drawing.Size(87, 28)
+        Me.cpt.Size = New System.Drawing.Size(113, 28)
         Me.cpt.Text = "ToolStripLabel1"
         '
         'ImageList1
@@ -243,14 +243,14 @@ Partial Class Form15
         '
         'Form15
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(543, 313)
+        Me.ClientSize = New System.Drawing.Size(724, 385)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.toolbar)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Form15"
         Me.Text = "Gestion des utilisateurs"
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()

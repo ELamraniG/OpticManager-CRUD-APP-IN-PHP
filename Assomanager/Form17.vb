@@ -1,12 +1,12 @@
 ﻿Imports System.Data.OleDb
 
-Public Class Form15
+Public Class Form17
     Public etat As Integer
 
-    Private Sub Form15_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Form17_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim icone As New Icon("images/emp.ico")
         Me.Icon = icone
-        Me.Text = "Gestion des utilisateurs"
+        Me.Text = "Gestion des membres"
         Me.BackColor = Color.White
         Me.Width = 1200
         Me.Height = 600
@@ -25,19 +25,20 @@ Public Class Form15
         DataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None
         DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right Or AnchorStyles.Bottom
 
-        afficher_utilisateurs()
+        afficher_membres()
     End Sub
 
-    Public Sub afficher_utilisateurs()
+    Public Sub afficher_membres()
         Try
             connexion()
             '-----------------------------------------------------------
-            '   Requête pour afficher tous les utilisateurs avec nom du rôle
+            '   Requête pour afficher tous les membres avec nom de la catégorie
             '-----------------------------------------------------------
-            ' Correct JOIN syntax for Access database with the roles table
-            requete = "SELECT u.idutilisateur, u.nom, u.email, u.idrole, r.nomrole, " & _
-                     "u.statut, u.datecreation " & _
-                     "FROM utilisateurs u LEFT JOIN roles r ON u.idrole = r.idrole"
+            ' Correct JOIN syntax for Access database with the categoriemembre table
+            requete = "SELECT m.idmembre, m.nom, m.prenom, m.adresse, m.telephone, m.email, " & _
+                     "m.idcategoriemembre, c.nomcategoriemembre, " & _
+                     "m.statut, m.dateinscription " & _
+                     "FROM membres m LEFT JOIN categoriemembre c ON m.idcategoriemembre = c.idcategoriemembre"
             '-----------------------------------------------------------
             Dim da As New OleDbDataAdapter
             Dim dt As New DataTable
@@ -55,22 +56,22 @@ Public Class Form15
             End Try
 
             ' Rename the column headers for better display
-            If DataGridView1.Columns.Count > 4 Then
-                DataGridView1.Columns(3).HeaderText = "ID Rôle"
-                DataGridView1.Columns(4).HeaderText = "Nom du Rôle"
+            If DataGridView1.Columns.Count > 7 Then
+                DataGridView1.Columns(6).HeaderText = "ID Catégorie"
+                DataGridView1.Columns(7).HeaderText = "Nom Catégorie"
             End If
 
             Dim nombre As Integer = DataGridView1.Rows.Count
-            cpt.Text = "Nombre d'utilisateurs : " + nombre.ToString
-            If (Form16.type_operation.Text = "Ajouter") Then
+            cpt.Text = "Nombre de membres : " + nombre.ToString
+            If (Form18.type_operation.Text = "Ajouter") Then
                 If DataGridView1.Rows.Count > 0 Then
                     DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
                     DataGridView1.Rows(DataGridView1.Rows.Count - 1).Selected = True
                 End If
             End If
-            If (Form16.type_operation.Text = "Modifier") Then
-                If DataGridView1.Rows.Count > Val(Form16.ligne_modifie.Text) Then
-                    DataGridView1.Rows(Val(Form16.ligne_modifie.Text)).Selected = True
+            If (Form18.type_operation.Text = "Modifier") Then
+                If DataGridView1.Rows.Count > Val(Form18.ligne_modifie.Text) Then
+                    DataGridView1.Rows(Val(Form18.ligne_modifie.Text)).Selected = True
                 End If
             End If
         Catch ex As Exception
@@ -80,46 +81,49 @@ Public Class Form15
     End Sub
 
     Private Sub Ajouter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Ajouter.Click
-        Form16.type_operation.Text = "Ajouter"
-        Form16.ShowDialog()
+        Form18.type_operation.Text = "Ajouter"
+        Form18.ShowDialog()
     End Sub
 
     Private Sub DataGridView1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Dim i As Integer
         i = DataGridView1.CurrentCell.RowIndex
-        Form16.idutilisateur.Text = DataGridView1.Rows(i).Cells(0).Value.ToString
-        Form16.nom.Text = DataGridView1.Rows(i).Cells(1).Value.ToString
-        Form16.email.Text = DataGridView1.Rows(i).Cells(2).Value.ToString
-        Form16.ancien_email.Text = DataGridView1.Rows(i).Cells(2).Value.ToString
+        Form18.idmembre.Text = DataGridView1.Rows(i).Cells(0).Value.ToString
+        Form18.nom.Text = DataGridView1.Rows(i).Cells(1).Value.ToString
+        Form18.prenom.Text = DataGridView1.Rows(i).Cells(2).Value.ToString
+        Form18.adresse.Text = DataGridView1.Rows(i).Cells(3).Value.ToString
+        Form18.telephone.Text = DataGridView1.Rows(i).Cells(4).Value.ToString
+        Form18.email.Text = DataGridView1.Rows(i).Cells(5).Value.ToString
+        Form18.ancien_email.Text = DataGridView1.Rows(i).Cells(5).Value.ToString
 
-        ' Get the role ID and select it in the dropdown
-        Dim roleId As String = DataGridView1.Rows(i).Cells(3).Value.ToString
-        Form16.SelectRoleById(roleId)
+        ' Get the categorie ID and select it in the dropdown
+        Dim categorieId As String = DataGridView1.Rows(i).Cells(6).Value.ToString
+        Form18.SelectCategorieById(categorieId)
 
-        Form16.statut.Text = DataGridView1.Rows(i).Cells(5).Value.ToString
-        Form16.datecreation.Value = DataGridView1.Rows(i).Cells(6).Value
-        Form16.ligne_modifie.Text = i
-        Form16.type_operation.Text = "Modifier"
-        Form16.ShowDialog()
+        Form18.statut.Text = DataGridView1.Rows(i).Cells(8).Value.ToString
+        Form18.dateinscription.Value = DataGridView1.Rows(i).Cells(9).Value
+        Form18.ligne_modifie.Text = i
+        Form18.type_operation.Text = "Modifier"
+        Form18.ShowDialog()
     End Sub
 
     Private Sub Supprimer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Supprimer.Click
-        Form16.type_operation.Text = "Ajouter"
+        Form18.type_operation.Text = "Ajouter"
         If (DataGridView1.Rows.Count = 0) Then
-            MsgBox("Aucun utilisateur...", vbExclamation, "Message")
+            MsgBox("Aucun membre...", vbExclamation, "Message")
         Else
             Dim i As Integer = DataGridView1.CurrentCell.RowIndex
             Dim id As String = DataGridView1.Rows(i).Cells(0).Value.ToString
             Dim rep As MsgBoxResult
-            rep = MsgBox("Etes-vous sûr de supprimer cet utilisateur ? ", vbYesNo + vbQuestion, "Confirmation")
+            rep = MsgBox("Etes-vous sûr de supprimer ce membre ? ", vbYesNo + vbQuestion, "Confirmation")
             If (rep = vbYes) Then
                 Try
                     connexion()
-                    requete = "DELETE FROM utilisateurs WHERE idutilisateur = " & id
+                    requete = "DELETE FROM membres WHERE idmembre = " & id
                     cmdsql()
                     cmd.ExecuteNonQuery()
                     deconnexion() ' Use the new method to properly close the connection
-                    afficher_utilisateurs()
+                    afficher_membres()
                 Catch ex As Exception
                     MsgBox("Erreur: " & ex.Message, vbExclamation, "Erreur de base de données")
                     deconnexion()
@@ -130,15 +134,16 @@ Public Class Form15
 
     Private Sub Rechercher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rechercher.Click
         Dim nom_a_chercher As String
-        nom_a_chercher = InputBox("Entrez le nom, l'email ou le rôle de l'utilisateur à chercher : ", "Recherche", "")
+        nom_a_chercher = InputBox("Entrez le nom, prénom ou email du membre à chercher : ", "Recherche", "")
         Try
             connexion()
             ' Correct JOIN syntax for Access database
-            requete = "SELECT u.idutilisateur, u.nom, u.email, u.idrole, r.nomrole, " & _
-                     "u.statut, u.datecreation " & _
-                     "FROM utilisateurs u LEFT JOIN roles r ON u.idrole = r.idrole " & _
-                     "WHERE u.nom LIKE '%" + nom_a_chercher + "%' OR u.email LIKE '%" + nom_a_chercher + "%' " & _
-                     "OR r.nomrole LIKE '%" + nom_a_chercher + "%'"
+            requete = "SELECT m.idmembre, m.nom, m.prenom, m.adresse, m.telephone, m.email, " & _
+                     "m.idcategoriemembre, c.nomcategoriemembre, " & _
+                     "m.statut, m.dateinscription " & _
+                     "FROM membres m LEFT JOIN categoriemembre c ON m.idcategoriemembre = c.idcategoriemembre " & _
+                     "WHERE m.nom LIKE '%" + nom_a_chercher + "%' OR m.prenom LIKE '%" + nom_a_chercher + "%' " & _
+                     "OR m.email LIKE '%" + nom_a_chercher + "%'"
             Dim da As New OleDbDataAdapter
             da = New OleDbDataAdapter(requete, con)
             Dim dt As New DataTable
@@ -154,7 +159,7 @@ Public Class Form15
     End Sub
 
     Private Sub Actualiser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Actualiser.Click
-        afficher_utilisateurs()
+        afficher_membres()
     End Sub
 
     Private Sub ImprimerTousLesServicesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerTousLesServicesToolStripMenuItem.Click
@@ -170,7 +175,7 @@ Public Class Form15
         Dim font_colonne As New Font("Arial", 10, FontStyle.Regular)
         Dim ln As Integer = 50
         Dim cl As Integer = 50
-        e.Graphics.DrawString("Liste des utilisateurs", font_titre, Brushes.Black, cl, ln)
+        e.Graphics.DrawString("Liste des membres", font_titre, Brushes.Black, cl, ln)
         Dim ligne As New Pen(Color.Gray)
         ln = ln + 20
         e.Graphics.DrawLine(ligne, cl, ln, 750, ln)
@@ -178,15 +183,16 @@ Public Class Form15
         With e.Graphics
             .DrawString("ID", font_tcolonne, Brushes.Black, cl, ln)
             .DrawString("Nom", font_tcolonne, Brushes.Black, cl + 50, ln)
-            .DrawString("Email", font_tcolonne, Brushes.Black, cl + 200, ln)
-            .DrawString("ID Rôle", font_tcolonne, Brushes.Black, cl + 400, ln)
-            .DrawString("Nom Rôle", font_tcolonne, Brushes.Black, cl + 450, ln)
-            .DrawString("Statut", font_tcolonne, Brushes.Black, cl + 550, ln)
-            .DrawString("Date création", font_tcolonne, Brushes.Black, cl + 620, ln)
+            .DrawString("Prénom", font_tcolonne, Brushes.Black, cl + 150, ln)
+            .DrawString("Téléphone", font_tcolonne, Brushes.Black, cl + 250, ln)
+            .DrawString("Email", font_tcolonne, Brushes.Black, cl + 350, ln)
+            .DrawString("Catégorie", font_tcolonne, Brushes.Black, cl + 500, ln)
+            .DrawString("Statut", font_tcolonne, Brushes.Black, cl + 600, ln)
+            .DrawString("Inscription", font_tcolonne, Brushes.Black, cl + 650, ln)
         End With
         ln = ln + 20
         e.Graphics.DrawLine(ligne, cl, ln, 750, ln)
-        Dim c1, c2, c3, c4, c5, c6, c7 As String
+        Dim c1, c2, c3, c4, c5, c7, c8, c9 As String
         Dim nld As Integer 'nld : nombre_de_ligne_du_datagrid
         If etat = 1 Then nld = DataGridView1.Rows.Count
         If etat = 2 Then nld = DataGridView2.Rows.Count
@@ -195,51 +201,52 @@ Public Class Form15
                 c1 = DataGridView1.Rows(i).Cells(0).Value.ToString
                 c2 = DataGridView1.Rows(i).Cells(1).Value.ToString
                 c3 = DataGridView1.Rows(i).Cells(2).Value.ToString
-                c4 = DataGridView1.Rows(i).Cells(3).Value.ToString
-                c5 = DataGridView1.Rows(i).Cells(4).Value.ToString
-                c6 = DataGridView1.Rows(i).Cells(5).Value.ToString
-                c7 = DataGridView1.Rows(i).Cells(6).Value.ToString
+                c4 = DataGridView1.Rows(i).Cells(4).Value.ToString
+                c5 = DataGridView1.Rows(i).Cells(5).Value.ToString
+                c7 = DataGridView1.Rows(i).Cells(7).Value.ToString
+                c8 = DataGridView1.Rows(i).Cells(8).Value.ToString
+                c9 = DataGridView1.Rows(i).Cells(9).Value.ToString
             Else
                 c1 = DataGridView2.Rows(i).Cells(0).Value.ToString
                 c2 = DataGridView2.Rows(i).Cells(1).Value.ToString
                 c3 = DataGridView2.Rows(i).Cells(2).Value.ToString
-                c4 = DataGridView2.Rows(i).Cells(3).Value.ToString
-                c5 = DataGridView2.Rows(i).Cells(4).Value.ToString
-                c6 = DataGridView2.Rows(i).Cells(5).Value.ToString
-                c2 = DataGridView2.Rows(i).Cells(1).Value.ToString
-                c3 = DataGridView2.Rows(i).Cells(2).Value.ToString
-                c4 = DataGridView2.Rows(i).Cells(3).Value.ToString
-                c5 = DataGridView2.Rows(i).Cells(4).Value.ToString
-                c6 = DataGridView2.Rows(i).Cells(5).Value.ToString
+                c4 = DataGridView2.Rows(i).Cells(4).Value.ToString
+                c5 = DataGridView2.Rows(i).Cells(5).Value.ToString
+                c7 = DataGridView2.Rows(i).Cells(7).Value.ToString
+                c8 = DataGridView2.Rows(i).Cells(8).Value.ToString
+                c9 = DataGridView2.Rows(i).Cells(9).Value.ToString
             End If
 
             With e.Graphics
                 .DrawString(c1, font_colonne, Brushes.Black, cl, ln)
                 .DrawString(c2, font_colonne, Brushes.Black, cl + 50, ln)
-                .DrawString(c3, font_colonne, Brushes.Black, cl + 200, ln)
-                .DrawString(c4, font_colonne, Brushes.Black, cl + 400, ln)
-                .DrawString(c5, font_colonne, Brushes.Black, cl + 450, ln)
-                .DrawString(c6, font_colonne, Brushes.Black, cl + 550, ln)
+                .DrawString(c3, font_colonne, Brushes.Black, cl + 150, ln)
+                .DrawString(c4, font_colonne, Brushes.Black, cl + 250, ln)
+                .DrawString(c5, font_colonne, Brushes.Black, cl + 350, ln)
+                .DrawString(c7, font_colonne, Brushes.Black, cl + 500, ln)
+                .DrawString(c8, font_colonne, Brushes.Black, cl + 600, ln)
+                .DrawString(c9, font_colonne, Brushes.Black, cl + 650, ln)
             End With
             ln = ln + 20
             e.Graphics.DrawLine(ligne, cl, ln, 750, ln)
         Next
         e.Graphics.DrawLine(ligne, cl, 1100, 750, 1100)
-        e.Graphics.DrawString("Entreprise : Liste des utilisateurs", font_titre, Brushes.Black, cl, 1100)
+        e.Graphics.DrawString("Entreprise : Liste des membres", font_titre, Brushes.Black, cl, 1100)
     End Sub
 
     Private Sub ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerListeDesEmployésDunServiceToolStripMenuItem.Click
         etat = 2
-        Dim role_recherche As String
-        role_recherche = InputBox("Entrez l'ID du rôle à rechercher", "Imprimer liste des utilisateurs par rôle", "")
+        Dim categorie_recherche As String
+        categorie_recherche = InputBox("Entrez l'ID de la catégorie à rechercher", "Imprimer liste des membres par catégorie", "")
 
         Try
-            'Liste des utilisateurs par rôle
+            'Liste des membres par catégorie
             connexion()
-            requete = "SELECT u.idutilisateur, u.nom, u.email, u.idrole, r.nomrole, " & _
-                "u.statut, u.datecreation " & _
-                "FROM utilisateurs u LEFT JOIN roles r ON u.idrole = r.idrole " & _
-                "WHERE u.idrole = " & role_recherche
+            requete = "SELECT m.idmembre, m.nom, m.prenom, m.adresse, m.telephone, m.email, " & _
+                     "m.idcategoriemembre, c.nomcategoriemembre, " & _
+                     "m.statut, m.dateinscription " & _
+                     "FROM membres m LEFT JOIN categoriemembre c ON m.idcategoriemembre = c.idcategoriemembre " & _
+                     "WHERE m.idcategoriemembre = " & categorie_recherche
 
             Dim da As New OleDbDataAdapter
             da = New OleDbDataAdapter(requete, con)
@@ -247,12 +254,12 @@ Public Class Form15
             Dim ds As New DataSet
             da.Fill(dt)
             DataGridView2.DataSource = dt.DefaultView
-            deconnexion() ' Use the new method to properly close the connection
+            deconnexion()
 
             Dim cpt As Integer = DataGridView2.Rows.Count()
 
             If cpt = 0 Then
-                MsgBox("Aucun utilisateur trouvé avec ce rôle...", MsgBoxStyle.Information, "Message")
+                MsgBox("Aucun membre trouvé dans cette catégorie...", MsgBoxStyle.Information, "Message")
             Else
                 'Imprimer
                 DirectCast(PrintPreviewDialog1, Form).WindowState = FormWindowState.Maximized
@@ -268,14 +275,16 @@ Public Class Form15
     Private Sub ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Click
         etat = 2
         Dim statut_recherche As String
-        statut_recherche = InputBox("Entrez le statut à rechercher (actif/inactif)", "Imprimer liste des utilisateurs par statut", "actif")
+        statut_recherche = InputBox("Entrez le statut à rechercher (actif/inactif)", "Imprimer liste des membres par statut", "actif")
 
         Try
-            'Liste des utilisateurs par statut
+            'Liste des membres par statut
             connexion()
-            requete = "SELECT idutilisateur, nom, email, idrole, statut, datecreation " & _
-                "FROM utilisateurs " & _
-                "WHERE statut = '" & statut_recherche & "'"
+            requete = "SELECT m.idmembre, m.nom, m.prenom, m.adresse, m.telephone, m.email, " & _
+                     "m.idcategoriemembre, c.nomcategoriemembre, " & _
+                     "m.statut, m.dateinscription " & _
+                     "FROM membres m LEFT JOIN categoriemembre c ON m.idcategoriemembre = c.idcategoriemembre " & _
+                     "WHERE m.statut = '" & statut_recherche & "'"
 
             Dim da As New OleDbDataAdapter
             da = New OleDbDataAdapter(requete, con)
@@ -283,12 +292,12 @@ Public Class Form15
             Dim ds As New DataSet
             da.Fill(dt)
             DataGridView2.DataSource = dt.DefaultView
-            deconnexion() ' Use the new method to properly close the connection
+            deconnexion()
 
             Dim cpt As Integer = DataGridView2.Rows.Count()
 
             If cpt = 0 Then
-                MsgBox("Aucun utilisateur trouvé avec ce statut...", MsgBoxStyle.Information, "Message")
+                MsgBox("Aucun membre trouvé avec ce statut...", MsgBoxStyle.Information, "Message")
             Else
                 'Imprimer
                 DirectCast(PrintPreviewDialog1, Form).WindowState = FormWindowState.Maximized
@@ -309,7 +318,7 @@ Public Class Form15
 
     End Sub
 
-    Private Sub toolbar_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles toolbar.ItemClicked
+    Private Sub toolbar_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolBar.ItemClicked
 
     End Sub
 End Class
