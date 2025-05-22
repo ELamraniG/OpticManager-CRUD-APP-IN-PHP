@@ -3,7 +3,7 @@
 Public Class Form17
     Public etat As Integer
 
-    Private Sub Form17_Load(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Form17_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim icone As New Icon("images/emp.ico")
         Me.Icon = icone
         Me.Text = "Gestion des membres"
@@ -80,12 +80,12 @@ Public Class Form17
         End Try
     End Sub
 
-    Private Sub Ajouter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Ajouter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Ajouter.Click
         Form18.type_operation.Text = "Ajouter"
         Form18.ShowDialog()
     End Sub
 
-    Private Sub DataGridView1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub DataGridView1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Dim i As Integer
         i = DataGridView1.CurrentCell.RowIndex
         Form18.idmembre.Text = DataGridView1.Rows(i).Cells(0).Value.ToString
@@ -107,7 +107,7 @@ Public Class Form17
         Form18.ShowDialog()
     End Sub
 
-    Private Sub Supprimer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Supprimer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Supprimer.Click
         Form18.type_operation.Text = "Ajouter"
         If (DataGridView1.Rows.Count = 0) Then
             MsgBox("Aucun membre...", vbExclamation, "Message")
@@ -132,7 +132,7 @@ Public Class Form17
         End If
     End Sub
 
-    Private Sub Rechercher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Rechercher_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Rechercher.Click
         Dim nom_a_chercher As String
         nom_a_chercher = InputBox("Entrez le nom, prénom ou email du membre à chercher : ", "Recherche", "")
         Try
@@ -158,18 +158,18 @@ Public Class Form17
         End Try
     End Sub
 
-    Private Sub Actualiser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Actualiser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Actualiser.Click
         afficher_membres()
     End Sub
 
-    Private Sub ImprimerTousLesServicesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ImprimerTousLesServicesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerTousLesServicesToolStripMenuItem.Click
         etat = 1
         DirectCast(PrintPreviewDialog1, Form).WindowState = FormWindowState.Maximized
         PrintDocument1.DefaultPageSettings.Landscape = False
         PrintPreviewDialog1.ShowDialog()
     End Sub
 
-    Private Sub PrintDocument1_PrintPage(ByVal sender As System.Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs)
+    Private Sub PrintDocument1_PrintPage(ByVal sender As System.Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim font_titre As New Font("Arial", 12, FontStyle.Regular)
         Dim font_tcolonne As New Font("Arial", 10, FontStyle.Bold)
         Dim font_colonne As New Font("Arial", 10, FontStyle.Regular)
@@ -234,7 +234,7 @@ Public Class Form17
         e.Graphics.DrawString("Entreprise : Liste des membres", font_titre, Brushes.Black, cl, 1100)
     End Sub
 
-    Private Sub ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerListeDesEmployésDunServiceToolStripMenuItem.Click
         etat = 2
         Dim categorie_recherche As String
         categorie_recherche = InputBox("Entrez l'ID de la catégorie à rechercher", "Imprimer liste des membres par catégorie", "")
@@ -272,7 +272,7 @@ Public Class Form17
         End Try
     End Sub
 
-    Private Sub ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Click
         etat = 2
         Dim statut_recherche As String
         statut_recherche = InputBox("Entrez le statut à rechercher (actif/inactif)", "Imprimer liste des membres par statut", "actif")
@@ -310,19 +310,15 @@ Public Class Form17
         End Try
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
+    Private Sub DataGridView1_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
 
     End Sub
 
-    Private Sub Imprimer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Imprimer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Imprimer.Click
 
     End Sub
 
     Private Sub toolbar_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolBar.ItemClicked
-
-    End Sub
-
-    Private Sub Form17_Load_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
     End Sub
 End Class
