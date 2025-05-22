@@ -1,9 +1,9 @@
 ﻿Imports System.Data.OleDb
 
-Public Class Form17
+Public Class Form19
     Public etat As Integer
 
-    Private Sub Form17_Load(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Form19_Load(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim icone As New Icon("images/emp.ico")
         Me.Icon = icone
         Me.Text = "Gestion des membres"
@@ -318,7 +318,7 @@ Public Class Form17
 
     End Sub
 
-    Private Sub toolbar_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolBar.ItemClicked
+    Private Sub toolbar_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles toolbar.ItemClicked
 
     End Sub
 
