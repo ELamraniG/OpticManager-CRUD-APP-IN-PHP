@@ -100,3 +100,5 @@ C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form17.
 C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form18.resources
 C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form19.resources
 C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form20.resources
+C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form21.resources
+C:\Users\m\Desktop\VBNPROJECT\lopo\Assomanager\obj\x86\Debug\Assomanager.Form22.resources
