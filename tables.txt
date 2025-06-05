@@ -1,0 +1,23 @@
+Full Texts
+Tables_in_optirent
+cabinet
+categorie
+client
+commande
+commandes_fournisseur
+consultations
+fournisseur
+ordonnances
+patients
+produit
+rendezvous
+users
+utilisateurs
+vente_details
+ventes
+vue_commandes_completes
+vue_commandes_fournisseur_completes
+vue_consultations_completes
+vue_produits_complets
+vue_rendezvous_complets
+vue_ventes_completes

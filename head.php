@@ -72,8 +72,7 @@ else
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px; padding: 10px 15px;">
                         <i class='bx bx-collection'></i> Tables
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    </a>                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../categorie/categorie-list.php">Categories</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../fournisseur/fournisseur-list.php">Fournisseur</a></li>
@@ -87,6 +86,18 @@ else
                         <li><a class="dropdown-item" href="../commande/commande-list.php">Commande</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../rendezvous/rendezvous-list.php">Rendez Vous</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php">Consultations</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php">Ordonnances</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php">Ventes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Vente_details/vente_details-list.php">Détails Ventes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php">Utilisateurs</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
