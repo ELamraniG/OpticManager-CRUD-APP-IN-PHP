@@ -11,6 +11,9 @@ if (!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
 require_once(__DIR__ . "/fonctions.php");
 $role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'admin';
 
+$notifications = array();
+$high_priority_count = 0;
+require(__DIR__ . "/get_notifications.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -78,6 +81,28 @@ $role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'admin';
                     </ul>
                 </li>
             </ul>
+
+            <div class="dropdown me-3">
+                <a class="btn btn-dark position-relative" href="#" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-bell"></i>
+                    <?php if ($high_priority_count > 0) { ?>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo $high_priority_count; ?>
+                    </span>
+                    <?php } ?>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end" style="min-width:310px">
+                    <?php if (count($notifications) == 0) { ?>
+                        <span class="dropdown-item-text text-muted">Aucune notification</span>
+                    <?php } ?>
+                    <?php foreach ($notifications as $n) { ?>
+                        <a class="dropdown-item" href="<?php echo e($n['action']); ?>">
+                            <b><?php echo e($n['title']); ?></b><br>
+                            <small><?php echo e($n['message']); ?></small>
+                        </a>
+                    <?php } ?>
+                </div>
+            </div>
 
             <span class="navbar-text me-3"><?php echo e($role); ?></span>
             <a href="../deconnexion.php" class="btn btn-outline-light btn-sm">Deconnexion</a>
