@@ -55,12 +55,11 @@ require("../connexion.php");
             <p>Date d'impression: <?php echo date('d/m/Y H:i:s'); ?></p>
         </div>
 
-        <?php
-        if (isset($_GET['id'])) {
+        <?php        if (isset($_GET['id'])) {
             // Print individual user
             $id = $_GET['id'];
             $sql = "SELECT * FROM utilisateurs WHERE idutilisateur = $id";
-            $resultat = mysqli_query($connexion, $sql);
+            $resultat = mysqli_query($con, $sql);
             
             if (mysqli_num_rows($resultat) > 0) {
                 $utilisateur = mysqli_fetch_assoc($resultat);
@@ -101,11 +100,10 @@ require("../connexion.php");
                 <?php
             } else {
                 echo '<div class="alert alert-warning">Utilisateur non trouvé.</div>';
-            }
-        } else {
+            }        } else {
             // Print all users
             $sql = "SELECT * FROM utilisateurs ORDER BY nomcomplet";
-            $resultat = mysqli_query($connexion, $sql);
+            $resultat = mysqli_query($con, $sql);
             
             if (mysqli_num_rows($resultat) > 0) {
                 ?>
