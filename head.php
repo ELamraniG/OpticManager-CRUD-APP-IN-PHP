@@ -47,9 +47,7 @@ else
 
     <!-- DataTables JavaScript -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-    <!-- Favicon -->
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16"  href="images/logo_bg.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
@@ -57,379 +55,164 @@ else
     
     <title>OPTIRENT</title>
     <!--Mon style -->
-    <link rel="stylesheet" type="text/css" href="../style.css">
-
-    
-<body>
-  <div class="sidebar close">
-    <div class="logo-details">
-      <img src="../images/logo_bg.png" width="79px">
-      <span class="logo_name" style ="margin-left:20px;">OPTI'RENT</span>
+    <link rel="stylesheet" type="text/css" href="../style.css"><body>
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #004080;">
+    <div class="container-fluid">
+        <img src="../images/logo_bg.png" width="90px">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-grid-alt'></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-collection'></i> Tables
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../categorie/categorie-list.php">Categories</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../fournisseur/fournisseur-list.php">Fournisseur</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../client/client-list.php">Client</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../cabinet/cabinet-list.php">Cabinet</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../produit/produit-list.php">Produit</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../commande/commande-list.php">Commande</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../rendezvous/rendezvous-list.php">Rendez Vous</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-pie-chart-alt-2'></i> Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-line-chart'></i> Chart
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-compass'></i> Explore
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-history'></i> History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
+                        <i class='bx bx-cog'></i> Setting
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="../deconnexion.php" style="padding: 10px 15px;">
+                        <i class="fa-solid fa-lock"></i> Déconnexion
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="#" style="padding: 10px 15px;">
+                        <i class="fa-solid fa-user"></i> Admin (Administration)
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <ul class="nav-links">
-      <li>
-        <a href="#">
-          <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Dashboard</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Dashbord</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-collection'></i>
-            <span class="link_name">Tables</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow'></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Tables</a></li>
-          <li><a href="../categorie/categorie-list.php">Categories</a></li>
-          <li><a href="../fournisseur/fournisseur-list.php">Fournisseur</a></li>
-          <li><a href="../client/client-list.php">Client</a></li>
-          <li><a href="../cabinet/cabinet-list.php">Cabinet</a></li>
-          <li><a href="../produit/produit-list.php">Produit</a></li>
-          <li><a href="../commande/commande-list.php">Commande</a></li>
-          <li><a href="../rendezvous/rendezvous-list.php">Rendez Vous</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-pie-chart-alt-2'></i>
-          <span class="link_name">Analytics</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Analytics</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-line-chart'></i>
-          <span class="link_name">Chart</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Chart</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-compass'></i>
-          <span class="link_name">Explore</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Explore</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-history'></i>
-          <span class="link_name">History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">History</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-cog'></i>
-          <span class="link_name">Setting</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href=""></a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="profile-details">
-          <div class="profile-content">
-            <!--<img src="image/profile.jpg" alt="profileImg">-->
-          </div>
-          <div class="name-job">
-            <div class="profile_name">Admin</div>
-            <div class="job">Administration</div>
-          </div>
-          <a href="../deconnexion.php"><i class='bx bx-log-out'></i></a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <section class="home-section">
-    <div class="home-content">
-      <i class='bx bx-menu'></i>
-      </div>
-</section>
-  <script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-      arrow[i].addEventListener("click", (e) => {
-        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-        arrowParent.classList.toggle("showMenu");
-      });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("close");
-    });
-  </script>
-</body>
+</nav>
+
+<!-- Main content area with top padding to account for fixed navbar -->
+<div class="container-fluid" style="margin-top: 80px; padding: 20px;"></body>
 <style>
-    /* Google Fonts Import Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-.sidebar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 260px;
-  background: #11101d;
-  z-index: 100;
-  transition: all 0.5s ease;
-}
-.sidebar.close{
-  width: 78px;
-}
-.sidebar .logo-details{
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-.sidebar .logo-details i{
-  font-size: 30px;
-  color: #fff;
-  height: 50px;
-  min-width: 78px;
-  text-align: center;
-  line-height: 50px;
-}
-.sidebar .logo-details .logo_name{
-  font-size: 22px;
-  color: #fff;
-  font-weight: 600;
-  transition: 0.3s ease;
-  transition-delay: 0.1s;
-}
-.sidebar.close .logo-details .logo_name{
-  transition-delay: 0s;
-  opacity: 0;
-  pointer-events: none;
-}
-.sidebar .nav-links{
-  height: 100%;
-  padding: 30px 0 150px 0;
-  overflow: auto;
-}
-.sidebar.close .nav-links{
-  overflow: visible;
-}
-.sidebar .nav-links::-webkit-scrollbar{
-  display: none;
-}
-.sidebar .nav-links li{
-  position: relative;
-  list-style: none;
-  transition: all 0.4s ease;
-}
-.sidebar .nav-links li:hover{
-  background: #1d1b31;
-}
-.sidebar .nav-links li .iocn-link{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sidebar.close .nav-links li .iocn-link{
-  display: block
-}
-.sidebar .nav-links li i{
-  height: 50px;
-  min-width: 78px;
-  text-align: center;
-  line-height: 50px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.sidebar .nav-links li.showMenu i.arrow{
-  transform: rotate(-180deg);
-}
-.sidebar.close .nav-links i.arrow{
-  display: none;
-}
-.sidebar .nav-links li a{
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.sidebar .nav-links li a .link_name{
-  font-size: 18px;
-  font-weight: 400;
-  color: #fff;
-  transition: all 0.4s ease;
-}
-.sidebar.close .nav-links li a .link_name{
-  opacity: 0;
-  pointer-events: none;
-}
-.sidebar .nav-links li .sub-menu{
-  padding: 6px 6px 14px 80px;
-  margin-top: -10px;
-  background: #1d1b31;
-  display: none;
-}
-.sidebar .nav-links li.showMenu .sub-menu{
-  display: block;
-}
-.sidebar .nav-links li .sub-menu a{
-  color: #fff;
-  font-size: 15px;
-  padding: 5px 0;
-  white-space: nowrap;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-}
-.sidebar .nav-links li .sub-menu a:hover{
-  opacity: 1;
-}
-.sidebar.close .nav-links li .sub-menu{
-  position: absolute;
-  left: 100%;
-  top: -10px;
-  margin-top: 0;
-  padding: 10px 20px;
-  border-radius: 0 6px 6px 0;
-  opacity: 0;
-  display: block;
-  pointer-events: none;
-  transition: 0s;
-}
-.sidebar.close .nav-links li:hover .sub-menu{
-  top: 0;
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-}
-.sidebar .nav-links li .sub-menu .link_name{
-  display: none;
-}
-.sidebar.close .nav-links li .sub-menu .link_name{
-  font-size: 18px;
-  opacity: 1;
-  display: block;
-}
-.sidebar .nav-links li .sub-menu.blank{
-  opacity: 1;
-  pointer-events: auto;
-  padding: 3px 20px 6px 16px;
-  opacity: 0;
-  pointer-events: none;
-}
-.sidebar .nav-links li:hover .sub-menu.blank{
-  top: 50%;
-  transform: translateY(-50%);
+    margin: 0;
+    padding: 0;
 }
 
-.one {
-  width: 80%;
-  margin-left: 10%;
-  background-color: black;
-  height: 400px;
+.table {
+    width: 100%;
 }
 
-.sidebar .profile-details{
-  position: fixed;
-  bottom: 0;
-  width: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #1d1b31;
-  padding: 12px 0;
-  transition: all 0.5s ease;
-}
-.sidebar.close .profile-details{
-  background: none;
-}
-.sidebar.close .profile-details{
-  width: 78px;
-}
-.sidebar .profile-details .profile-content{
-  display: flex;
-  align-items: center;
-}
-.sidebar .profile-details img{
-  height: 52px;
-  width: 52px;
-  object-fit: cover;
-  border-radius: 16px;
-  margin: 0 14px 0 12px;
-  background: #1d1b31;
-  transition: all 0.5s ease;
-}
-.sidebar.close .profile-details img{
-  padding: 10px;
-}
-.sidebar .profile-details .profile_name,
-.sidebar .profile-details .job{
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.sidebar.close .profile-details i,
-.sidebar.close .profile-details .profile_name,
-.sidebar.close .profile-details .job{
-  display: none;
-}
-.sidebar .profile-details .job{
-  font-size: 12px;
-}
-.home-section{
-  position: relative;
-  background: #E4E9F7;
-  height: 0;
-  left: 260px;
-  width: calc(100% - 260px);
-  transition: all 0.5s ease;
-}
-.sidebar.close ~ .home-section{
-  left: 78px;
-  width: calc(100% - 78px);
-}
-.home-section .home-content{
-  height: 60px;
-  display: flex;
-  align-items: center;
-}
-.home-section .home-content .bx-menu,
-.home-section .home-content .text{
-  color: #11101d;
-  font-size: 35px;
-}
-.home-section .home-content .bx-menu{
-  margin: 0 15px;
-  cursor: pointer;
-}
-.home-section .home-content .text{
-  font-size: 26px;
-  font-weight: 600;
-}
-@media (max-width: 420px) {
-  .sidebar.close .nav-links li .sub-menu{
-    display: none;
-  }
+.colm {
+    width: 30px;
 }
 
+input{
+    margin-bottom: 10px;
+}
+
+.iconrouge{
+    color:gray;
+}
+
+.entete-list{
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nbr{
+    border: 1px solid green;
+    padding: 10px;
+    background: green;
+    color: white;
+    font-size: 14pt;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.cledelete{
+    width: 400px;
+    text-align: center;
+    border: 1px solid blue;
+    padding: 20px;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.authentification{
+    width: 50%;
+    margin: auto;
+}
+
+.authentification img{
+    width: 50%;
+    float: center;
+}
+
+.navbar {
+    background-color: #004080; /* Couleur de fond */
+    padding: 10px; /* Espacement interne */
+}
+
+.navbar-nav .nav-link {
+    color: white ; /* Couleur du texte */
+    border-radius: 5px; /* Arrondissement des coins */
+    padding: 10px 15px; /* Espacement du texte */
+    font-size: 16px; /* Taille de la police */
+}
+
+.navbar-nav .nav-link.active {
+    color: #007bff; /* Couleur du texte pour l'élément actif */
+    background-color: #fff; /* Couleur de fond pour l'élément actif */
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
 </style>
 </html>
 </head>

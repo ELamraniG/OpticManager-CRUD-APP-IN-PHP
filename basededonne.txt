@@ -1,0 +1,111 @@
+LA BASE DE DONNEES
+🔸 Table fournisseurs
+Champ Type Description
+id_fournisseur INT AUTO_INCREMENT ID
+nom VARCHAR(150) Nom du fournisseur
+telephone VARCHAR(20) Téléphone
+email VARCHAR(150) Email
+adresse TEXT Adresse
+INSERT INTO fournisseurs (id, nom, adresse, telephone, email)
+VALUES
+(1, "VisionPlus Distribution", "12 Rue des Lunetiers, Paris",
+"0145237890", "contact@visionplus.fr"),
+(2, "OptiLens Pro", "88 Avenue de l’Optique, Lyon",
+"0478561234", "service@optilenspro.com"),
+(3, "LunetTech Solutions", "5 Boulevard de la Vue, Marseille",
+"0491112233", "support@lunettech.fr");
+🔸 Table categories
+Champ Type Description
+idcategorie VARCHAR(50) ID
+nomcategorie VARCHAR(100) 'monture', 'verre', 'lentille', 'accessoire'
+description VARCHAR(500) description facultative de la catégorie
+INSERT INTO categories (id, nom, description)
+VALUES
+(1, "Montures", "Montures de lunettes pour hommes, femmes et
+enfants."),
+(2, "Verres Correcteurs", "Verres unifocaux, progressifs et
+anti-reflets."),
+(3, "Lentilles de contact", "Lentilles journalières, mensuelles
+et toriques."),
+(4, "Accessoires", "Étuis, lingettes, sprays nettoyants,
+cordons."),
+(5, "Solaires", "Lunettes de soleil avec ou sans correction.");
+PROJET DEVELOPPEMENT WEB
+254P4/OPTIQUEMANAGER
+Page 4 sur 5
+🔸 Table commandes_fournisseur
+Champ Type Description
+idcommande INT AUTO_INCREMENT ID
+idfournisseur INT Clé vers fournisseurs
+datecommande DATE Date de commande
+statut VARCHAR(100) État : 'en_attente', 'livrée', 'annulée'
+🔸 Table produits
+Champ Type Description
+idproduit INT AUTO_INCREMENT ID
+idcategorie VARCHAR(100) Clé étrangère vers categories
+nomproduit VARCHAR(150) Nom
+description TEXT Description détaillée
+prixachat DECIMAL(10,2) Prix d'achat
+prixvente DECIMAL(10,2) Prix de vente
+stock INT Quantité en stock
+seuildalerte INT Limite du stock pour passer une commande
+idcommande INT Clé étrangère vers commandes
+dateajout DATE Date d’ajout du produit
+🔸 Table patients
+Champ Type Description
+idpatient INT AUTO_INCREMENT Identifiant unique
+nom VARCHAR(100) Nom du patient
+prenom VARCHAR(100) Prénom
+datenaissance DATE Date de naissance
+sexe VARCHAR(100) Sexe
+telephone VARCHAR(50) Téléphone
+email VARCHAR(150) Email
+adresse TEXT Adresse complète
+datecreation DATE Date d’ajout dans la base
+🔸 Table consultations
+Champ Type Description
+idconsultation INT AUTO_INCREMENT ID unique
+idpatient INT Clé étrangère vers patients
+dateconsultation DATE Date de la consultation
+motif TEXT Motif de la consultation
+observations TEXT Notes de l’opticien
+prescriptionpdf VARCHAR(255) Chemin du fichier ordonnance
+PROJET DEVELOPPEMENT WEB
+254P4/OPTIQUEMANAGER
+Page 5 sur 5
+🔸 Table ordonnances
+Champ Type Description
+idordonnance INT AUTO_INCREMENT Identifiant
+idconsultation INT Clé vers consultations
+œil VARCHAR(100) Droit / Gauche
+sphere FLOAT Valeur de sphère
+cylindre FLOAT Valeur de cylindre
+axe INT Axe
+addition FLOAT Valeur d’addition (presbytie)
+typecorrection VARCHAR(100) Type de correction 'verre', 'lentille'
+🔸 Table ventes
+Champ Type Description
+id_vente INT
+AUTO_INCREMENT
+ID
+idpatient INT Client
+datevente DATETIME Date de vente
+montanttotal DECIMAL(10,2) Montant total
+modepaiement VARCHAR(100) Moyen de paiement 'espèces', 'carte', 'mutuelle',
+'tiers_payant'
+statutpaiement VARCHAR(100) État du paiement 'payé', 'en_attente'
+🔸 Table vente_details
+Champ Type Description
+iddetail INT AUTO_INCREMENT ID
+idvente INT Clé vers ventes
+idproduit INT Clé vers produits
+quantite INT Quantité vendue
+prixunitaire DECIMAL(10,2) Prix unitaire au moment de vente
+🔸 Table utilisateurs
+Champ Type Description
+idutilisateur INT AUTO_INCREMENT ID
+nomutilisateur VARCHAR(100) Identifiant
+motdepasse VARCHAR(255) Mot de passe (haché)
+role VARCHAR(100) Rôle ('admin', 'opticien', 'assistant')
+nomcomplet VARCHAR(150) Nom complet
+actif BOOLEAN Compte actif/inactif
