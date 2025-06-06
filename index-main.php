@@ -12,7 +12,7 @@ if (isset($_POST['login']) && isset($_POST['mdp'])) {
     $r = "select * from utilisateurs
           where nomutilisateur = '$login'
           and motdepasse = MD5('$mdp')
-          ";
+          and actif = 1";
 
     $res = mysqli_query($con, $r);
 
@@ -25,7 +25,7 @@ if (isset($_POST['login']) && isset($_POST['mdp'])) {
 
         redirection("home/home.php");
     } else {
-        $message = "login incorrect";
+        $message = "Echec de connexion";
     }
 }
 ?>
