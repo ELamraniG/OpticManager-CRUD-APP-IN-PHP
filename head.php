@@ -56,23 +56,29 @@ else
     <title>OPTIRENT</title>
     <!--Mon style -->
     <link rel="stylesheet" type="text/css" href="../style.css"><body>
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #004080;">
-    <div class="container-fluid">
-        <img src="../images/logo_bg.png" width="90px">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background-color: #004080;">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" href="../home/home.php">
+            <img src="../images/logo_bg.png" width="50" height="50" class="me-2 rounded-circle">
+            <span class="fw-bold">OpticManager</span>
+        </a>
+        
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-grid-alt'></i> Dashboard
+                    <a class="nav-link px-3" href="../home/home.php">
+                        <i class='bx bx-grid-alt me-1'></i>Accueil
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-collection'></i> Tables
-                    </a>                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-collection me-1'></i>Toutes Les Tables
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
                         <li><a class="dropdown-item" href="../categorie/categorie-list.php">Categories</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../fournisseur/fournisseur-list.php">Fournisseur</a></li>
@@ -103,40 +109,26 @@ else
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-pie-chart-alt-2'></i> Analytics
+                    <a class="nav-link px-3" href="#">
+                        <i class='bx bx-pie-chart-alt-2 me-1'></i>Analytics
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-line-chart'></i> Chart
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-compass'></i> Explore
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-history'></i> History
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" style="border-radius: 5px; padding: 10px 15px;">
-                        <i class='bx bx-cog'></i> Setting
+                    <a class="nav-link px-3" href="#">
+                        <i class='bx bx-cog me-1'></i>Paramètres
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto">
+            
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="../deconnexion.php" style="padding: 10px 15px;">
-                        <i class="fa-solid fa-lock"></i> Déconnexion
+                    <a class="nav-link px-3" href="#">
+                        <i class="fa-solid fa-user me-1"></i>Admin
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#" style="padding: 10px 15px;">
-                        <i class="fa-solid fa-user"></i> Admin (Administration)
+                    <a class="nav-link px-3 text-warning" href="../deconnexion.php">
+                        <i class="fa-solid fa-sign-out-alt me-1"></i>Déconnexion
                     </a>
                 </li>
             </ul>
@@ -144,8 +136,8 @@ else
     </div>
 </nav>
 
-<!-- Main content area with top padding to account for fixed navbar -->
-<div class="container-fluid" style="margin-top: 80px; padding: 20px;"></body>
+<!-- Main content area -->
+<div class="container-fluid" style="margin-top: 70px; padding: 20px;"></body>
 <style>
 *{
     margin: 0;

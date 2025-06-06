@@ -70,7 +70,7 @@ if (isset($mdp))
 		$_SESSION['vs_login']=$login;
 		$_SESSION['vs_motdepasse']=$mdp;
 		require("fonctions.php");
-		redirection("categorie/categorie-list.php");
+		redirection("home/home.php");
 	}
 	else
 	{
