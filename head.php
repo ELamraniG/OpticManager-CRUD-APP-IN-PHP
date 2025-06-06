@@ -1,26 +1,14 @@
 <?php
 session_start();
-?>
-<!-- Bootstrap version 5.3.0 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-
-<!--Font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <meta charset="utf-8">
-<!-- Favicon -->    
-    <link rel="icon" type="image/png" sizes="16x16"  href="../images/logo_bg.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-
-<?php
 /* Vérifier si cette page est authentifié */
-    $v_session = $_SESSION['v_session'];
-    if ($v_session != 1) {
+$v_session = $_SESSION['v_session'];
+if ($v_session != 1) {
+    echo "<!-- Bootstrap version 5.3.0 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>";
+    echo "<meta charset=utf-8>";
     echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
     exit();
 }
-else
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -47,20 +35,37 @@ else
 
     <!-- DataTables JavaScript -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="16x16"  href="images/logo_bg.png">
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="16x16"  href="../images/logo_bg.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     
     <title>OPTIRENT</title>
     <!--Mon style -->
-    <link rel="stylesheet" type="text/css" href="../style.css"><body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background-color: #004080;">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+<?php
+// Get user role for navigation
+$user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'admin';
+$navbar_color = '#004080'; // Default admin color
+
+if ($user_role == 'opticien') {
+    $navbar_color = '#008000';
+} elseif ($user_role == 'assistant') {
+    $navbar_color = '#ff6600';
+}
+?>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background-color: <?php echo $navbar_color; ?>;">
     <div class="container-fluid px-4">
         <a class="navbar-brand d-flex align-items-center" href="../home/home.php">
             <img src="../images/logo_bg.png" width="50" height="50" class="me-2 rounded-circle">
-            <span class="fw-bold">OpticManager</span>
+            <span class="fw-bold">OpticManager - <?php echo ucfirst($user_role); ?></span>
         </a>
         
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -74,26 +79,28 @@ else
                         <i class='bx bx-grid-alt me-1'></i>Accueil
                     </a>
                 </li>
+                
+                <?php if ($user_role == 'admin'): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-collection me-1'></i>Toutes Les Tables
                     </a>
                     <ul class="dropdown-menu shadow border-0">
-                        <li><a class="dropdown-item" href="../categorie/categorie-list.php">Categories</a></li>
+                        <li><a class="dropdown-item" href="../Categorie/categorie-list.php">Categories</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../fournisseur/fournisseur-list.php">Fournisseur</a></li>
+                        <li><a class="dropdown-item" href="../Fournisseur/fournisseur-list.php">Fournisseur</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../client/client-list.php">Client</a></li>
+                        <li><a class="dropdown-item" href="../Client/client-list.php">Client</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../cabinet/cabinet-list.php">Cabinet</a></li>
+                        <li><a class="dropdown-item" href="../Cabinet/cabinet-list.php">Cabinet</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../produit/produit-list.php">Produit</a></li>
+                        <li><a class="dropdown-item" href="../Produit/produit-list.php">Produit</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../commande/commande-list.php">Commande</a></li>
+                        <li><a class="dropdown-item" href="../Commande/commande-list.php">Commande</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Commandes_Fournisseur/commandes-fournisseur-list.php">Commandes Fournisseur</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../rendezvous/rendezvous-list.php">Rendez Vous</a></li>
+                        <li><a class="dropdown-item" href="../Rendezvous/rendezvous-list.php">Rendez Vous</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -118,12 +125,38 @@ else
                         <i class='bx bx-cog me-1'></i>Paramètres
                     </a>
                 </li>
+                
+                <?php elseif ($user_role == 'opticien'): ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-collection me-1'></i>Mes Tables
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a class="dropdown-item" href="../Client/client-list.php">Client</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php">Consultations</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php">Ordonnances</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php">Ventes</a></li>
+                    </ul>
+                </li>
+                
+                <?php elseif ($user_role == 'assistant'): ?>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="../Rendezvous/rendezvous-list.php">
+                        <i class='bx bx-calendar me-1'></i>Rendez-vous
+                    </a>
+                </li>
+                <?php endif; ?>
             </ul>
             
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link px-3" href="#">
-                        <i class="fa-solid fa-user me-1"></i>Admin
+                        <i class="fa-solid fa-user me-1"></i><?php echo ucfirst($user_role); ?>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -137,7 +170,8 @@ else
 </nav>
 
 <!-- Main content area -->
-<div class="container-fluid" style="margin-top: 70px; padding: 20px;"></body>
+<div class="container-fluid" style="margin-top: 70px; padding: 20px;">
+
 <style>
 *{
     margin: 0;
@@ -197,27 +231,15 @@ input{
     float: center;
 }
 
-.navbar {
-    background-color: #004080; /* Couleur de fond */
-    padding: 10px; /* Espacement interne */
-}
-
-.navbar-nav .nav-link {
-    color: white ; /* Couleur du texte */
-    border-radius: 5px; /* Arrondissement des coins */
-    padding: 10px 15px; /* Espacement du texte */
-    font-size: 16px; /* Taille de la police */
-}
-
-.navbar-nav .nav-link.active {
-    color: #007bff; /* Couleur du texte pour l'élément actif */
-    background-color: #fff; /* Couleur de fond pour l'élément actif */
-}
-
 .navbar-nav .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+}
 </style>
+</body>
 </html>
-</head>

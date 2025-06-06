@@ -66,9 +66,11 @@ if (isset($mdp))
 	$nbr_res = mysqli_num_rows($res);
 	if ($nbr_res == 1)
 	{
+		$user_data = mysqli_fetch_assoc($res);
 		$_SESSION['v_session']=1;
 		$_SESSION['vs_login']=$login;
 		$_SESSION['vs_motdepasse']=$mdp;
+		$_SESSION['user_role']=$user_data['role']; // Store user role in session
 		require("fonctions.php");
 		redirection("home/home.php");
 	}
