@@ -135,8 +135,6 @@ if ($user_role == 'opticien') {
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Produit/product-catalog.php"><i class="fas fa-eye me-2"></i>Catalogue Produits</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Dashboard/analytics.php"><i class="fas fa-chart-line me-2"></i>Analytics Avancé</a></li>
-                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Dashboard/notifications.php"><i class="fas fa-bell me-2"></i>Centre de Notifications</a></li>
                     </ul>
                 </li>

@@ -1,11 +1,11 @@
 <?php
 session_start();
-if(!isset($_SESSION['isadmin']) || $_SESSION['isadmin'] != 1) {
-    header('Location: ../');
+if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
+    header('Location: ../index-main.php');
     exit();
 }
 
-include('../cnx.php');
+require("../connexion.php");
 
 // Statistiques pour les graphiques
 $stats = array();
@@ -60,13 +60,14 @@ while($row = mysqli_fetch_assoc($result)) {
 // Stock critique
 $query = "SELECT COUNT(*) as nb_critique FROM produit WHERE qteenstock <= seuildalerte";
 $result = mysqli_query($con, $query);
-$stock_critique = mysqli_fetch_assoc($result)['nb_critique'];
+$stock_critique_data = mysqli_fetch_assoc($result);
+$stock_critique = $stock_critique_data['nb_critique'];
 
 // Chiffre d'affaires mensuel
-$query = "SELECT MONTH(date_vente) as mois, SUM(montant_total) as ca 
+$query = "SELECT MONTH(datevente) as mois, SUM(montanttotal) as ca 
           FROM ventes 
-          WHERE date_vente >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-          GROUP BY MONTH(date_vente)
+          WHERE datevente >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+          GROUP BY MONTH(datevente)
           ORDER BY mois";
 $result = mysqli_query($con, $query);
 $ca_mensuel = array();
@@ -134,7 +135,8 @@ while($row = mysqli_fetch_assoc($result)) {
                     <h4><?php 
                         $query = "SELECT COUNT(*) as total FROM patients";
                         $result = mysqli_query($con, $query);
-                        echo mysqli_fetch_assoc($result)['total'];
+                        $total_data = mysqli_fetch_assoc($result);
+                        echo $total_data['total'];
                     ?></h4>
                     <p class="text-muted mb-0">Patients Total</p>
                 </div>
@@ -145,7 +147,8 @@ while($row = mysqli_fetch_assoc($result)) {
                     <h4><?php 
                         $query = "SELECT COUNT(*) as total FROM consultations WHERE MONTH(dateconsultation) = MONTH(NOW())";
                         $result = mysqli_query($con, $query);
-                        echo mysqli_fetch_assoc($result)['total'];
+                        $total_data = mysqli_fetch_assoc($result);
+                        echo $total_data['total'];
                     ?></h4>
                     <p class="text-muted mb-0">Consultations ce mois</p>
                 </div>
@@ -161,10 +164,11 @@ while($row = mysqli_fetch_assoc($result)) {
                 <div class="card analytics-card text-center p-3">
                     <i class="fas fa-euro-sign stat-icon text-info"></i>
                     <h4><?php 
-                        $query = "SELECT SUM(montant_total) as total FROM ventes WHERE MONTH(date_vente) = MONTH(NOW())";
+                        $query = "SELECT SUM(montanttotal) as total FROM ventes WHERE MONTH(datevente) = MONTH(NOW())";
                         $result = mysqli_query($con, $query);
-                        $ca = mysqli_fetch_assoc($result)['total'];
-                        echo number_format($ca ?: 0, 0, ',', ' ');
+                        $ca_data = mysqli_fetch_assoc($result);
+                        $ca = $ca_data['total'];
+                        echo number_format($ca ? $ca : 0, 0, ',', ' ');
                     ?>€</h4>
                     <p class="text-muted mb-0">CA ce mois</p>
                 </div>
@@ -258,15 +262,15 @@ while($row = mysqli_fetch_assoc($result)) {
         Chart.defaults.font.family = 'Arial, sans-serif';
 
         // Graphique des consultations
-        const consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
-        const consultationsCtx = document.getElementById('consultationsChart').getContext('2d');
+        var consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
+        var consultationsCtx = document.getElementById('consultationsChart').getContext('2d');
         new Chart(consultationsCtx, {
             type: 'line',
             data: {
-                labels: consultationsData.map(item => item.mois),
+                labels: consultationsData.map(function(item) { return item.mois; }),
                 datasets: [{
                     label: 'Consultations',
-                    data: consultationsData.map(item => item.total),
+                    data: consultationsData.map(function(item) { return item.total; }),
                     borderColor: '#4e73df',
                     backgroundColor: 'rgba(78, 115, 223, 0.1)',
                     tension: 0.3,
@@ -285,15 +289,15 @@ while($row = mysqli_fetch_assoc($result)) {
         });
 
         // Graphique du CA
-        const caData = <?php echo json_encode($ca_mensuel); ?>;
-        const caCtx = document.getElementById('caChart').getContext('2d');
+        var caData = <?php echo json_encode($ca_mensuel); ?>;
+        var caCtx = document.getElementById('caChart').getContext('2d');
         new Chart(caCtx, {
             type: 'bar',
             data: {
-                labels: caData.map(item => item.mois),
+                labels: caData.map(function(item) { return item.mois; }),
                 datasets: [{
                     label: 'Chiffre d\'affaires (€)',
-                    data: caData.map(item => item.ca),
+                    data: caData.map(function(item) { return item.ca; }),
                     backgroundColor: '#1cc88a',
                     borderColor: '#1cc88a',
                     borderWidth: 1
@@ -311,14 +315,14 @@ while($row = mysqli_fetch_assoc($result)) {
         });
 
         // Graphique répartition par âge
-        const ageData = <?php echo json_encode($repartition_age); ?>;
-        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        var ageData = <?php echo json_encode($repartition_age); ?>;
+        var ageCtx = document.getElementById('ageChart').getContext('2d');
         new Chart(ageCtx, {
             type: 'doughnut',
             data: {
-                labels: ageData.map(item => item.tranche_age),
+                labels: ageData.map(function(item) { return item.tranche_age; }),
                 datasets: [{
-                    data: ageData.map(item => item.nombre),
+                    data: ageData.map(function(item) { return item.nombre; }),
                     backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
                 }]
             },
@@ -329,15 +333,15 @@ while($row = mysqli_fetch_assoc($result)) {
         });
 
         // Graphique produits les plus vendus
-        const produitsData = <?php echo json_encode($produits_vendus); ?>;
-        const produitsCtx = document.getElementById('produitsChart').getContext('2d');
+        var produitsData = <?php echo json_encode($produits_vendus); ?>;
+        var produitsCtx = document.getElementById('produitsChart').getContext('2d');
         new Chart(produitsCtx, {
             type: 'horizontalBar',
             data: {
-                labels: produitsData.map(item => item.nomproduit.substring(0, 20) + '...'),
+                labels: produitsData.map(function(item) { return item.nomproduit.substring(0, 20) + '...'; }),
                 datasets: [{
                     label: 'Quantité vendue',
-                    data: produitsData.map(item => item.total_vendu),
+                    data: produitsData.map(function(item) { return item.total_vendu; }),
                     backgroundColor: '#e74a3b',
                     borderColor: '#e74a3b',
                     borderWidth: 1
