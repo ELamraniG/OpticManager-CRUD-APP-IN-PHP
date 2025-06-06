@@ -1,23 +1,16 @@
 Full Texts
 Tables_in_optirent
-cabinet
-categorie
-client
-commande
+4                   cabinet
+1               categorie
+3           client 
+6               commande
 commandes_fournisseur
-consultations
-fournisseur
-ordonnances
-patients
-produit
-rendezvous
-users
-utilisateurs
-vente_details
-ventes
-vue_commandes_completes
-vue_commandes_fournisseur_completes
-vue_consultations_completes
-vue_produits_complets
-vue_rendezvous_complets
-vue_ventes_completes
+9           consultations
+2            fournisseur
+10              ordonnances
+8           patients
+5                           produit
+7           rendezvous
+13              utilisateurs
+12          vente_details
+11              ventes

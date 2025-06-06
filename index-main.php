@@ -60,13 +60,22 @@ session_start();
 extract($_POST);
 if (isset($mdp))
 {
-	if ($login == "admin" && $mdp=="admin")
+	require("connexion.php");
+	$r = "select * from utilisateurs where nomutilisateur = '" . $login . "' and motdepasse = MD5('" . $mdp . "')";
+	$res = mysqli_query($con, $r);
+	$nbr_res = mysqli_num_rows($res);
+	if ($nbr_res == 1)
 	{
 		$_SESSION['v_session']=1;
+		$_SESSION['vs_login']=$login;
+		$_SESSION['vs_motdepasse']=$mdp;
 		require("fonctions.php");
 		redirection("categorie/categorie-list.php");
 	}
 	else
-    	echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion...</div>";
+	{
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion...</div>";
+	}
+	mysqli_close($con);
 }
 ?>

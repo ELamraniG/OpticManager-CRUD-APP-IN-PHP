@@ -237,25 +237,8 @@ CREATE INDEX idx_commande_statut ON commande(statut);
 -- Query to check products with low stock
 -- SELECT * FROM produit WHERE qteenstock <= seuildalerte;
 
--- =============================================
--- USER SESSION TABLE (for authentication)
--- =============================================
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `role` enum('admin','user') DEFAULT 'user',
-  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Default admin user (password: admin123 - should be hashed in production)
-INSERT INTO `users` (`username`, `password`, `email`, `role`) VALUES
-('admin', MD5('admin123'), 'admin@optirent.com', 'admin');
 
 -- =============================================
 -- BACKUP AND MAINTENANCE QUERIES
