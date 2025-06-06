@@ -58,7 +58,7 @@ extract($_POST);
 if (isset($mdp))
 {
 	require("connexion.php");
-	$r = "select * from employe where email = '" . $login . "' and motdepasse = '" . sha1($mdp) . "'";
+	$r = "select * from utilisateur where login = '" . $login . "' and motdepasse = '" . $mdp . "'";
 	$res = mysqli_query($con, $r);
 	$nbr_res = mysqli_num_rows($res);
 	if ($nbr_res == 1)
