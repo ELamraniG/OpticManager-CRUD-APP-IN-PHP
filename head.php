@@ -85,6 +85,8 @@ else
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../commande/commande-list.php">Commande</a></li>
                         <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Commandes_Fournisseur/commandes-fournisseur-list.php">Commandes Fournisseur</a></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../rendezvous/rendezvous-list.php">Rendez Vous</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
