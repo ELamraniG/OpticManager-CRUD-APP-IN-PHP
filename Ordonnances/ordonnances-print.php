@@ -16,27 +16,30 @@ else
 require('../fpdf/fpdf.php');
 require("../connexion.php");
 
-if(isset($_GET['id'])) {
-    // Imprimer une ordonnance spécifique
-    $id = $_GET['id'];
-    $r = "SELECT o.*, p.nom as patient_nom, p.prenom as patient_prenom 
-          FROM ordonnances o 
-          LEFT JOIN patients p ON o.patient_id = p.idpatient 
-          WHERE o.id = $id";
-} else {
-    // Imprimer toutes les ordonnances
-    $r = "SELECT o.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet
-          FROM ordonnances o 
-          LEFT JOIN patients p ON o.patient_id = p.idpatient
-          ORDER BY o.date_ordonnance DESC";
+// Vérifier la connexion à la base de données
+if (!$con) {
+    exit('Erreur de connexion à la base de données');
 }
+
+    // Imprimer toutes les ordonnances - Fixed query to match schema
+    $r = "SELECT o.*, 
+          CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet,
+          c.dateconsultation,
+          c.motif,
+          p.nom as patient_nom,
+          p.prenom as patient_prenom
+          FROM ordonnances o 
+          LEFT JOIN consultations c ON o.idconsultation = c.idconsultation
+          LEFT JOIN patients p ON c.idpatient = p.idpatient
+          ORDER BY c.dateconsultation DESC";
 
 $res = mysqli_query($con, $r);
 
 // Vérifier si la requête a réussi
 if (!$res) {
+    $error_message = mysqli_error($con);
     mysqli_close($con);
-    exit('Erreur de requête: ' . mysqli_error($con));
+    exit('Erreur de requête: ' . $error_message);
 }
 
 // Créer un objet FPDF
@@ -60,9 +63,9 @@ if(isset($_GET['id'])) {
         $pdf->Cell(50, 8, 'Patient:', 0, 0, 'L');
         $pdf->Cell(0, 8, $ordonnance['patient_nom'] . ' ' . $ordonnance['patient_prenom'], 0, 1, 'L');
         $pdf->Cell(50, 8, 'Date:', 0, 0, 'L');
-        $pdf->Cell(0, 8, date('d/m/Y', strtotime($ordonnance['date_ordonnance'])), 0, 1, 'L');
-        $pdf->Cell(50, 8, utf8_decode('Médecin:'), 0, 0, 'L');
-        $pdf->Cell(0, 8, $ordonnance['medecin'], 0, 1, 'L');
+        $pdf->Cell(0, 8, date('d/m/Y', strtotime($ordonnance['dateconsultation'])), 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Oeil:', 0, 0, 'L');
+        $pdf->Cell(0, 8, $ordonnance['oeil'], 0, 1, 'L');
         $pdf->Ln(10);
         
         // Détails optiques
@@ -75,33 +78,20 @@ if(isset($_GET['id'])) {
         $pdf->Cell(25, 8, 'Cylindre', 1, 0, 'C');
         $pdf->Cell(20, 8, 'Axe', 1, 0, 'C');
         $pdf->Cell(25, 8, 'Addition', 1, 0, 'C');
+        $pdf->Cell(30, 8, 'Type', 1, 0, 'C');
         $pdf->Ln();
         
-        $pdf->Cell(30, 8, 'OD (Droit):', 0, 0);
-        $pdf->Cell(25, 8, $ordonnance['sphere_od'], 1, 0, 'C');
-        $pdf->Cell(25, 8, $ordonnance['cylindre_od'], 1, 0, 'C');
-        $pdf->Cell(20, 8, $ordonnance['axe_od'], 1, 0, 'C');
+        $pdf->Cell(30, 8, $ordonnance['oeil'] . ':', 0, 0);
+        $pdf->Cell(25, 8, $ordonnance['sphere'], 1, 0, 'C');
+        $pdf->Cell(25, 8, $ordonnance['cylindre'], 1, 0, 'C');
+        $pdf->Cell(20, 8, $ordonnance['axe'], 1, 0, 'C');
         $pdf->Cell(25, 8, $ordonnance['addition'], 1, 0, 'C');
-        $pdf->Ln();
-        
-        $pdf->Cell(30, 8, 'OG (Gauche):', 0, 0);
-        $pdf->Cell(25, 8, $ordonnance['sphere_og'], 1, 0, 'C');
-        $pdf->Cell(25, 8, $ordonnance['cylindre_og'], 1, 0, 'C');
-        $pdf->Cell(20, 8, $ordonnance['axe_og'], 1, 0, 'C');
-        $pdf->Cell(25, 8, '', 1, 0, 'C');
+        $pdf->Cell(30, 8, $ordonnance['typecorrection'], 1, 0, 'C');
         $pdf->Ln();
         
         $pdf->Ln(5);
-        $pdf->Cell(50, 8, utf8_decode('Écart pupillaire:'), 0, 0);
-        $pdf->Cell(0, 8, $ordonnance['ecart_pupillaire'] . ' mm', 0, 1);
-        
-        if(!empty($ordonnance['notes'])) {
-            $pdf->Ln(10);
-            $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(0, 8, 'NOTES:', 0, 1);
-            $pdf->SetFont('Arial', '', 10);
-            $pdf->MultiCell(0, 6, $ordonnance['notes']);
-        }
+        $pdf->Cell(50, 8, 'Motif consultation:', 0, 0);
+        $pdf->Cell(0, 8, $ordonnance['motif'], 0, 1);
     }
 } else {
     // Format liste pour toutes les ordonnances
@@ -119,15 +109,15 @@ if(isset($_GET['id'])) {
     $pdf->SetFont('Arial', 'B', 9);
     $pdf->SetFillColor(200, 220, 255);
     
-    $pdf->Cell(20, 10, 'ID', 1, 0, 'C', true);
+    $pdf->Cell(15, 10, 'ID', 1, 0, 'C', true);
     $pdf->Cell(50, 10, 'Patient', 1, 0, 'C', true);
     $pdf->Cell(30, 10, 'Date', 1, 0, 'C', true);
-    $pdf->Cell(40, 10, utf8_decode('Médecin'), 1, 0, 'C', true);
-    $pdf->Cell(25, 10, utf8_decode('Sph. OD'), 1, 0, 'C', true);
-    $pdf->Cell(25, 10, 'Cyl. OD', 1, 0, 'C', true);
-    $pdf->Cell(25, 10, utf8_decode('Sph. OG'), 1, 0, 'C', true);
-    $pdf->Cell(25, 10, 'Cyl. OG', 1, 0, 'C', true);
-    $pdf->Cell(25, 10, utf8_decode('É.P.'), 1, 0, 'C', true);
+    $pdf->Cell(20, 10, 'Oeil', 1, 0, 'C', true);
+    $pdf->Cell(25, 10, utf8_decode('Sphère'), 1, 0, 'C', true);
+    $pdf->Cell(25, 10, 'Cylindre', 1, 0, 'C', true);
+    $pdf->Cell(20, 10, 'Axe', 1, 0, 'C', true);
+    $pdf->Cell(25, 10, 'Addition', 1, 0, 'C', true);
+    $pdf->Cell(35, 10, 'Type', 1, 0, 'C', true);
     $pdf->Ln();
     
     // Afficher les données
@@ -140,15 +130,15 @@ if(isset($_GET['id'])) {
             $pdf->SetFillColor(255, 255, 255);
         }
         
-        $pdf->Cell(20, 8, $data['id'], 1, 0, 'C', $fill);
+        $pdf->Cell(15, 8, $data['idordonnance'], 1, 0, 'C', $fill);
         $pdf->Cell(50, 8, substr($data['patient_nom_complet'], 0, 22), 1, 0, 'L', $fill);
-        $pdf->Cell(30, 8, date('d/m/Y', strtotime($data['date_ordonnance'])), 1, 0, 'C', $fill);
-        $pdf->Cell(40, 8, substr($data['medecin'], 0, 18), 1, 0, 'L', $fill);
-        $pdf->Cell(25, 8, $data['sphere_od'], 1, 0, 'C', $fill);
-        $pdf->Cell(25, 8, $data['cylindre_od'], 1, 0, 'C', $fill);
-        $pdf->Cell(25, 8, $data['sphere_og'], 1, 0, 'C', $fill);
-        $pdf->Cell(25, 8, $data['cylindre_og'], 1, 0, 'C', $fill);
-        $pdf->Cell(25, 8, $data['ecart_pupillaire'], 1, 0, 'C', $fill);
+        $pdf->Cell(30, 8, date('d/m/Y', strtotime($data['dateconsultation'])), 1, 0, 'C', $fill);
+        $pdf->Cell(20, 8, $data['oeil'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['sphere'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['cylindre'], 1, 0, 'C', $fill);
+        $pdf->Cell(20, 8, $data['axe'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['addition'], 1, 0, 'C', $fill);
+        $pdf->Cell(35, 8, substr($data['typecorrection'], 0, 15), 1, 0, 'C', $fill);
         $pdf->Ln();
         $fill = !$fill;
     }
