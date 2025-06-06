@@ -80,43 +80,68 @@ if ($user_role == 'opticien') {
                     </a>
                 </li>
                 
-                <?php if ($user_role == 'admin'): ?>
-                <li class="nav-item dropdown">
+                <?php if ($user_role == 'admin'): ?>                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-collection me-1'></i>Toutes Les Tables
                     </a>
                     <ul class="dropdown-menu shadow border-0">
-                        <li><a class="dropdown-item" href="../Categorie/categorie-list.php">Categories</a></li>
+                        <li><a class="dropdown-item" href="../Categorie/categorie-list.php"><i class="fas fa-tags me-2"></i>Categories</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Fournisseur/fournisseur-list.php">Fournisseur</a></li>
+                        <li><a class="dropdown-item" href="../Fournisseur/fournisseur-list.php"><i class="fas fa-truck me-2"></i>Fournisseur</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Client/client-list.php">Client</a></li>
+                        <li><a class="dropdown-item" href="../Client/client-list.php"><i class="fas fa-user-friends me-2"></i>Client</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Cabinet/cabinet-list.php">Cabinet</a></li>
+                        <li><a class="dropdown-item" href="../Cabinet/cabinet-list.php"><i class="fas fa-building me-2"></i>Cabinet</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Produit/produit-list.php">Produit</a></li>
+                        <li><a class="dropdown-item" href="../Produit/produit-list.php"><i class="fas fa-boxes me-2"></i>Produit</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Commande/commande-list.php">Commande</a></li>
+                        <li><a class="dropdown-item" href="../Commande/commande-list.php"><i class="fas fa-shopping-cart me-2"></i>Commande</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Commandes_Fournisseur/commandes-fournisseur-list.php">Commandes Fournisseur</a></li>
+                        <li><a class="dropdown-item" href="../Commandes_Fournisseur/commandes-fournisseur-list.php"><i class="fas fa-clipboard-list me-2"></i>Commandes Fournisseur</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Rendezvous/rendezvous-list.php">Rendez Vous</a></li>
+                        <li><a class="dropdown-item" href="../Rendezvous/rendezvous-list.php"><i class="fas fa-calendar-alt me-2"></i>Rendez Vous</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
+                        <li><a class="dropdown-item" href="../Patients/patients-list.php"><i class="fas fa-users me-2"></i>Patients</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php">Consultations</a></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php"><i class="fas fa-stethoscope me-2"></i>Consultations</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php">Ordonnances</a></li>
+                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php"><i class="fas fa-prescription me-2"></i>Ordonnances</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php">Ventes</a></li>
+                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php"><i class="fas fa-cash-register me-2"></i>Ventes</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Vente_details/vente_details-list.php">Détails Ventes</a></li>
+                        <li><a class="dropdown-item" href="../Vente_details/vente_details-list.php"><i class="fas fa-receipt me-2"></i>Détails Ventes</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php">Utilisateurs</a></li>
+                        <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php"><i class="fas fa-user-cog me-2"></i>Utilisateurs</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" href="#">
+                
+                <!-- New Quick Tools Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-wrench me-1'></i>Outils Rapides
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a class="dropdown-item" href="../Dashboard/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Search/global-search.php"><i class="fas fa-search me-2"></i>Recherche Globale</a></li>
+                        <li><hr class="dropdown-divider"></li>                        <li><a class="dropdown-item" href="../Stock/stock-quick-update.php"><i class="fas fa-warehouse me-2"></i>Gestion Stock Rapide</a></li>
+                        <li><hr class="dropdown-divider"></li>                        <li><a class="dropdown-item" href="../Stock/inventory-manager.php"><i class="fas fa-clipboard-check me-2"></i>Gestionnaire Inventaire</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultation-history.php"><i class="fas fa-history me-2"></i>Historique Consultations</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Patients/patient-finder.php"><i class="fas fa-search me-2"></i>Recherche Patients</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Rendezvous/appointment-manager.php"><i class="fas fa-calendar-alt me-2"></i>Gestionnaire RDV</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Produit/product-catalog.php"><i class="fas fa-eye me-2"></i>Catalogue Produits</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Dashboard/analytics.php"><i class="fas fa-chart-line me-2"></i>Analytics Avancé</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Dashboard/notifications.php"><i class="fas fa-bell me-2"></i>Centre de Notifications</a></li>
+                    </ul>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" href="../Dashboard/analytics.php">
                         <i class='bx bx-pie-chart-alt-2 me-1'></i>Analytics
                     </a>
                 </li>
@@ -126,21 +151,34 @@ if ($user_role == 'opticien') {
                     </a>
                 </li>
                 
-                <?php elseif ($user_role == 'opticien'): ?>
-                <li class="nav-item dropdown">
+                <?php elseif ($user_role == 'opticien'): ?>                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-collection me-1'></i>Mes Tables
                     </a>
                     <ul class="dropdown-menu shadow border-0">
-                        <li><a class="dropdown-item" href="../Client/client-list.php">Client</a></li>
+                        <li><a class="dropdown-item" href="../Client/client-list.php"><i class="fas fa-user-friends me-2"></i>Client</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Patients/patients-list.php">Patients</a></li>
+                        <li><a class="dropdown-item" href="../Patients/patients-list.php"><i class="fas fa-users me-2"></i>Patients</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php">Consultations</a></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultations-list.php"><i class="fas fa-stethoscope me-2"></i>Consultations</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php">Ordonnances</a></li>
+                        <li><a class="dropdown-item" href="../Ordonnances/ordonnances-list.php"><i class="fas fa-prescription me-2"></i>Ordonnances</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php">Ventes</a></li>
+                        <li><a class="dropdown-item" href="../Ventes/ventes-list.php"><i class="fas fa-cash-register me-2"></i>Ventes</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Quick Tools for Opticien -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-wrench me-1'></i>Outils Rapides
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a class="dropdown-item" href="../Search/global-search.php"><i class="fas fa-search me-2"></i>Recherche Globale</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Consultations/consultation-history.php"><i class="fas fa-history me-2"></i>Historique Consultations</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Dashboard/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord</a></li>
                     </ul>
                 </li>
                 
