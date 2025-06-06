@@ -18,9 +18,15 @@ require('../fpdf/fpdf.php');
 
 require("../connexion.php");
 
-// Récupérer les données de la table "service"
-$r = "SELECT * FROM service";
+// Récupérer les données de la table "fournisseur"
+$r = "SELECT * FROM fournisseur";
 $res = mysqli_query($con, $r);
+
+// Vérifier si la requête a réussi
+if (!$res) {
+    mysqli_close($con);
+    exit('Erreur de requête: ' . mysqli_error($con));
+}
 
 // Créer un objet FPDF
 $pdf = new FPDF();
@@ -35,25 +41,28 @@ $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
 $pdf->Ln(10);
 
 // Titre
-$pdf->Cell(0, 10, 'Liste des services', 0, 1, 'C');
+$pdf->Cell(0, 10, 'Liste des Fournisseurs', 0, 1, 'C');
 $pdf->Ln(6);
 
 // Entête du tableau
-$pdf->SetFont('Arial', 'B', 12);
+$pdf->SetFont('Arial', 'B', 10);
 $pdf->SetFillColor(200, 220, 255); // Couleur de fond de l'en-tête
 
-// Utilisez la largeur de la page comme largeur de cellule
-$cellWidth = ($pdf->GetPageWidth()-20) / 4;
-
-$pdf->Cell($cellWidth, 10, 'ID Service', 1, 0, 'C', true);
-$pdf->Cell($cellWidth*3, 10, 'Nom du Service', 1, 0, 'C', true);
+$pdf->Cell(25, 10, 'ID', 1, 0, 'C', true);
+$pdf->Cell(50, 10, 'Nom', 1, 0, 'C', true);
+$pdf->Cell(40, 10, 'Contact', 1, 0, 'C', true);
+$pdf->Cell(30, 10, 'Telephone', 1, 0, 'C', true);
+$pdf->Cell(45, 10, 'Email', 1, 0, 'C', true);
 $pdf->Ln();
 
 // Afficher les données de la table
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 9);
 while ($data = mysqli_fetch_assoc($res)) {
-    $pdf->Cell($cellWidth, 10, $data['idservice'], 1);
-    $pdf->Cell($cellWidth*3, 10, $data['nomservice'], 1);
+    $pdf->Cell(25, 10, $data['idf'], 1);
+    $pdf->Cell(50, 10, substr($data['nom'], 0, 22), 1);
+    $pdf->Cell(40, 10, substr($data['contact'], 0, 18), 1);
+    $pdf->Cell(30, 10, $data['tel'], 1);
+    $pdf->Cell(45, 10, substr($data['email'], 0, 20), 1);
     $pdf->Ln();
 }
 

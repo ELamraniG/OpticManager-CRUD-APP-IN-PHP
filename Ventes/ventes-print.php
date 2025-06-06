@@ -1,225 +1,146 @@
 <?php
+session_start();
+/* Vérifier si cette page est authentifié */
+$v_session = $_SESSION['v_session'];
+if ($v_session != 1) 
+{
+    echo "<!-- Bootstrap version 5.3.0 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>";
+    echo "<meta charset=utf-8>";
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
+    exit();
+}
+else
+{
+// Inclure la bibliothèque FPDF
+require('../fpdf/fpdf.php');
 require("../connexion.php");
 
 if(isset($_GET['id'])) {
+    // Imprimer une vente spécifique
     $id = $_GET['id'];
+    $r = "SELECT v.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet, p.telephone, p.email 
+          FROM ventes v, patients p 
+          WHERE v.idpatient = p.idpatient 
+          AND v.id_vente = $id";
+} else {
+    // Imprimer toutes les ventes
+    $r = "SELECT v.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet 
+          FROM ventes v, patients p 
+          WHERE v.idpatient = p.idpatient 
+          ORDER BY v.datevente DESC";
+}
+
+$res = mysqli_query($con, $r);
+
+// Vérifier si la requête a réussi
+if (!$res) {
+    mysqli_close($con);
+    exit('Erreur de requête: ' . mysqli_error($con));
+}
+
+// Créer un objet FPDF
+$pdf = new FPDF();
+$pdf->AliasNbPages();
+
+if(isset($_GET['id'])) {
+    // Format facture pour une vente spécifique
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
     
-    $result = mysqli_query($con, "SELECT v.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet, p.telephone, p.email 
-                                   FROM ventes v, patients p 
-                                   WHERE v.idpatient = p.idpatient 
-                                   AND v.id_vente = $id");
+    // Ajouter une image en haut de la page
+    $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
+    $pdf->Ln(10);
     
-    if($result && mysqli_num_rows($result) > 0) {
-        $vente = mysqli_fetch_assoc($result);
-    } else {
-        echo "Vente not found.";
-        exit;
+    $pdf->Cell(0, 10, 'OPTI-RENT - FACTURE VENTE', 0, 1, 'C');
+    $pdf->Ln(10);
+    
+    if($vente = mysqli_fetch_assoc($res)) {
+        $pdf->SetFont('Arial', '', 12);
+        
+        // Informations client
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(0, 8, 'INFORMATIONS CLIENT', 0, 1, 'L');
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(50, 8, 'Patient:', 0, 0, 'L');
+        $pdf->Cell(0, 8, $vente['patient_nom_complet'], 0, 1, 'L');
+        $pdf->Cell(50, 8, utf8_decode('Téléphone:'), 0, 0, 'L');
+        $pdf->Cell(0, 8, $vente['telephone'], 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Email:', 0, 0, 'L');
+        $pdf->Cell(0, 8, $vente['email'], 0, 1, 'L');
+        $pdf->Ln(10);
+        
+        // Informations vente
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(0, 8, 'INFORMATIONS VENTE', 0, 1, 'L');
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(50, 8, 'ID Vente:', 0, 0, 'L');
+        $pdf->Cell(0, 8, $vente['id_vente'], 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Date:', 0, 0, 'L');
+        $pdf->Cell(0, 8, date('d/m/Y H:i', strtotime($vente['datevente'])), 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Mode de paiement:', 0, 0, 'L');
+        $pdf->Cell(0, 8, ucfirst($vente['modepaiement']), 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Statut:', 0, 0, 'L');
+        $pdf->Cell(0, 8, ucfirst(str_replace('_', ' ', $vente['statutpaiement'])), 0, 1, 'L');
+        $pdf->Ln(10);
+        
+        // Montant
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(0, 10, 'MONTANT TOTAL: ' . number_format($vente['montanttotal'], 2) . ' €', 0, 1, 'R');
     }
 } else {
-    // Afficher toutes les ventes
-    $result = mysqli_query($con, "SELECT v.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet 
-                                   FROM ventes v, patients p 
-                                   WHERE v.idpatient = p.idpatient 
-                                   ORDER BY v.datevente DESC");
+    // Format liste pour toutes les ventes
+    $pdf->AddPage('L');
+    $pdf->SetFont('Arial', 'B', 16);
+    
+    // Ajouter une image en haut de la page
+    $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
+    $pdf->Ln(10);
+    
+    $pdf->Cell(0, 10, 'Liste des Ventes', 0, 1, 'C');
+    $pdf->Ln(6);
+    
+    // Entête du tableau
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->SetFillColor(200, 220, 255);
+    
+    $pdf->Cell(20, 10, 'ID', 1, 0, 'C', true);
+    $pdf->Cell(60, 10, 'Patient', 1, 0, 'C', true);
+    $pdf->Cell(35, 10, 'Date', 1, 0, 'C', true);
+    $pdf->Cell(30, 10, 'Montant', 1, 0, 'C', true);
+    $pdf->Cell(40, 10, 'Mode Paiement', 1, 0, 'C', true);
+    $pdf->Cell(40, 10, 'Statut', 1, 0, 'C', true);
+    $pdf->Ln();
+    
+    // Afficher les données
+    $pdf->SetFont('Arial', '', 8);
+    $fill = false;
+    while ($data = mysqli_fetch_assoc($res)) {
+        if ($fill) {
+            $pdf->SetFillColor(240, 240, 240);
+        } else {
+            $pdf->SetFillColor(255, 255, 255);
+        }
+        
+        $pdf->Cell(20, 8, $data['id_vente'], 1, 0, 'C', $fill);
+        $pdf->Cell(60, 8, substr($data['patient_nom_complet'], 0, 26), 1, 0, 'L', $fill);
+        $pdf->Cell(35, 8, date('d/m/Y H:i', strtotime($data['datevente'])), 1, 0, 'C', $fill);
+        $pdf->Cell(30, 8, number_format($data['montanttotal'], 2) . ' €', 1, 0, 'R', $fill);
+        $pdf->Cell(40, 8, ucfirst($data['modepaiement']), 1, 0, 'C', $fill);
+        $pdf->Cell(40, 8, ucfirst(str_replace('_', ' ', $data['statutpaiement'])), 1, 0, 'C', $fill);
+        $pdf->Ln();
+        $fill = !$fill;
+    }
+}
+
+// Numéro de page
+$pdf->SetFont('Arial', 'I', 10);
+$pdf->Cell(0,10, 'Page ' . $pdf->PageNo() . ' sur {nb}', 0, 0, 'L');
+
+// Fermer la connexion à la base de données
+mysqli_close($con);
+
+// Afficher le PDF dans le navigateur
+$pdf->Output();
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprimer Ventes<?php if(isset($vente)) echo " - " . $vente['id_vente']; ?></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        .print-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #007bff;
-            margin: 0;
-            font-size: 2.5em;
-        }
-        .info-section {
-            margin-bottom: 20px;
-        }
-        .info-section h3 {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .info-item {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            border-left: 4px solid #007bff;
-        }
-        .info-item strong {
-            color: #495057;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .print-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 20px 0;
-        }
-        .print-btn:hover {
-            background-color: #0056b3;
-        }
-        .back-btn {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-        }
-        .back-btn:hover {
-            background-color: #5a6268;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-        @media print {
-            .print-btn, .back-btn {
-                display: none;
-            }
-            body {
-                background-color: white;
-            }
-            .print-container {
-                box-shadow: none;
-                max-width: none;
-                margin: 0;
-                padding: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="print-container">
-        <div class="header">
-            <h1>OPTI-RENT</h1>
-            <h2><?php echo isset($vente) ? 'Facture Vente' : 'Liste des Ventes'; ?></h2>
-        </div>
-
-        <?php if(isset($vente)): ?>
-        <div class="info-section">
-            <h3>Informations de la Vente</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>ID Vente:</strong>
-                    <?php echo $vente['id_vente']; ?>
-                </div>
-                <div class="info-item">
-                    <strong>Patient:</strong>
-                    <?php echo $vente['patient_nom_complet']; ?>
-                </div>
-                <div class="info-item">
-                    <strong>Date de Vente:</strong>
-                    <?php echo date('d/m/Y H:i', strtotime($vente['datevente'])); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Montant Total:</strong>
-                    <?php echo $vente['montanttotal']; ?> €
-                </div>
-                <div class="info-item">
-                    <strong>Mode de Paiement:</strong>
-                    <?php echo ucfirst($vente['modepaiement']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Statut du Paiement:</strong>
-                    <?php echo ucfirst(str_replace('_', ' ', $vente['statutpaiement'])); ?>
-                </div>
-            </div>
-        </div>
-        <?php else: ?>
-        <div class="info-section">
-            <h3>Liste de toutes les Ventes</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Patient</th>
-                        <th>Date</th>
-                        <th>Montant</th>
-                        <th>Mode Paiement</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($row = mysqli_fetch_assoc($result)): ?>
-                    <tr>
-                        <td><?php echo $row['id_vente']; ?></td>
-                        <td><?php echo $row['patient_nom_complet']; ?></td>
-                        <td><?php echo date('d/m/Y H:i', strtotime($row['datevente'])); ?></td>
-                        <td><?php echo $row['montanttotal']; ?> €</td>
-                        <td><?php echo ucfirst($row['modepaiement']); ?></td>
-                        <td><?php echo ucfirst(str_replace('_', ' ', $row['statutpaiement'])); ?></td>
-                    </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-        <?php endif; ?>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <button onclick="window.print()" class="print-btn">
-                <i class="fa-solid fa-print"></i> Imprimer
-            </button>
-            <a href="ventes-list.php" class="back-btn">
-                <i class="fa-solid fa-arrow-left"></i> Retour à la liste
-            </a>
-        </div>
-    </div>
-
-    <script>
-        // Auto print when URL has print=true parameter
-        if(window.location.search.includes('print=true')) {
-            window.onload = function() {
-                window.print();
-            }
-        }
-    </script>
-</body>
-</html>

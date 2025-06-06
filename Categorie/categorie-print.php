@@ -18,9 +18,15 @@ require('../fpdf/fpdf.php');
 
 require("../connexion.php");
 
-// Récupérer les données de la table "service"
-$r = "SELECT * FROM service";
+// Récupérer les données de la table "categorie"
+$r = "SELECT * FROM categorie";
 $res = mysqli_query($con, $r);
+
+// Vérifier si la requête a réussi
+if (!$res) {
+    mysqli_close($con);
+    exit('Erreur de requête: ' . mysqli_error($con));
+}
 
 // Créer un objet FPDF
 $pdf = new FPDF();
@@ -35,7 +41,7 @@ $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
 $pdf->Ln(10);
 
 // Titre
-$pdf->Cell(0, 10, 'Liste des services', 0, 1, 'C');
+$pdf->Cell(0, 10, 'Liste des Categories', 0, 1, 'C');
 $pdf->Ln(6);
 
 // Entête du tableau
@@ -45,15 +51,15 @@ $pdf->SetFillColor(200, 220, 255); // Couleur de fond de l'en-tête
 // Utilisez la largeur de la page comme largeur de cellule
 $cellWidth = ($pdf->GetPageWidth()-20) / 4;
 
-$pdf->Cell($cellWidth, 10, 'ID Service', 1, 0, 'C', true);
-$pdf->Cell($cellWidth*3, 10, 'Nom du Service', 1, 0, 'C', true);
+$pdf->Cell($cellWidth, 10, 'ID Categorie', 1, 0, 'C', true);
+$pdf->Cell($cellWidth*3, 10, 'Titre Categorie', 1, 0, 'C', true);
 $pdf->Ln();
 
 // Afficher les données de la table
 $pdf->SetFont('Arial', '', 12);
 while ($data = mysqli_fetch_assoc($res)) {
-    $pdf->Cell($cellWidth, 10, $data['idservice'], 1);
-    $pdf->Cell($cellWidth*3, 10, $data['nomservice'], 1);
+    $pdf->Cell($cellWidth, 10, $data['idc'], 1);
+    $pdf->Cell($cellWidth*3, 10, $data['titrec'], 1);
     $pdf->Ln();
 }
 

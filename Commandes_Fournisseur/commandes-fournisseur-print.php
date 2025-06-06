@@ -1,57 +1,86 @@
 <?php
-require("../head.php");
+session_start();
+/* Vérifier si cette page est authentifié */
+$v_session = $_SESSION['v_session'];
+if ($v_session != 1) 
+{
+    echo "<!-- Bootstrap version 5.3.0 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>";
+    echo "<meta charset=utf-8>";
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
+    exit();
+}
+else
+{
+// Inclure la bibliothèque FPDF
+require('../fpdf/fpdf.php');
 require("../connexion.php");
+
+// Récupérer les données des commandes fournisseur
 $r = "SELECT cf.idcommande, cf.datecommande, cf.statut, f.nom as fournisseur_nom
 FROM commandes_fournisseur cf, fournisseur f
-WHERE cf.idfournisseur = f.idf";
+WHERE cf.idfournisseur = f.idf
+ORDER BY cf.datecommande DESC";
 $res = mysqli_query($con, $r);
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Impression - Commandes Fournisseur</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .header { text-align: center; margin-bottom: 30px; }
-        @media print {
-            .no-print { display: none; }
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>Liste des Commandes Fournisseur</h1>
-        <p>Date d'impression: <?php echo date('d/m/Y H:i:s'); ?></p>
-    </div>
 
-    <button onclick="window.print()" class="no-print">Imprimer</button>
-    <a href="commandes-fournisseur-list.php" class="no-print">Retour</a>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id Commande</th>
-                <th>Date Commande</th>
-                <th>Fournisseur</th>
-                <th>Statut</th>
-            </tr>
-        </thead>
-        <tbody>
-<?php
-while ($data = mysqli_fetch_assoc($res)) {
-    echo "<tr>";
-    echo "<td>" . $data['idcommande'] . "</td>";
-    echo "<td>" . $data['datecommande'] . "</td>";
-    echo "<td>" . $data['fournisseur_nom'] . "</td>";
-    echo "<td>" . $data['statut'] . "</td>";
-    echo "</tr>";
+// Vérifier si la requête a réussi
+if (!$res) {
+    mysqli_close($con);
+    exit('Erreur de requête: ' . mysqli_error($con));
 }
+
+// Créer un objet FPDF
+$pdf = new FPDF();
+$pdf->AliasNbPages();
+$pdf->AddPage();
+
+// Définir la police
+$pdf->SetFont('Arial', 'B', 16);
+
+// Ajouter une image en haut de la page
+$pdf->Image('../images/lap2.png', 10, 10, 0, 5);
+$pdf->Ln(10);
+
+// Titre
+$pdf->Cell(0, 10, 'Liste des Commandes Fournisseur', 0, 1, 'C');
+$pdf->Ln(6);
+
+// Entête du tableau
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->SetFillColor(200, 220, 255);
+
+$pdf->Cell(30, 10, 'ID Commande', 1, 0, 'C', true);
+$pdf->Cell(40, 10, 'Date Commande', 1, 0, 'C', true);
+$pdf->Cell(70, 10, 'Fournisseur', 1, 0, 'C', true);
+$pdf->Cell(50, 10, 'Statut', 1, 0, 'C', true);
+$pdf->Ln();
+
+// Afficher les données
+$pdf->SetFont('Arial', '', 10);
+$fill = false;
+while ($data = mysqli_fetch_assoc($res)) {
+    if ($fill) {
+        $pdf->SetFillColor(240, 240, 240);
+    } else {
+        $pdf->SetFillColor(255, 255, 255);
+    }
+    
+    $pdf->Cell(30, 8, $data['idcommande'], 1, 0, 'C', $fill);
+    $pdf->Cell(40, 8, date('d/m/Y', strtotime($data['datecommande'])), 1, 0, 'C', $fill);
+    $pdf->Cell(70, 8, substr($data['fournisseur_nom'], 0, 30), 1, 0, 'L', $fill);
+    $pdf->Cell(50, 8, ucfirst($data['statut']), 1, 0, 'C', $fill);
+    $pdf->Ln();
+    $fill = !$fill;
+}
+
+// Numéro de page
+$pdf->SetFont('Arial', 'I', 10);
+$pdf->Cell(0,10, 'Page ' . $pdf->PageNo() . ' sur {nb}', 0, 0, 'L');
+
+// Fermer la connexion à la base de données
 mysqli_close($con);
+
+// Afficher le PDF dans le navigateur
+$pdf->Output();
+}
 ?>
-        </tbody>
-    </table>
-</body>
-</html>

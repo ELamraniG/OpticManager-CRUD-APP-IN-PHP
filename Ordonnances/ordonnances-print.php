@@ -1,197 +1,167 @@
 <?php
-include_once '../conn.php';
+session_start();
+/* Vérifier si cette page est authentifié */
+$v_session = $_SESSION['v_session'];
+if ($v_session != 1) 
+{
+    echo "<!-- Bootstrap version 5.3.0 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>";
+    echo "<meta charset=utf-8>";
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
+    exit();
+}
+else
+{
+// Inclure la bibliothèque FPDF
+require('../fpdf/fpdf.php');
+require("../connexion.php");
 
 if(isset($_GET['id'])) {
+    // Imprimer une ordonnance spécifique
     $id = $_GET['id'];
+    $r = "SELECT o.*, p.nom as patient_nom, p.prenom as patient_prenom 
+          FROM ordonnances o 
+          LEFT JOIN patients p ON o.patient_id = p.idpatient 
+          WHERE o.id = $id";
+} else {
+    // Imprimer toutes les ordonnances
+    $r = "SELECT o.*, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet
+          FROM ordonnances o 
+          LEFT JOIN patients p ON o.patient_id = p.idpatient
+          ORDER BY o.date_ordonnance DESC";
+}
+
+$res = mysqli_query($con, $r);
+
+// Vérifier si la requête a réussi
+if (!$res) {
+    mysqli_close($con);
+    exit('Erreur de requête: ' . mysqli_error($con));
+}
+
+// Créer un objet FPDF
+$pdf = new FPDF();
+$pdf->AliasNbPages();
+
+if(isset($_GET['id'])) {
+    // Format détaillé pour une ordonnance
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
     
-    $result = mysqli_query($conn, "SELECT o.*, p.nom as patient_nom, p.prenom as patient_prenom 
-                                   FROM ordonnances o 
-                                   LEFT JOIN patients p ON o.patient_id = p.id 
-                                   WHERE o.id = $id");
+    // Ajouter une image en haut de la page
+    $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
+    $pdf->Ln(10);
     
-    if($result && mysqli_num_rows($result) > 0) {
-        $ordonnance = mysqli_fetch_assoc($result);
-    } else {
-        echo "Ordonnance not found.";
-        exit;
+    $pdf->Cell(0, 10, 'ORDONNANCE MEDICALE', 0, 1, 'C');
+    $pdf->Ln(10);
+    
+    if($ordonnance = mysqli_fetch_assoc($res)) {
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(50, 8, 'Patient:', 0, 0, 'L');
+        $pdf->Cell(0, 8, $ordonnance['patient_nom'] . ' ' . $ordonnance['patient_prenom'], 0, 1, 'L');
+        $pdf->Cell(50, 8, 'Date:', 0, 0, 'L');
+        $pdf->Cell(0, 8, date('d/m/Y', strtotime($ordonnance['date_ordonnance'])), 0, 1, 'L');
+        $pdf->Cell(50, 8, utf8_decode('Médecin:'), 0, 0, 'L');
+        $pdf->Cell(0, 8, $ordonnance['medecin'], 0, 1, 'L');
+        $pdf->Ln(10);
+        
+        // Détails optiques
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(0, 8, utf8_decode('CORRECTION OPTIQUE'), 0, 1, 'L');
+        $pdf->SetFont('Arial', '', 10);
+        
+        $pdf->Cell(30, 8, '', 0, 0);
+        $pdf->Cell(25, 8, utf8_decode('Sphère'), 1, 0, 'C');
+        $pdf->Cell(25, 8, 'Cylindre', 1, 0, 'C');
+        $pdf->Cell(20, 8, 'Axe', 1, 0, 'C');
+        $pdf->Cell(25, 8, 'Addition', 1, 0, 'C');
+        $pdf->Ln();
+        
+        $pdf->Cell(30, 8, 'OD (Droit):', 0, 0);
+        $pdf->Cell(25, 8, $ordonnance['sphere_od'], 1, 0, 'C');
+        $pdf->Cell(25, 8, $ordonnance['cylindre_od'], 1, 0, 'C');
+        $pdf->Cell(20, 8, $ordonnance['axe_od'], 1, 0, 'C');
+        $pdf->Cell(25, 8, $ordonnance['addition'], 1, 0, 'C');
+        $pdf->Ln();
+        
+        $pdf->Cell(30, 8, 'OG (Gauche):', 0, 0);
+        $pdf->Cell(25, 8, $ordonnance['sphere_og'], 1, 0, 'C');
+        $pdf->Cell(25, 8, $ordonnance['cylindre_og'], 1, 0, 'C');
+        $pdf->Cell(20, 8, $ordonnance['axe_og'], 1, 0, 'C');
+        $pdf->Cell(25, 8, '', 1, 0, 'C');
+        $pdf->Ln();
+        
+        $pdf->Ln(5);
+        $pdf->Cell(50, 8, utf8_decode('Écart pupillaire:'), 0, 0);
+        $pdf->Cell(0, 8, $ordonnance['ecart_pupillaire'] . ' mm', 0, 1);
+        
+        if(!empty($ordonnance['notes'])) {
+            $pdf->Ln(10);
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(0, 8, 'NOTES:', 0, 1);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->MultiCell(0, 6, $ordonnance['notes']);
+        }
     }
 } else {
-    echo "No ordonnance ID provided.";
-    exit;
+    // Format liste pour toutes les ordonnances
+    $pdf->AddPage('L');
+    $pdf->SetFont('Arial', 'B', 16);
+    
+    // Ajouter une image en haut de la page
+    $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
+    $pdf->Ln(10);
+    
+    $pdf->Cell(0, 10, 'Liste des Ordonnances', 0, 1, 'C');
+    $pdf->Ln(6);
+    
+    // Entête du tableau
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->SetFillColor(200, 220, 255);
+    
+    $pdf->Cell(20, 10, 'ID', 1, 0, 'C', true);
+    $pdf->Cell(50, 10, 'Patient', 1, 0, 'C', true);
+    $pdf->Cell(30, 10, 'Date', 1, 0, 'C', true);
+    $pdf->Cell(40, 10, utf8_decode('Médecin'), 1, 0, 'C', true);
+    $pdf->Cell(25, 10, utf8_decode('Sph. OD'), 1, 0, 'C', true);
+    $pdf->Cell(25, 10, 'Cyl. OD', 1, 0, 'C', true);
+    $pdf->Cell(25, 10, utf8_decode('Sph. OG'), 1, 0, 'C', true);
+    $pdf->Cell(25, 10, 'Cyl. OG', 1, 0, 'C', true);
+    $pdf->Cell(25, 10, utf8_decode('É.P.'), 1, 0, 'C', true);
+    $pdf->Ln();
+    
+    // Afficher les données
+    $pdf->SetFont('Arial', '', 8);
+    $fill = false;
+    while ($data = mysqli_fetch_assoc($res)) {
+        if ($fill) {
+            $pdf->SetFillColor(240, 240, 240);
+        } else {
+            $pdf->SetFillColor(255, 255, 255);
+        }
+        
+        $pdf->Cell(20, 8, $data['id'], 1, 0, 'C', $fill);
+        $pdf->Cell(50, 8, substr($data['patient_nom_complet'], 0, 22), 1, 0, 'L', $fill);
+        $pdf->Cell(30, 8, date('d/m/Y', strtotime($data['date_ordonnance'])), 1, 0, 'C', $fill);
+        $pdf->Cell(40, 8, substr($data['medecin'], 0, 18), 1, 0, 'L', $fill);
+        $pdf->Cell(25, 8, $data['sphere_od'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['cylindre_od'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['sphere_og'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['cylindre_og'], 1, 0, 'C', $fill);
+        $pdf->Cell(25, 8, $data['ecart_pupillaire'], 1, 0, 'C', $fill);
+        $pdf->Ln();
+        $fill = !$fill;
+    }
+}
+
+// Numéro de page
+$pdf->SetFont('Arial', 'I', 10);
+$pdf->Cell(0,10, 'Page ' . $pdf->PageNo() . ' sur {nb}', 0, 0, 'L');
+
+// Fermer la connexion à la base de données
+mysqli_close($con);
+
+// Afficher le PDF dans le navigateur
+$pdf->Output();
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprimer Ordonnance - <?php echo $ordonnance['id']; ?></title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        .print-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #007bff;
-            margin: 0;
-            font-size: 2.5em;
-        }
-        .info-section {
-            margin-bottom: 20px;
-        }
-        .info-section h3 {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .info-item {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            border-left: 4px solid #007bff;
-        }
-        .info-item strong {
-            color: #495057;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .print-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 20px 0;
-        }
-        .print-btn:hover {
-            background-color: #0056b3;
-        }
-        .back-btn {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 20px 10px 20px 0;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .back-btn:hover {
-            background-color: #5a6268;
-        }
-        @media print {
-            .print-btn, .back-btn {
-                display: none;
-            }
-            body {
-                background-color: white;
-            }
-            .print-container {
-                box-shadow: none;
-                margin: 0;
-                padding: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="print-container">
-        <div class="header">
-            <h1>Ordonnance</h1>
-            <p>Gestion Optique - Impression des Données</p>
-        </div>
-
-        <div class="info-section">
-            <h3>Informations de l'Ordonnance</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>ID Ordonnance:</strong>
-                    <?php echo htmlspecialchars($ordonnance['id']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Patient:</strong>
-                    <?php echo htmlspecialchars($ordonnance['patient_nom'] . ' ' . $ordonnance['patient_prenom']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Date Ordonnance:</strong>
-                    <?php echo htmlspecialchars($ordonnance['date_ordonnance']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Médecin:</strong>
-                    <?php echo htmlspecialchars($ordonnance['medecin']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Sphère OD:</strong>
-                    <?php echo htmlspecialchars($ordonnance['sphere_od']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Cylindre OD:</strong>
-                    <?php echo htmlspecialchars($ordonnance['cylindre_od']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Axe OD:</strong>
-                    <?php echo htmlspecialchars($ordonnance['axe_od']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Sphère OG:</strong>
-                    <?php echo htmlspecialchars($ordonnance['sphere_og']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Cylindre OG:</strong>
-                    <?php echo htmlspecialchars($ordonnance['cylindre_og']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Axe OG:</strong>
-                    <?php echo htmlspecialchars($ordonnance['axe_og']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Addition:</strong>
-                    <?php echo htmlspecialchars($ordonnance['addition']); ?>
-                </div>
-                <div class="info-item">
-                    <strong>Écart Pupillaire:</strong>
-                    <?php echo htmlspecialchars($ordonnance['ecart_pupillaire']); ?>
-                </div>
-            </div>
-            
-            <?php if (!empty($ordonnance['notes'])): ?>
-            <div class="info-item" style="margin-top: 20px;">
-                <strong>Notes:</strong>
-                <?php echo nl2br(htmlspecialchars($ordonnance['notes'])); ?>
-            </div>
-            <?php endif; ?>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="ordonnances-list.php" class="back-btn">Retour à la Liste</a>
-            <button onclick="window.print()" class="print-btn">Imprimer</button>
-        </div>
-    </div>
-</body>
-</html>
