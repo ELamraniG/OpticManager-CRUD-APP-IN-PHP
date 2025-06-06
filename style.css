@@ -1,4 +1,36 @@
-body { background:#f5f6f8; }
-.main-content { margin-top:85px; }
-.card { margin-bottom:15px; }
-.table-actions { white-space:nowrap; }
+body {
+    background: #f5f6f8;
+}
+.main-content {
+    margin-top: 85px;
+    padding-bottom: 40px;
+}
+.entete-list {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.nbr {
+    background: #0d6efd;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 10px;
+}
+.table-actions {
+    white-space: nowrap;
+}
+.form-box {
+    max-width: 950px;
+}
+.card {
+    border-radius: 8px;
+}
+@media print {
+    .navbar, .no-print, .btn {
+        display: none !important;
+    }
+    .main-content {
+        margin-top: 0;
+    }
+}
