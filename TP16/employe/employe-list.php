@@ -16,38 +16,43 @@ $nbr_service = mysqli_num_rows($res);
 <a href=employe-print.php class='btn btn-secondary' data-bs-toggle='tooltip' title='Imprimer tous les employes'><i class='fa-solid fa-print'></i></a>
 <br><br>
 
-<div class='table-container' style='overflow-x: auto;'>
-<table id='example' class='table table-striped'>
-    <thead>
-        <tr><th>Idemploye</th><th>Photo</th><th>Ncin</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Tel</th><th>Email</th><th>Datedenaissance</th><th>Datederecrutement</th><th>Fonction</th><th>Specialite</th><th>Salairenet</th><th>Motdepasse</th><th class='colm'></th>
-        </tr>
-    </thead><tbody>
-<?php
-while ($data = mysqli_fetch_assoc($res))
-{
-$id = $data[idemploye];
-echo "<tr>";
-echo "<td>".$data['idemploye']."</td>";
-echo "<td><img src='images/".$data['photo']."' style='width:30'></td>";
-echo "<td>".$data['ncin']."</td>";
-echo "<td>".$data['nom']."</td>";
-echo "<td>".$data['prenom']."</td>";
-echo "<td>".$data['adresse']."</td>";
-echo "<td>".$data['tel']."</td>";
-echo "<td>".$data['email']."</td>";
-echo "<td>".$data['datedenaissance']."</td>";
-echo "<td>".$data['datederecrutement']."</td>";
-echo "<td>".$data['fonction']."</td>";
-echo "<td>".$data['specialite']."</td>";
-echo "<td>".$data['salairenet']."</td>";
-echo "<td>".$data['motdepasse']."</td>";
-echo "<td> <a href='employe-form-update.php?id=".$id."' data-bs-toggle='tooltip' title='Modifier cette ligne'><i class='fa-solid fa-pencil'></i></a>";
-echo "<a href='employe-form-delete.php?id=".$id."' data-bs-toggle='tooltip' title='Supprimer cette ligne'><i class='fa-solid fa-trash-can iconrouge'></i></a>";
-}
-echo "
-</tbody>
-</table>
-</div></div>";
+<div class='card shadow'>
+    <div class='card-body'>
+        <div class='table-container' style='overflow-x: auto;'>
+            <table id='example' class='table table-striped'>
+                <thead>
+                    <tr><th>Idemploye</th><th>Photo</th><th>Ncin</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Tel</th><th>Email</th><th>Datedenaissance</th><th>Datederecrutement</th><th>Fonction</th><th>Specialite</th><th>Salairenet</th><th>Motdepasse</th><th class='colm'></th>
+                    </tr>
+                </thead><tbody>
+            <?php
+            while ($data = mysqli_fetch_assoc($res))
+            {
+            $id = $data[idemploye];
+            echo "<tr>";
+            echo "<td>".$data['idemploye']."</td>";
+            echo "<td><img src='images/".$data['photo']."' style='width:30'></td>";
+            echo "<td>".$data['ncin']."</td>";
+            echo "<td>".$data['nom']."</td>";
+            echo "<td>".$data['prenom']."</td>";
+            echo "<td>".$data['adresse']."</td>";
+            echo "<td>".$data['tel']."</td>";
+            echo "<td>".$data['email']."</td>";
+            echo "<td>".$data['datedenaissance']."</td>";
+            echo "<td>".$data['datederecrutement']."</td>";
+            echo "<td>".$data['fonction']."</td>";
+            echo "<td>".$data['specialite']."</td>";
+            echo "<td>".$data['salairenet']."</td>";
+            echo "<td>".$data['motdepasse']."</td>";
+            echo "<td> <a href='employe-form-update.php?id=".$id."' data-bs-toggle='tooltip' title='Modifier cette ligne'><i class='fa-solid fa-pencil'></i></a>";
+            echo "<a href='employe-form-delete.php?id=".$id."' data-bs-toggle='tooltip' title='Supprimer cette ligne'><i class='fa-solid fa-trash-can iconrouge'></i></a>";
+            }
+            echo "
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>";
 mysqli_close($con);
 require("../footer.php");
 ?>

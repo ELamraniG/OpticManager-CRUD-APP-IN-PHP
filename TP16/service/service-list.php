@@ -19,15 +19,17 @@ require("../menu.php");
 
     <br>
     <br>
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id Service</th>
-                <th>Nom </th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id Service</th>
+                        <th>Nom </th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
 while ($data = mysqli_fetch_assoc($res))
@@ -41,8 +43,10 @@ echo " <a href=service-form-delete.php?id=".urlencode($id)." data-bs-toggle='too
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
     
 <?php

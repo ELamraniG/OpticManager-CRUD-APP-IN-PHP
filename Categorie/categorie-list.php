@@ -18,15 +18,17 @@ require("../fonctions.php");
 
     <br>
     <br>
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id Categorie</th>
-                <th>Titre Categorie </th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id Categorie</th>
+                        <th>Titre Categorie </th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
 while ($data = mysqli_fetch_assoc($res))
@@ -40,8 +42,10 @@ while ($data = mysqli_fetch_assoc($res))
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
     
 <?php

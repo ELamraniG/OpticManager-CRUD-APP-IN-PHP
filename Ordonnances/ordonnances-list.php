@@ -22,23 +22,25 @@ require("../fonctions.php");
 
     <br>
     <br>
-    <table id="example" class="table table-striped table-responsive">
-        <thead>
-            <tr>
-                <th>Id Ordonnance</th>
-                <th>Patient</th>
-                <th>Consultation</th>
-                <th>Oeil</th>
-                <th>Sphère</th>
-                <th>Cylindre</th>
-                <th>Axe</th>
-                <th>Addition</th>
-                <th>Type Correction</th>
-                <th class="colm"></th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Id Ordonnance</th>
+                        <th>Patient</th>
+                        <th>Consultation</th>
+                        <th>Oeil</th>
+                        <th>Sphère</th>
+                        <th>Cylindre</th>
+                        <th>Axe</th>
+                        <th>Addition</th>
+                        <th>Type Correction</th>
+                        <th class="colm"></th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
 while ($data = mysqli_fetch_assoc($res))
@@ -59,8 +61,10 @@ while ($data = mysqli_fetch_assoc($res))
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
     

@@ -113,21 +113,23 @@ $nbr_affecter = mysqli_num_rows($res);
 
     <br>
     <br>
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id Employé</th>
-                <th>Photo </th>
-                <th>Nom </th>
-                <th>Prénom </th>
-                <th>Id Service </th>
-                <th>Titre </th>
-                <th>Date début </th>
-                <th>Date fin </th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id Employé</th>
+                        <th>Photo </th>
+                        <th>Nom </th>
+                        <th>Prénom </th>
+                        <th>Id Service </th>
+                        <th>Titre </th>
+                        <th>Date début </th>
+                        <th>Date fin </th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
     while ($data = mysqli_fetch_assoc($res))
@@ -148,8 +150,10 @@ echo " <a href=affecter-form-delete.php?id=".$id." data-bs-toggle='tooltip' titl
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
     
 <?php

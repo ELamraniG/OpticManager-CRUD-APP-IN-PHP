@@ -180,34 +180,36 @@ $aujourdhui = date("Y-m-d");
 
     <br>
     <br>
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th class="colm"></th>
-                <th class="colm"></th>
-                <th>Num</th>
-                <th>Id employé </th>
-                <th>Nom </th>
-                <th>Prénom </th>
-                <th>Type </th>
-                <th>login </th>
-                <th>Gérer </th>
-                <th>Service </th>
-                <th>Employé </th>
-                <th>lesaffectationsauxservices </th>
-                <th>pointage </th>
-                <th>pointageindividuel </th>
-                <th>pointageautomatique </th>
-                <th>tableaudebord </th>
-                <th>etatdesemployesparservice </th>
-                <th>etatdesaffectationsdunemploye </th>
-                <th>etatdespointagesentredatesdunemploye </th>
-                <th>parametre </th>
-                <th>gestiondesutilisateurs </th>
-                <th>configurationdelapplication </th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="colm"></th>
+                        <th class="colm"></th>
+                        <th>Num</th>
+                        <th>Id employé </th>
+                        <th>Nom </th>
+                        <th>Prénom </th>
+                        <th>Type </th>
+                        <th>login </th>
+                        <th>Gérer </th>
+                        <th>Service </th>
+                        <th>Employé </th>
+                        <th>lesaffectationsauxservices </th>
+                        <th>pointage </th>
+                        <th>pointageindividuel </th>
+                        <th>pointageautomatique </th>
+                        <th>tableaudebord </th>
+                        <th>etatdesemployesparservice </th>
+                        <th>etatdesaffectationsdunemploye </th>
+                        <th>etatdespointagesentredatesdunemploye </th>
+                        <th>parametre </th>
+                        <th>gestiondesutilisateurs </th>
+                        <th>configurationdelapplication </th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
     while ($data = mysqli_fetch_assoc($res))
@@ -257,8 +259,10 @@ else echo "<td> ";
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
     
 <?php

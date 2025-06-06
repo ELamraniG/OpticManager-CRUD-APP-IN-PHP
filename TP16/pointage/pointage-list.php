@@ -203,23 +203,25 @@ $aujourdhui = date("Y-m-d");
 
     <br>
     <br>
-    <table id="example" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Num</th>
-                <th>Id employé </th>
-                <th>Nom </th>
-                <th>Prénom </th>
-                <th>Titre </th>
-                <th>Date </th>
-                <th>Heure d'entrée </th>
-                <th>Heure de sortie </th>
-                <th>Statut </th>
-                <th>Notes </th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Num</th>
+                        <th>Id employé </th>
+                        <th>Nom </th>
+                        <th>Prénom </th>
+                        <th>Titre </th>
+                        <th>Date </th>
+                        <th>Heure d'entrée </th>
+                        <th>Heure de sortie </th>
+                        <th>Statut </th>
+                        <th>Notes </th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
     while ($data = mysqli_fetch_assoc($res))
@@ -242,8 +244,10 @@ echo " <a href=pointage-form-delete.php?id=".$id." data-bs-toggle='tooltip' titl
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
     
 <?php

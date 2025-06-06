@@ -24,22 +24,24 @@ require("../fonctions.php");
 
     <br>
     <br>
-    <table id="example" class="table table-striped table-responsive">
-        <thead>
-            <tr>
-                <th>Id Détail</th>
-                <th>Patient</th>
-                <th>Vente</th>
-                <th>Produit</th>
-                <th>Marque</th>
-                <th>Quantité</th>
-                <th>Prix Unitaire</th>
-                <th>Total</th>
-                <th class="colm"></th>
-                <th class="colm"></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow">
+        <div class="card-body">
+            <table id="example" class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Id Détail</th>
+                        <th>Patient</th>
+                        <th>Vente</th>
+                        <th>Produit</th>
+                        <th>Marque</th>
+                        <th>Quantité</th>
+                        <th>Prix Unitaire</th>
+                        <th>Total</th>
+                        <th class="colm"></th>
+                        <th class="colm"></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 
 while ($data = mysqli_fetch_assoc($res))
@@ -59,8 +61,10 @@ while ($data = mysqli_fetch_assoc($res))
 }
 mysqli_close($con);
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
     
