@@ -1,5 +1,5 @@
 <?php
-    require("./head.php");
+    require("../head.php");
 ?>
 
 
