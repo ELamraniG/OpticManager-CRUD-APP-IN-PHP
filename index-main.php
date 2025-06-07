@@ -76,7 +76,7 @@ if (isset($mdp))
 	}
 	else
 	{
-    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion...</div>";
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>optique manager</b> : Echec de connexion...</div>";
 	}
 	mysqli_close($con);
 }

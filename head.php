@@ -6,7 +6,7 @@ if ($v_session != 1) {
     echo "<!-- Bootstrap version 5.3.0 -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>";
     echo "<meta charset=utf-8>";
-    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>LaPduP</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
+    echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>optique manager</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
     exit();
 }
 ?>
@@ -50,37 +50,34 @@ if ($v_session != 1) {
 <?php
 
 $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'admin';
-$navbar_color = '#004080'; 
+$navbar_color = '#1e293b'; // Modern slate gray for admin
 
 if ($user_role == 'opticien') {
-    $navbar_color = '#008000';
+    $navbar_color = '#059669'; // Modern emerald green for opticien
 } elseif ($user_role == 'assistant') {
-    $navbar_color = '#ff6600';
+    $navbar_color = '#dc2626'; // Modern red for assistant
 }
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" style="background-color: <?php echo $navbar_color; ?>;">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand d-flex align-items-center" href="../home/home.php">
-            <img src="../images/logo_bg.png" width="50" height="50" class="me-2 rounded-circle">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm navbar-compact" style="background-color: <?php echo $navbar_color; ?>;">
+    <div class="container-fluid px-3">        <a class="navbar-brand d-flex align-items-center" href="../home/home.php">
+            <img src="../images/logo_bg.png" width="24" height="24" class="me-2 rounded-circle">
             <span class="fw-bold">OpticManager - <?php echo ucfirst($user_role); ?></span>
         </a>
         
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="../home/home.php">
+                    <a class="nav-link px-2" href="../home/home.php">
                         <i class='bx bx-grid-alt me-1'></i>Accueil
                     </a>
                 </li>
-                
-                <?php if ($user_role == 'admin'): ?>                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class='bx bx-collection me-1'></i>Toutes Les Tables
+                  <?php if ($user_role == 'admin'): ?>                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-collection me-1'></i>Tables
                     </a>
                     <ul class="dropdown-menu shadow border-0">
                         <li><a class="dropdown-item" href="../Categorie/categorie-list.php"><i class="fas fa-tags me-2"></i>Categories</a></li>
@@ -112,11 +109,9 @@ if ($user_role == 'opticien') {
                         <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php"><i class="fas fa-user-cog me-2"></i>Utilisateurs</a></li>
                     </ul>
                 </li>
-                
-          
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class='bx bx-wrench me-1'></i>Outils Rapides
+                              <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-wrench me-1'></i>Outils
                     </a>
                     <ul class="dropdown-menu shadow border-0">
                         <li><a class="dropdown-item" href="../Dashboard/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord</a></li>
@@ -135,23 +130,21 @@ if ($user_role == 'opticien') {
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Dashboard/notifications.php"><i class="fas fa-bell me-2"></i>Centre de Notifications</a></li>
                     </ul>
-                </li>
-                  <li class="nav-item">
-                    <a class="nav-link px-3" href="../Dashboard/statistics.php">
+                </li>                  <li class="nav-item">
+                    <a class="nav-link px-2" href="../Dashboard/statistics.php">
                         <i class='bx bx-pie-chart-alt-2 me-1'></i>Statistics
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarParamsDropdown" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarParamsDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-cog me-1'></i>Paramètres
                     </a>
                     <ul class="dropdown-menu shadow border-0">
                         <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php"><i class="fas fa-user-cog me-2"></i>Gestion des Utilisateurs</a></li>
                     </ul>
                 </li>
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarAideDropdown" role="button" data-bs-toggle="dropdown">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarAideDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-help-circle me-1'></i>Aide
                     </a>
                     <ul class="dropdown-menu shadow border-0">
@@ -160,9 +153,8 @@ if ($user_role == 'opticien') {
                         <li><a class="dropdown-item" href="../Aide/contacter-support.php"><i class="fas fa-headset me-2"></i>Contacter le support</a></li>
                     </ul>
                 </li>
-                
-                <?php elseif ($user_role == 'opticien'): ?>                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                  <?php elseif ($user_role == 'opticien'): ?>                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-collection me-1'></i>Mes Tables
                     </a>
                     <ul class="dropdown-menu shadow border-0">
@@ -177,11 +169,9 @@ if ($user_role == 'opticien') {
                         <li><a class="dropdown-item" href="../Ventes/ventes-list.php"><i class="fas fa-cash-register me-2"></i>Ventes</a></li>
                     </ul>
                 </li>
-                
-             
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class='bx bx-wrench me-1'></i>Outils Rapides
+                                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-2" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-wrench me-1'></i>Outils
                     </a>
                     <ul class="dropdown-menu shadow border-0">
                         <li><a class="dropdown-item" href="../Search/global-search.php"><i class="fas fa-search me-2"></i>Recherche Globale</a></li>
@@ -191,10 +181,9 @@ if ($user_role == 'opticien') {
                         <li><a class="dropdown-item" href="../Dashboard/dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Tableau de Bord</a></li>
                     </ul>
                 </li>
-                
-                <?php elseif ($user_role == 'assistant'): ?>
+                  <?php elseif ($user_role == 'assistant'): ?>
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="../Rendezvous/rendezvous-list.php">
+                    <a class="nav-link px-2" href="../Rendezvous/rendezvous-list.php">
                         <i class='bx bx-calendar me-1'></i>Rendez-vous
                     </a>
                 </li>
@@ -203,12 +192,12 @@ if ($user_role == 'opticien') {
             
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link px-3" href="#">
+                    <a class="nav-link px-2" href="#">
                         <i class="fa-solid fa-user me-1"></i><?php echo ucfirst($user_role); ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-3 text-warning" href="../deconnexion.php">
+                    <a class="nav-link px-2 text-warning" href="../deconnexion.php">
                         <i class="fa-solid fa-sign-out-alt me-1"></i>Déconnexion
                     </a>
                 </li>
