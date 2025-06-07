@@ -5,21 +5,20 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
     exit();
 }
 
-require("../connexion.php");
+include("../connexion.php");
 
 $stats = array();
 
-$query = "SELECT MONTH(dateconsultation) as mois, COUNT(*) as total 
+$query = "SELECT DATE(dateconsultation) as jour, COUNT(*) as total 
           FROM consultations 
-          WHERE dateconsultation >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-          GROUP BY MONTH(dateconsultation)
-          ORDER BY mois";
+          WHERE dateconsultation >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+          GROUP BY DATE(dateconsultation)
+          ORDER BY jour";
 $result = mysqli_query($con, $query);
-$consultations_mensuelle = array();
+$consultations_journaliere = array();
 while($row = mysqli_fetch_assoc($result)) {
-    $mois_nom = array('', 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc');
-    $consultations_mensuelle[] = array(
-        'mois' => $mois_nom[$row['mois']],
+    $consultations_journaliere[] = array(
+        'jour' => date('d/m', strtotime($row['jour'])),
         'total' => $row['total']
     );
 }
@@ -58,17 +57,16 @@ $result = mysqli_query($con, $query);
 $stock_critique_data = mysqli_fetch_assoc($result);
 $stock_critique = $stock_critique_data['nb_critique'];
 
-$query = "SELECT MONTH(datevente) as mois, SUM(montanttotal) as ca 
+$query = "SELECT DATE(datevente) as jour, SUM(montanttotal) as ca 
           FROM ventes 
-          WHERE datevente >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-          GROUP BY MONTH(datevente)
-          ORDER BY mois";
+          WHERE datevente >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+          GROUP BY DATE(datevente)
+          ORDER BY jour";
 $result = mysqli_query($con, $query);
-$ca_mensuel = array();
+$ca_journalier = array();
 while($row = mysqli_fetch_assoc($result)) {
-    $mois_nom = array('', 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc');
-    $ca_mensuel[] = array(
-        'mois' => $mois_nom[$row['mois']],
+    $ca_journalier[] = array(
+        'jour' => date('d/m', strtotime($row['jour'])),
         'ca' => $row['ca']
     );
 }
@@ -134,17 +132,16 @@ while($row = mysqli_fetch_assoc($result)) {
                         ?></h4>
                         <p class="text-muted mb-0">Patients Total</p>
                     </div>
-                </div>
-                <div class="col-md-3">
+                </div>                <div class="col-md-3">
                     <div class="card analytics-card text-center p-3">
                         <i class="fas fa-calendar stat-icon text-success"></i>
                         <h4><?php 
-                            $query = "SELECT COUNT(*) as total FROM consultations WHERE MONTH(dateconsultation) = MONTH(NOW())";
+                            $query = "SELECT COUNT(*) as total FROM consultations WHERE DATE(dateconsultation) = CURDATE()";
                             $result = mysqli_query($con, $query);
                             $total_data = mysqli_fetch_assoc($result);
                             echo $total_data['total'];
                         ?></h4>
-                        <p class="text-muted mb-0">Consultations ce mois</p>
+                        <p class="text-muted mb-0">Consultations aujourd'hui</p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -156,25 +153,22 @@ while($row = mysqli_fetch_assoc($result)) {
                 </div>
                 <div class="col-md-3">
                     <div class="card analytics-card text-center p-3">
-                        <i class="fas fa-euro-sign stat-icon text-info"></i>
-                        <h4><?php 
-                            $query = "SELECT SUM(montanttotal) as total FROM ventes WHERE MONTH(datevente) = MONTH(NOW())";
+                        <i class="fas fa-euro-sign stat-icon text-info"></i>                        <h4><?php 
+                            $query = "SELECT SUM(montanttotal) as total FROM ventes WHERE DATE(datevente) = CURDATE()";
                             $result = mysqli_query($con, $query);
                             $ca_data = mysqli_fetch_assoc($result);
                             $ca = $ca_data['total'];
                             echo number_format($ca ? $ca : 0, 0, ',', ' ');
                         ?>€</h4>
-                        <p class="text-muted mb-0">CA ce mois</p>
+                        <p class="text-muted mb-0">CA aujourd'hui</p>
                     </div>
                 </div>
             </div>
 
     
-            <div class="row">
-
-                <div class="col-md-6">
+            <div class="row">                <div class="col-md-6">
                     <div class="card analytics-card p-4">
-                        <h5><i class="fas fa-chart-line me-2"></i>Consultations par mois</h5>
+                        <h5><i class="fas fa-chart-line me-2"></i>Consultations par jour (30 derniers jours)</h5>
                         <div class="chart-container">
                             <canvas id="consultationsChart"></canvas>
                         </div>
@@ -183,7 +177,7 @@ while($row = mysqli_fetch_assoc($result)) {
 
                 <div class="col-md-6">
                     <div class="card analytics-card p-4">
-                        <h5><i class="fas fa-chart-bar me-2"></i>Chiffre d'affaires mensuel</h5>
+                        <h5><i class="fas fa-chart-bar me-2"></i>Chiffre d'affaires journalier (30 derniers jours)</h5>
                         <div class="chart-container">
                             <canvas id="caChart"></canvas>
                         </div>
@@ -253,15 +247,13 @@ while($row = mysqli_fetch_assoc($result)) {
     <script>
        
         Chart.defaults.color = '#666';
-        Chart.defaults.font.family = 'Arial, sans-serif';
-
-       
-        var consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
+        Chart.defaults.font.family = 'Arial, sans-serif';       
+        var consultationsData = <?php echo json_encode($consultations_journaliere); ?>;
         var consultationsCtx = document.getElementById('consultationsChart').getContext('2d');
         new Chart(consultationsCtx, {
             type: 'line',
             data: {
-                labels: consultationsData.map(function(item) { return item.mois; }),
+                labels: consultationsData.map(function(item) { return item.jour; }),
                 datasets: [{
                     label: 'Consultations',
                     data: consultationsData.map(function(item) { return item.total; }),
@@ -284,12 +276,12 @@ while($row = mysqli_fetch_assoc($result)) {
         });
 
        
-        var caData = <?php echo json_encode($ca_mensuel); ?>;
+        var caData = <?php echo json_encode($ca_journalier); ?>;
         var caCtx = document.getElementById('caChart').getContext('2d');
         new Chart(caCtx, {
             type: 'bar',
             data: {
-                labels: caData.map(function(item) { return item.mois; }),
+                labels: caData.map(function(item) { return item.jour; }),
                 datasets: [{
                     label: 'Chiffre d\'affaires (€)',
                     data: caData.map(function(item) { return item.ca; }),

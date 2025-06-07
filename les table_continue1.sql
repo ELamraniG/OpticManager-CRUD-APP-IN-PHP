@@ -104,3 +104,16 @@ INSERT INTO `utilisateurs` (`nomutilisateur`, `motdepasse`, `role`, `nomcomplet`
 ('admin', MD5('admin'), 'admin', 'Administrateur Principal', 1),
 ('opticien1', MD5('opticien123'), 'opticien', 'Dr. Jean Dubois', 1),
 ('assistant1', MD5('assistant123'), 'assistant', 'Marie Dupont', 1);
+
+
+USE `optirent`;
+ALTER TABLE `rendezvous` DROP FOREIGN KEY `fk_rdv_client`;
+ALTER TABLE `commande` DROP FOREIGN KEY `fk_commande_client`;
+ALTER TABLE `client` DROP PRIMARY KEY;
+ALTER TABLE `client` MODIFY `idl` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE `rendezvous` MODIFY `idclient` int(11) NOT NULL;
+ALTER TABLE `commande` MODIFY `idclient` int(11) NOT NULL;
+ALTER TABLE `rendezvous` ADD CONSTRAINT `fk_rdv_client` 
+    FOREIGN KEY (`idclient`) REFERENCES `client` (`idl`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `commande` ADD CONSTRAINT `fk_commande_client` 
+    FOREIGN KEY (`idclient`) REFERENCES `client` (`idl`) ON DELETE CASCADE ON UPDATE CASCADE;

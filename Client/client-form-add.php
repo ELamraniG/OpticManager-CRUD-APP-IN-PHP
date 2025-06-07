@@ -2,20 +2,10 @@
 	require("../head.php");
 	require("../fonctions.php");
 	require("../connexion.php");
-	$r = "select * from client";
-	$res = mysqli_query($con, $r);
-	$nbr = mysqli_query($con ,"select idl from client order by idl desc limit 1;");
-	$nbr_cat = mysqli_fetch_assoc($nbr);
 ?>
 <div class="container" style="margin-top: 100px;">
-<form method="POST" action="client-add.php">
-	<fieldset class="row">
-		<legend>Formulaire Client</legend>
-		<div class="col-md-6">
-		<label>Id client</label>
-		<input type="text" class="form-control" value =<?php echo ++$nbr_cat['idl'] ;?> disabled>
-		<input type="text" name="idl" class="form-control" value =<?php echo $nbr_cat; ?> hidden>
-		<label>Nom <span class="obg">*</span></label>
+<form method="POST" action="client-add.php">	<fieldset class="row">
+		<legend>Formulaire Client</legend>		<div class="col-md-6">		<label>Nom <span class="obg">*</span></label>
 		<input type="text" name="nomc" class="form-control" require>
 		<label>Prenom<span class="obg">*</span></label>
 		<input type="text" name="prenomc" class="form-control" require>
