@@ -7,7 +7,6 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
 
 include('../connexion.php');
 
-// Traitement des actions AJAX
 if(isset($_POST['action'])) {
     header('Content-Type: application/json');
     
@@ -293,28 +292,13 @@ $stats = mysqli_fetch_assoc($result_stats);
                     <button class="btn btn-primary w-100 mb-2" onclick="applyFilters()">
                         <i class="fas fa-search me-2"></i>Rechercher
                     </button>
-                    
-                    <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
+                      <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
                         <i class="fas fa-times me-2"></i>Effacer
                     </button>
                 </div>
-
-                <!-- Actions rapides -->
-                <div class="filter-card">
-                    <h5><i class="fas fa-tools me-2"></i>Actions</h5>
-                    <a href="../Produit/produit-add.php" class="btn btn-success w-100 mb-2">
-                        <i class="fas fa-plus me-2"></i>Nouveau produit
-                    </a>
-                    <a href="../Stock/inventory-manager.php" class="btn btn-warning w-100 mb-2">
-                        <i class="fas fa-boxes me-2"></i>Gérer le stock
-                    </a>
-                    <a href="../Categorie/categorie-list.php" class="btn btn-info w-100">
-                        <i class="fas fa-tags me-2"></i>Catégories
-                    </a>
-                </div>
             </div>
 
-            <!-- Catalogue -->
+     
             <div class="col-md-9">
                 <div class="search-bar">
                     <div class="row align-items-center">
@@ -322,14 +306,10 @@ $stats = mysqli_fetch_assoc($result_stats);
                             <h5 class="mb-0">
                                 <span id="results-count">Chargement...</span> produits trouvés
                             </h5>
-                        </div>
-                        <div class="col-md-6 text-end">
+                        </div>                        <div class="col-md-6 text-end">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-primary active" onclick="setView('grid')" id="btn-grid">
-                                    <i class="fas fa-th"></i> Grille
-                                </button>
-                                <button class="btn btn-outline-primary" onclick="setView('list')" id="btn-list">
-                                    <i class="fas fa-list"></i> Liste
+                                <button class="btn btn-outline-primary" disabled>
+                                    <i class="fas fa-list"></i> Vue Liste
                                 </button>
                             </div>
                         </div>
@@ -344,38 +324,15 @@ $stats = mysqli_fetch_assoc($result_stats);
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal détails produit -->
-    <div class="modal fade" id="productModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-info-circle me-2"></i>Détails du produit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="product-details">
-                    <!-- Contenu chargé dynamiquement -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" id="edit-product-btn">
-                        <i class="fas fa-edit me-2"></i>Modifier
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentView = 'grid';
+    </div>    <script>
+        let currentView = 'list';
         let searchTimeout;
 
-        // Chargement initial
+      
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             
-            // Auto-recherche en temps réel
+        
             document.getElementById('search-input').addEventListener('input', function() {
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(applyFilters, 300);
@@ -417,9 +374,7 @@ $stats = mysqli_fetch_assoc($result_stats);
             document.getElementById('price-max').value = '';
             document.getElementById('stock-filter').value = '';
             applyFilters();
-        }
-
-        function displayProducts(products) {
+        }        function displayProducts(products) {
             const container = document.getElementById('products-container');
             
             if (products.length === 0) {
@@ -433,55 +388,8 @@ $stats = mysqli_fetch_assoc($result_stats);
                 return;
             }
 
-            if (currentView === 'grid') {
-                displayGridView(products, container);
-            } else {
-                displayListView(products, container);
-            }
-        }
-
-        function displayGridView(products, container) {
-            let html = '<div class="row">';
-            
-            products.forEach(product => {
-                const stockClass = getStockClass(product.qteenstock, product.seuildalerte);
-                const stockText = getStockText(product.qteenstock, product.seuildalerte);
-                
-                html += `
-                    <div class="col-md-4 col-lg-3 mb-4">
-                        <div class="card product-card position-relative">
-                            <div class="product-actions">
-                                <button class="btn btn-sm btn-primary" onclick="showProductDetails(${product.idproduit})">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <span class="badge ${stockClass} stock-badge">${stockText}</span>
-                            <div class="product-image">
-                                <i class="fas fa-glasses"></i>
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">${product.nomproduit}</h6>
-                                <p class="card-text">
-                                    <small class="text-muted">${product.marque}</small><br>
-                                    <small class="text-muted">Stock: ${product.qteenstock}</small>
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="product-price">${parseFloat(product.prixdevente).toFixed(2)}€</span>
-                                    <button class="btn btn-sm btn-outline-primary" onclick="showProductDetails(${product.idproduit})">
-                                        <i class="fas fa-info"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        function displayListView(products, container) {
+            displayListView(products, container);
+        }        function displayListView(products, container) {
             let html = '<div class="list-group">';
             
             products.forEach(product => {
@@ -489,9 +397,9 @@ $stats = mysqli_fetch_assoc($result_stats);
                 const stockText = getStockText(product.qteenstock, product.seuildalerte);
                 
                 html += `
-                    <div class="list-group-item list-group-item-action">
+                    <div class="list-group-item">
                         <div class="row align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <h6 class="mb-1">${product.nomproduit}</h6>
                                 <p class="mb-1 text-muted">${product.marque}</p>
                                 <small>${product.categorie_nom || 'Sans catégorie'}</small>
@@ -503,11 +411,6 @@ $stats = mysqli_fetch_assoc($result_stats);
                             <div class="col-md-2 text-center">
                                 <span class="product-price">${parseFloat(product.prixdevente).toFixed(2)}€</span>
                             </div>
-                            <div class="col-md-2 text-end">
-                                <button class="btn btn-sm btn-outline-primary" onclick="showProductDetails(${product.idproduit})">
-                                    <i class="fas fa-eye me-1"></i>Détails
-                                </button>
-                            </div>
                         </div>
                     </div>
                 `;
@@ -515,9 +418,7 @@ $stats = mysqli_fetch_assoc($result_stats);
             
             html += '</div>';
             container.innerHTML = html;
-        }
-
-        function getStockClass(stock, seuil) {
+        }        function getStockClass(stock, seuil) {
             if (stock == 0) return 'bg-danger';
             if (stock <= seuil) return 'bg-warning';
             return 'bg-success';
@@ -527,105 +428,6 @@ $stats = mysqli_fetch_assoc($result_stats);
             if (stock == 0) return 'Rupture';
             if (stock <= seuil) return 'Faible';
             return 'Disponible';
-        }
-
-        function setView(view) {
-            currentView = view;
-            
-            document.getElementById('btn-grid').classList.toggle('active', view === 'grid');
-            document.getElementById('btn-list').classList.toggle('active', view === 'list');
-            
-            applyFilters();
-        }
-
-        function showProductDetails(productId) {
-            fetch('', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `action=get_product_details&id=${productId}`
-            })
-            .then(response => response.json())
-            .then(product => {
-                displayProductDetails(product);
-                new bootstrap.Modal(document.getElementById('productModal')).show();
-                
-                document.getElementById('edit-product-btn').onclick = function() {
-                    window.location.href = `../Produit/produit-update.php?idproduit=${productId}`;
-                };
-            });
-        }
-
-        function displayProductDetails(product) {
-            const stockClass = getStockClass(product.qteenstock, product.seuildalerte);
-            const stockText = getStockText(product.qteenstock, product.seuildalerte);
-            
-            let salesHtml = '';
-            if (product.sales_history && product.sales_history.length > 0) {
-                salesHtml = '<h6 class="mt-4">Historique des ventes récentes</h6><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Date</th><th>Quantité</th><th>Prix</th></tr></thead><tbody>';
-                product.sales_history.forEach(sale => {
-                    salesHtml += `<tr><td>${sale.datevente}</td><td>${sale.quantite}</td><td>${parseFloat(sale.prix_unitaire).toFixed(2)}€</td></tr>`;
-                });
-                salesHtml += '</tbody></table></div>';
-            } else {
-                salesHtml = '<p class="mt-4 text-muted">Aucune vente récente</p>';
-            }
-
-            const html = `
-                <div class="row">
-                    <div class="col-md-8">
-                        <h4>${product.nomproduit}</h4>
-                        <p class="text-muted">${product.marque}</p>
-                        
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <strong>Catégorie:</strong><br>
-                                ${product.categorie_nom || 'Non définie'}
-                            </div>
-                            <div class="col-6">
-                                <strong>Fournisseur:</strong><br>
-                                ${product.fournisseur_nom || 'Non défini'}
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-4">
-                                <strong>Prix d'achat:</strong><br>
-                                ${parseFloat(product.prixdachat).toFixed(2)}€
-                            </div>
-                            <div class="col-4">
-                                <strong>Prix de vente:</strong><br>
-                                <span class="text-success fs-5">${parseFloat(product.prixdevente).toFixed(2)}€</span>
-                            </div>
-                            <div class="col-4">
-                                <strong>TVA:</strong><br>
-                                ${product.tvaappliquee}%
-                            </div>
-                        </div>
-                        
-                        ${product.notes ? `<div class="mb-3"><strong>Notes:</strong><br>${product.notes}</div>` : ''}
-                        
-                        ${salesHtml}
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h5>Stock</h5>
-                                <h2 class="text-primary">${product.qteenstock}</h2>
-                                <span class="badge ${stockClass} mb-2">${stockText}</span>
-                                <p class="small text-muted">Seuil d'alerte: ${product.seuildalerte}</p>
-                                
-                                <div class="mt-3">
-                                    <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="window.location.href='../Stock/inventory-manager.php'">
-                                        <i class="fas fa-warehouse me-1"></i>Voir Stock
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('product-details').innerHTML = html;
         }
     </script>
 </body>

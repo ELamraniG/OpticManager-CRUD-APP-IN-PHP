@@ -249,43 +249,7 @@ $today_consultations = mysqli_query($con, $today_consultations_query);
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="card shadow">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-bolt"></i> Actions Rapides</h5>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-md-3 mb-3">
-                        <a href="../Patients/patients-form-add.php" class="btn btn-success btn-lg w-100">
-                            <i class="fas fa-user-plus fa-2x mb-2"></i><br>
-                            Nouveau Patient
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="../Consultations/consultations-form-add.php" class="btn btn-primary btn-lg w-100">
-                            <i class="fas fa-stethoscope fa-2x mb-2"></i><br>
-                            Nouvelle Consultation
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="../Patients/patients-list.php" class="btn btn-info btn-lg w-100">
-                            <i class="fas fa-users fa-2x mb-2"></i><br>
-                            Liste Patients
-                        </a>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <a href="../Search/global-search.php" class="btn btn-warning btn-lg w-100">
-                            <i class="fas fa-search fa-2x mb-2"></i><br>
-                            Recherche Globale
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </div>        </div>
     <?php endif; ?>
 </div>
 
