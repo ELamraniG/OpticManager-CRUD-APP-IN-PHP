@@ -3,11 +3,9 @@ require("../head.php");
 require("../connexion.php");
 require("../fonctions.php");
 
-// Get current date and handle month navigation
 $current_month = isset($_GET['month']) ? intval($_GET['month']) : date('m');
 $current_year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
 
-// Ensure valid month/year
 if ($current_month < 1) { $current_month = 12; $current_year--; }
 if ($current_month > 12) { $current_month = 1; $current_year++; }
 
@@ -16,7 +14,6 @@ $month_name = strftime('%B %Y', $first_day);
 $days_in_month = date('t', $first_day);
 $first_day_of_week = date('w', $first_day);
 
-// Get appointments for current month
 $start_date = "$current_year-" . sprintf('%02d', $current_month) . "-01";
 $end_date = "$current_year-" . sprintf('%02d', $current_month) . "-$days_in_month";
 
@@ -37,7 +34,7 @@ while ($appointment = mysqli_fetch_assoc($appointments_result)) {
     $appointments[$day][] = $appointment;
 }
 
-// Get today's appointments
+
 $today = date('Y-m-d');
 $today_appointments = mysqli_query($con, "SELECT r.heurerendezvous, c.nom, c.prenom, r.notes
                                          FROM rendezvous r
@@ -63,7 +60,7 @@ $total_appointments = mysqli_num_rows(mysqli_query($con, "SELECT * FROM rendezvo
         </div>
     </div>
 
-    <!-- Navigation and Actions -->
+
     <div class="row mb-4">
         <div class="col-md-6">
             <div class="btn-group" role="group">
@@ -91,7 +88,7 @@ $total_appointments = mysqli_num_rows(mysqli_query($con, "SELECT * FROM rendezvo
     </div>
 
     <div class="row">
-        <!-- Calendar -->
+
         <div class="col-lg-8">
             <div class="card shadow">
                 <div class="card-header py-3">
@@ -179,9 +176,9 @@ $total_appointments = mysqli_num_rows(mysqli_query($con, "SELECT * FROM rendezvo
             </div>
         </div>
 
-        <!-- Today's Appointments and Quick Stats -->
+ 
         <div class="col-lg-4">
-            <!-- Today's Appointments -->
+        
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
@@ -212,7 +209,7 @@ $total_appointments = mysqli_num_rows(mysqli_query($con, "SELECT * FROM rendezvo
                 </div>
             </div>
 
-            <!-- Quick Stats -->
+     
             <div class="card shadow">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">

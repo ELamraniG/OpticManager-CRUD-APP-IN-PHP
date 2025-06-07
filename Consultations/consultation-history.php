@@ -3,24 +3,23 @@ require("../head.php");
 require("../connexion.php");
 require("../fonctions.php");
 
-// Get patient ID if provided
+
 $patient_id = isset($_GET['patient_id']) ? mysqli_real_escape_string($con, $_GET['patient_id']) : '';
 
-// Get all patients for dropdown
+
 $patients_query = "SELECT idpatient, CONCAT(nom, ' ', prenom) as nom_complet, telephone 
                    FROM patients 
                    ORDER BY nom, prenom";
 $patients_result = mysqli_query($con, $patients_query);
 
-// If patient selected, get their consultation history
+
 $consultation_history = null;
 $patient_info = null;
 if ($patient_id) {
-    // Get patient info
+
     $patient_query = "SELECT * FROM patients WHERE idpatient = '$patient_id'";
     $patient_info = mysqli_fetch_assoc(mysqli_query($con, $patient_query));
-    
-    // Get consultation history with ordonnances
+
     $history_query = "SELECT c.*, 
                       GROUP_CONCAT(CONCAT(o.oeil, ': SPH ', IFNULL(o.sphere, '0'), 
                                          ' CYL ', IFNULL(o.cylindre, '0'), 
@@ -43,7 +42,7 @@ if ($patient_id) {
         </div>
     </div>
 
-    <!-- Patient Selection -->
+
     <div class="card shadow mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0"><i class="fas fa-user-md"></i> Sélection du Patient</h5>
@@ -76,7 +75,6 @@ if ($patient_id) {
     </div>
 
     <?php if ($patient_info): ?>
-        <!-- Patient Information -->
         <div class="card shadow mb-4">
             <div class="card-header bg-info text-white">
                 <h5 class="mb-0"><i class="fas fa-user"></i> Informations Patient</h5>
@@ -112,7 +110,7 @@ if ($patient_id) {
             </div>
         </div>
 
-        <!-- Consultation History -->
+      
         <div class="card shadow">
             <div class="card-header bg-success text-white">
                 <h5 class="mb-0">
@@ -241,7 +239,7 @@ if ($patient_id) {
 </style>
 
 <script>
-// Auto-focus on patient selection
+
 document.addEventListener('DOMContentLoaded', function() {
     var hasPatientId = <?php echo $patient_id ? 'true' : 'false'; ?>;
     if (!hasPatientId) {

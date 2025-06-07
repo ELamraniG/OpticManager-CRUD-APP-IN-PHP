@@ -7,10 +7,10 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
 
 require("../connexion.php");
 
-// Récupérer les notifications
+
 $notifications = array();
 
-// 1. Stock critique
+
 $query = "SELECT nomproduit, qteenstock, seuildalerte FROM produit WHERE qteenstock <= seuildalerte ORDER BY qteenstock ASC LIMIT 10";
 $result = mysqli_query($con, $query);
 while($row = mysqli_fetch_assoc($result)) {
@@ -26,7 +26,7 @@ while($row = mysqli_fetch_assoc($result)) {
     );
 }
 
-// 2. Rendez-vous du jour
+
 $query = "SELECT COUNT(*) as nb_rdv FROM rendezvous WHERE DATE(daterendezvous) = CURDATE()";
 $result = mysqli_query($con, $query);
 $nb_rdv_row = mysqli_fetch_assoc($result);
@@ -44,7 +44,7 @@ if($nb_rdv > 0) {
     );
 }
 
-// 3. Consultations récentes sans ordonnance
+
 $query = "SELECT COUNT(*) as nb FROM consultations WHERE prescriptionpdf IS NULL AND dateconsultation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
 $result = mysqli_query($con, $query);
 $nb_sans_ord_row = mysqli_fetch_assoc($result);
@@ -62,7 +62,7 @@ if($nb_sans_ord > 0) {
     );
 }
 
-// 4. Nouveaux patients cette semaine
+
 $query = "SELECT COUNT(*) as nb FROM patients WHERE datecreation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
 $result = mysqli_query($con, $query);
 $nouveaux_patients_row = mysqli_fetch_assoc($result);
@@ -80,7 +80,7 @@ if($nouveaux_patients > 0) {
     );
 }
 
-// 5. Ventes importantes du jour (si la table existe)
+
 $query = "SELECT SUM(montanttotal) as total_jour FROM ventes WHERE DATE(datevente) = CURDATE()";
 $result = mysqli_query($con, $query);
 if($result) {
@@ -100,14 +100,14 @@ if($result) {
     }
 }
 
-// Fonction pour trier par priorité (compatible avec PHP ancien)
+
 function sortByPriority($a, $b) {
     $priority_order = array('high' => 1, 'medium' => 2, 'low' => 3);
     return $priority_order[$a['priority']] - $priority_order[$b['priority']];
 }
 usort($notifications, 'sortByPriority');
 
-// Fonctions pour compter les notifications par priorité
+
 function countNotificationsByPriority($notifications, $priority) {
     $count = 0;
     foreach($notifications as $notification) {
@@ -130,11 +130,11 @@ $low_count = countNotificationsByPriority($notifications, 'low');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centre de Notifications - OptiRent</title>
     
-    <!-- Use same versions as head.php -->
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- jQuery for dropdown functionality -->
+
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     
     <style>
@@ -207,7 +207,7 @@ $low_count = countNotificationsByPriority($notifications, 'low');
             font-size: 0.8rem;
             color: #6c757d;
         }
-        /* Fix for navbar spacing */
+     
         body {
             padding-top: 0;
         }
@@ -216,7 +216,7 @@ $low_count = countNotificationsByPriority($notifications, 'low');
 <body class="bg-light">
     <?php include('../head.php'); ?>
 
-    <!-- Add proper spacing after navbar -->
+
     <div style="margin-top: 70px;">
         <div class="page-header">
             <div class="container">
@@ -235,7 +235,7 @@ $low_count = countNotificationsByPriority($notifications, 'low');
         </div>
 
         <div class="container">
-            <!-- Statistiques rapides -->
+        
             <div class="row mb-4">
                 <div class="col-md-3">
                     <div class="stats-card">
@@ -267,7 +267,7 @@ $low_count = countNotificationsByPriority($notifications, 'low');
                 </div>
             </div>
 
-            <!-- Liste des notifications -->
+          
             <div class="row">
                 <div class="col-12">
                     <?php if(empty($notifications)): ?>
@@ -325,7 +325,7 @@ $low_count = countNotificationsByPriority($notifications, 'low');
                 </div>
             </div>
 
-            <!-- Actions rapides -->
+        
             <div class="row mt-4 mb-5">
                 <div class="col-12">
                     <div class="card">
@@ -372,16 +372,18 @@ $low_count = countNotificationsByPriority($notifications, 'low');
         </div>
     </div>
 
-    <!-- Bootstrap JS (required for dropdowns) -->
+   
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Auto-refresh toutes les 5 minutes
+   
         setTimeout(function() {
             location.reload();
         }, 300000);
 
-        // Animation d'entrée pour les cartes
+       
+        
         window.onload = function() {
             var cards = document.querySelectorAll('.notification-card');
             for(var i = 0; i < cards.length; i++) {

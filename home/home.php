@@ -2,7 +2,6 @@
     require("../head.php");
     require("../connexion.php");
 
-    // Get some basic stats for display
     $total_patients = mysqli_num_rows(mysqli_query($con, "SELECT * FROM patients"));
     $total_produits = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
     $alerts_stock = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit WHERE qteenstock <= seuildalerte"));
@@ -10,7 +9,7 @@
 ?>
 
 <div class="container-fluid" style="margin-top: 50px;">
-    <!-- Welcome Section -->
+
     <div class="row justify-content-center mb-5">
         <div class="col-lg-8">
             <div class="card shadow-lg border-0">
@@ -63,7 +62,7 @@
         </div>
     </div>
 
-    <!-- Footer Info -->
+
     <div class="row justify-content-center mt-5">
         <div class="col-lg-8">
             <div class="text-center border-top pt-4">

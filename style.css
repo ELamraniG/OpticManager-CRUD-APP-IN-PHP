@@ -1,50 +1,290 @@
-<style type="text/css">
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        .table {
-            width: 100%;
-        }
-        .colm {
-            width: 30px;
-        }
-        input{
-        	margin-bottom: 10px;
-        }
-       .iconrouge{
-       	color:gray;
-       }
-       .entete-list{
-        display: flex; 
-        justify-content: space-between;
-        align-items: center;
-       }
-       .nbr{
-        border: 1px solid green;
+/* OPTI'RENT - Cabinet d'Optique - Main Stylesheet */
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Container adjustments */
+.container-fluid {
+    margin-top: 70px;
+    padding: 20px;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background-color: #f1f3f4;
+    color: #495057;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+.colm {
+    width: 30px;
+}
+
+/* Form elements */
+input, select, textarea {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #5cb85c, #449d44);
+    border: none;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #d9534f, #c9302c);
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f0ad4e, #ec971f);
+    border: none;
+}
+
+/* Icons */
+.iconrouge {
+    color: #6c757d;
+    transition: color 0.2s ease;
+}
+
+.iconrouge:hover {
+    color: #495057;
+}
+
+/* Header list styling */
+.entete-list {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Number badge */
+.nbr {
+    border: 1px solid #28a745;
+    padding: 10px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    font-size: 14pt;
+    font-weight: 600;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Delete confirmation modal */
+.cledelete {
+    width: 400px;
+    text-align: center;
+    border: 1px solid #4a90e2;
+    padding: 20px;
+    border-radius: 8px;
+    margin: auto;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Authentication styles */
+.authentification {
+    width: 50%;
+    margin: auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.authentification img {
+    width: 50%;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+/* Navigation enhancements */
+.navbar {
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    margin: 2px 8px;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+    transform: translateX(4px);
+}
+
+.dropdown-divider {
+    margin: 8px 16px;
+    border-color: #e9ecef;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .container-fluid {
         padding: 10px;
-        background: green;
-        color: white;
-        font-size: 14pt;
-        height: 40px;
-        width: 40px;
+        margin-top: 60px;
+    }
+    
+    .entete-list {
+        flex-direction: column;
+        gap: 10px;
         text-align: center;
-       }
-       .cledelete{
-        width: 400px;
-        text-align: center;
-        border: 1px solid blue;
+    }
+    
+    .authentification {
+        width: 90%;
         padding: 20px;
-        border-radius: 5px;
-        margin: auto;
-       }
-       .authentification{
-        width: 50%;
-        margin: auto;
-       }
-       .authentification img{
-        width: 50%;
-        float: center;
-       }
-       
-    </style>
+    }
+    
+    .cledelete {
+        width: 90%;
+    }
+}
+
+/* Utility classes */
+.text-gradient {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.border-radius-lg {
+    border-radius: 12px !important;
+}

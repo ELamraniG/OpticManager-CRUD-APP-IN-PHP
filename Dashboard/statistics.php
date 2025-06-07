@@ -7,10 +7,8 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
 
 require("../connexion.php");
 
-// Statistiques pour les graphiques
 $stats = array();
 
-// Consultations par mois (6 derniers mois)
 $query = "SELECT MONTH(dateconsultation) as mois, COUNT(*) as total 
           FROM consultations 
           WHERE dateconsultation >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
@@ -26,7 +24,6 @@ while($row = mysqli_fetch_assoc($result)) {
     );
 }
 
-// Produits les plus vendus
 $query = "SELECT p.nomproduit, SUM(vd.quantite) as total_vendu 
           FROM produit p 
           JOIN vente_details vd ON p.idproduit = vd.idproduit 
@@ -39,7 +36,6 @@ while($row = mysqli_fetch_assoc($result)) {
     $produits_vendus[] = $row;
 }
 
-// Répartition des patients par âge
 $query = "SELECT 
             CASE 
                 WHEN TIMESTAMPDIFF(YEAR, datenaissance, CURDATE()) < 18 THEN 'Moins de 18'
@@ -57,13 +53,11 @@ while($row = mysqli_fetch_assoc($result)) {
     $repartition_age[] = $row;
 }
 
-// Stock critique
 $query = "SELECT COUNT(*) as nb_critique FROM produit WHERE qteenstock <= seuildalerte";
 $result = mysqli_query($con, $query);
 $stock_critique_data = mysqli_fetch_assoc($result);
 $stock_critique = $stock_critique_data['nb_critique'];
 
-// Chiffre d'affaires mensuel
 $query = "SELECT MONTH(datevente) as mois, SUM(montanttotal) as ca 
           FROM ventes 
           WHERE datevente >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
@@ -86,7 +80,7 @@ while($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics - OptiRent</title>
-    <!-- Remove Bootstrap/jQuery - use only from head.php -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .analytics-card {
@@ -118,7 +112,6 @@ while($row = mysqli_fetch_assoc($result)) {
 <body class="bg-light">
     <?php include('../head.php'); ?>
 
-    <!-- Add proper spacing after navbar -->
     <div style="margin-top: 70px;">
         <div class="page-header">
             <div class="container">
@@ -128,7 +121,7 @@ while($row = mysqli_fetch_assoc($result)) {
         </div>
 
         <div class="container">
-            <!-- Indicateurs clés -->
+
             <div class="row mb-4">
                 <div class="col-md-3">
                     <div class="card analytics-card text-center p-3">
@@ -176,9 +169,9 @@ while($row = mysqli_fetch_assoc($result)) {
                 </div>
             </div>
 
-            <!-- Graphiques -->
+    
             <div class="row">
-                <!-- Consultations mensuelles -->
+
                 <div class="col-md-6">
                     <div class="card analytics-card p-4">
                         <h5><i class="fas fa-chart-line me-2"></i>Consultations par mois</h5>
@@ -188,7 +181,6 @@ while($row = mysqli_fetch_assoc($result)) {
                     </div>
                 </div>
 
-                <!-- Chiffre d'affaires -->
                 <div class="col-md-6">
                     <div class="card analytics-card p-4">
                         <h5><i class="fas fa-chart-bar me-2"></i>Chiffre d'affaires mensuel</h5>
@@ -200,7 +192,7 @@ while($row = mysqli_fetch_assoc($result)) {
             </div>
 
             <div class="row mt-4">
-                <!-- Répartition par âge -->
+             
                 <div class="col-md-6">
                     <div class="card analytics-card p-4">
                         <h5><i class="fas fa-chart-pie me-2"></i>Répartition des patients par âge</h5>
@@ -210,7 +202,7 @@ while($row = mysqli_fetch_assoc($result)) {
                     </div>
                 </div>
 
-                <!-- Produits les plus vendus -->
+      
                 <div class="col-md-6">
                     <div class="card analytics-card p-4">
                         <h5><i class="fas fa-trophy me-2"></i>Top 5 des produits</h5>
@@ -221,7 +213,7 @@ while($row = mysqli_fetch_assoc($result)) {
                 </div>
             </div>
 
-            <!-- Actions rapides -->
+
             <div class="row mt-4 mb-5">
                 <div class="col-12">
                     <div class="card analytics-card">
@@ -259,11 +251,11 @@ while($row = mysqli_fetch_assoc($result)) {
     </div>
 
     <script>
-        // Configuration des graphiques
+       
         Chart.defaults.color = '#666';
         Chart.defaults.font.family = 'Arial, sans-serif';
 
-        // Graphique des consultations
+       
         var consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
         var consultationsCtx = document.getElementById('consultationsChart').getContext('2d');
         new Chart(consultationsCtx, {
@@ -291,7 +283,7 @@ while($row = mysqli_fetch_assoc($result)) {
             }
         });
 
-        // Graphique du CA
+       
         var caData = <?php echo json_encode($ca_mensuel); ?>;
         var caCtx = document.getElementById('caChart').getContext('2d');
         new Chart(caCtx, {
@@ -319,7 +311,7 @@ while($row = mysqli_fetch_assoc($result)) {
             }
         });
 
-        // Graphique répartition par âge
+      
         var ageData = <?php echo json_encode($repartition_age); ?>;
         var ageCtx = document.getElementById('ageChart').getContext('2d');
         new Chart(ageCtx, {
@@ -337,7 +329,7 @@ while($row = mysqli_fetch_assoc($result)) {
             }
         });
 
-        // Graphique produits les plus vendus
+       
         var produitsData = <?php echo json_encode($produits_vendus); ?>;
         var produitsCtx = document.getElementById('produitsChart').getContext('2d');
         new Chart(produitsCtx, {
@@ -368,7 +360,6 @@ while($row = mysqli_fetch_assoc($result)) {
         });
     </script>
 
-    <!-- Remove this line - Bootstrap is already loaded in head.php -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> -->
+
 </body>
 </html>

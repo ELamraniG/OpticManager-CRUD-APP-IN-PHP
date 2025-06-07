@@ -7,7 +7,7 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
 
 include('../connexion.php');
 
-// Get all patients and clients for the select dropdown
+
 $patients_query = "SELECT idpatient as id, CONCAT(nom, ' ', prenom) as nom_complet, telephone, 'patient' as type 
                    FROM patients 
                    ORDER BY nom, prenom";
@@ -18,7 +18,6 @@ $clients_query = "SELECT idl as id, CONCAT(nom, ' ', prenom) as nom_complet, tel
                   ORDER BY nom, prenom";
 $clients_result = mysqli_query($con, $clients_query);
 
-// Traitement des actions AJAX
 if(isset($_POST['action'])) {
     header('Content-Type: application/json');
     
@@ -51,7 +50,7 @@ if(isset($_POST['action'])) {
         $patient_data = mysqli_real_escape_string($con, $_POST['patient_data']);
         $notes = mysqli_real_escape_string($con, $_POST['notes']);
         
-        // Parse patient data (format: "type:id")
+    
         $patient_info = explode(':', $patient_data);
         $patient_type = $patient_info[0];
         $patient_id = $patient_info[1];
@@ -73,7 +72,7 @@ if(isset($_POST['action'])) {
     }
 }
 
-// Récupérer les statistiques
+
 $today = date('Y-m-d');
 $query_today = "SELECT COUNT(*) as nb FROM rendezvous WHERE DATE(daterendezvous) = '$today'";
 $result_today = mysqli_query($con, $query_today);
@@ -176,7 +175,7 @@ $rdv_month = $rdv_month_data['nb'];
     </div>
 
     <div class="container">
-        <!-- Statistiques -->
+  
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="stats-card">
@@ -208,7 +207,7 @@ $rdv_month = $rdv_month_data['nb'];
             </div>
         </div>
 
-        <!-- Navigation du calendrier -->
+
         <div class="row">
             <div class="col-12">
                 <div class="calendar-nav">
@@ -237,7 +236,6 @@ $rdv_month = $rdv_month_data['nb'];
             </div>
         </div>
 
-        <!-- Planning des rendez-vous -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -249,7 +247,7 @@ $rdv_month = $rdv_month_data['nb'];
                     </div>
                     <div class="card-body">
                         <div class="time-grid" id="time-slots">
-                            <!-- Les créneaux seront chargés par JavaScript -->
+                          
                         </div>
                     </div>
                 </div>
@@ -257,7 +255,7 @@ $rdv_month = $rdv_month_data['nb'];
         </div>
     </div>
 
-    <!-- Modal de détail du RDV -->
+
     <div class="modal fade" id="appointmentModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -266,7 +264,7 @@ $rdv_month = $rdv_month_data['nb'];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="appointment-details">
-                    <!-- Contenu chargé dynamiquement -->
+  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -278,7 +276,7 @@ $rdv_month = $rdv_month_data['nb'];
     <script>
         let currentDate = new Date();
 
-        // Mise à jour de l'heure
+ 
         function updateCurrentTime() {
             const now = new Date();
             document.getElementById('current-time').textContent = now.toLocaleTimeString('fr-FR');
@@ -286,7 +284,6 @@ $rdv_month = $rdv_month_data['nb'];
         setInterval(updateCurrentTime, 1000);
         updateCurrentTime();
 
-        // Changement de date
         function changeDate(days) {
             currentDate.setDate(currentDate.getDate() + days);
             updateCalendar();
@@ -304,14 +301,14 @@ $rdv_month = $rdv_month_data['nb'];
             loadAppointments(dateStr);
         }
 
-        // Gestionnaire de changement de date
+
         document.getElementById('selected-date').addEventListener('change', function() {
             currentDate = new Date(this.value);
             document.getElementById('display-date').textContent = currentDate.toLocaleDateString('fr-FR');
             loadAppointments(this.value);
         });
 
-        // Charger les rendez-vous
+ 
         function loadAppointments(date) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '', true);
@@ -331,7 +328,7 @@ $rdv_month = $rdv_month_data['nb'];
             xhr.send('action=get_appointments&date=' + date);
         }
 
-        // Générer les créneaux horaires
+
         function generateTimeSlots(appointments) {
             const container = document.getElementById('time-slots');
             container.innerHTML = '';
@@ -368,11 +365,11 @@ $rdv_month = $rdv_month_data['nb'];
                 container.appendChild(slot);
             });
             
-            // Debug: Log the number of appointments loaded
+          
             console.log('Loaded ' + appointments.length + ' appointments for date: ' + document.getElementById('selected-date').value);
         }
 
-        // Afficher les détails d'un RDV
+
         function showAppointmentDetails(appointment) {
             const details = `
                 <div class="row">
@@ -397,7 +394,6 @@ $rdv_month = $rdv_month_data['nb'];
             new bootstrap.Modal(document.getElementById('appointmentModal')).show();
         }
 
-        // Charger les RDV du jour actuel au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
             loadAppointments(document.getElementById('selected-date').value);
         });

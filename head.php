@@ -1,6 +1,6 @@
 <?php
 session_start();
-/* Vérifier si cette page est authentifié */
+
 $v_session = $_SESSION['v_session'];
 if ($v_session != 1) {
     echo "<!-- Bootstrap version 5.3.0 -->
@@ -15,44 +15,42 @@ if ($v_session != 1) {
 
 <head>
     <meta charset="utf-8">
-    <!-- Taille d'écran -->
+   
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- DataTables CSS -->
+ 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-    <!-- Bootstrap JavaScript -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- DataTables JavaScript -->
+  
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     
-    <!-- Favicon -->
+  
     <link rel="icon" type="image/png" sizes="16x16"  href="../images/logo_bg.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     
     <title>OPTIRENT</title>
-    <!--Mon style -->
+
     <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 
 <body>
 <?php
-// Get user role for navigation
+
 $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'admin';
-$navbar_color = '#004080'; // Default admin color
+$navbar_color = '#004080'; 
 
 if ($user_role == 'opticien') {
     $navbar_color = '#008000';
@@ -115,7 +113,7 @@ if ($user_role == 'opticien') {
                     </ul>
                 </li>
                 
-                <!-- New Quick Tools Menu -->
+          
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-wrench me-1'></i>Outils Rapides
@@ -180,7 +178,7 @@ if ($user_role == 'opticien') {
                     </ul>
                 </li>
                 
-                <!-- Quick Tools for Opticien -->
+             
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-3" href="#" id="navbarToolsDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-wrench me-1'></i>Outils Rapides
@@ -219,77 +217,7 @@ if ($user_role == 'opticien') {
     </div>
 </nav>
 
-<!-- Main content area -->
-<div class="container-fluid" style="margin-top: 70px; padding: 20px;">
 
-<style>
-*{
-    margin: 0;
-    padding: 0;
-}
-
-.table {
-    width: 100%;
-}
-
-.colm {
-    width: 30px;
-}
-
-input{
-    margin-bottom: 10px;
-}
-
-.iconrouge{
-    color:gray;
-}
-
-.entete-list{
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nbr{
-    border: 1px solid green;
-    padding: 10px;
-    background: green;
-    color: white;
-    font-size: 14pt;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-    border-radius: 5px;
-}
-
-.cledelete{
-    width: 400px;
-    text-align: center;
-    border: 1px solid blue;
-    padding: 20px;
-    border-radius: 5px;
-    margin: auto;
-}
-
-.authentification{
-    width: 50%;
-    margin: auto;
-}
-
-.authentification img{
-    width: 50%;
-    float: center;
-}
-
-.navbar-nav .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.dropdown-menu {
-    max-height: 400px;
-    overflow-y: auto;
-}
-</style>
+<div class="container-fluid">
 </body>
 </html>

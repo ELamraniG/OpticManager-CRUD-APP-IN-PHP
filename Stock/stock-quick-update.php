@@ -2,14 +2,14 @@
 require("../head.php");
 require("../connexion.php");
 
-// Get products with low stock
+
 $low_stock_query = "SELECT idproduit, nomproduit, marque, qteenstock, seuildalerte, prixdevente 
                     FROM produit 
                     WHERE qteenstock <= seuildalerte 
                     ORDER BY qteenstock ASC";
 $low_stock_result = mysqli_query($con, $low_stock_query);
 
-// Calculate stock statistics
+
 $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
 $out_of_stock = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit WHERE qteenstock = 0"));
 $low_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit WHERE qteenstock <= seuildalerte AND qteenstock > 0"));
@@ -27,7 +27,6 @@ $total_value = $total_value_data['total'];
         </div>
     </div>
 
-    <!-- Stock Statistics -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card bg-primary text-white">
@@ -67,7 +66,6 @@ $total_value = $total_value_data['total'];
         </div>
     </div>
 
-    <!-- Alerts Stock -->
     <div class="row">
         <div class="col-12">
             <div class="card border-warning">

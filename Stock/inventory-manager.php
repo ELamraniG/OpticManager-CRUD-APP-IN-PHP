@@ -2,11 +2,10 @@
 require("../head.php");
 require("../connexion.php");
 
-// Get filter parameters
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 $category_filter = isset($_GET['category']) ? mysqli_real_escape_string($con, $_GET['category']) : '';
 
-// Build query based on filters
+
 $where_clause = "WHERE 1=1";
 switch ($filter) {
     case 'low_stock':
@@ -34,18 +33,18 @@ ORDER BY produit.qteenstock ASC, produit.nomproduit ASC";
 $res = mysqli_query($con, $r);
 $nbr_service = mysqli_num_rows($res);
 
-// Get categories for filter
+
 $categories_query = "SELECT idc, titrec FROM categorie ORDER BY titrec";
 $categories_result = mysqli_query($con, $categories_query);
 
-// Get statistics
+
 $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
 $low_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit WHERE qteenstock <= seuildalerte"));
 $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit WHERE qteenstock = 0"));
 ?>
 
 <div class="container" style="margin-top: 100px;">
-    <!-- Header with Statistics -->
+
     <div class="row mb-4">
         <div class="col-md-8">
             <h1 class="display-4"><i class="fas fa-warehouse"></i> Inventaire</h1>
@@ -73,7 +72,7 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
         </div>
     </div>
 
-    <!-- Filters -->
+
     <div class="card shadow mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0"><i class="fas fa-filter"></i> Filtres</h5>
@@ -110,7 +109,7 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
         </div>
     </div>
 
-    <!-- Results -->
+
     <div class="card shadow">
         <div class="card-header">
             <h6 class="m-0 font-weight-bold">

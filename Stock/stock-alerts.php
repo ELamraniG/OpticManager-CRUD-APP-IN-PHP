@@ -3,7 +3,7 @@ require("../head.php");
 require("../connexion.php");
 require("../fonctions.php");
 
-// Get products with stock alerts
+
 $r = "SELECT p.idproduit, p.nomproduit, p.marque, p.qteenstock, p.seuildalerte, 
              c.titrec as categorie, f.nom as fournisseur
       FROM produit p
@@ -15,7 +15,7 @@ $r = "SELECT p.idproduit, p.nomproduit, p.marque, p.qteenstock, p.seuildalerte,
 $res = mysqli_query($con, $r);
 $nbr_alerts = mysqli_num_rows($res);
 
-// Get all products for reference
+
 $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
 ?>
 
@@ -90,7 +90,7 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
     </div>
     <?php endif; ?>
 
-    <!-- Summary Statistics -->
+    
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="card bg-danger text-white">

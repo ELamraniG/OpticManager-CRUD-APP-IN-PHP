@@ -72,7 +72,7 @@ require("../head.php");
                         </div>
                     </div>
 
-                    <!-- À Qui S'adresse -->
+                 
                     <div class="row mb-5">
                         <div class="col-12">
                             <h3 class="text-warning mb-3">
@@ -86,7 +86,7 @@ require("../head.php");
                         </div>
                     </div>
 
-                    <!-- À propos du développeur -->
+                 
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="card bg-light">

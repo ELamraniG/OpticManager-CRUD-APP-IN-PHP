@@ -1,6 +1,5 @@
 <?php
 session_start();
-/* Vérifier si cette page est authentifié */
 $v_session = $_SESSION['v_session'];
 if ($v_session != 1) 
 {
@@ -12,12 +11,11 @@ if ($v_session != 1)
 }
 else
 {
-// Inclure la bibliothèque FPDF
 require('../fpdf/fpdf.php');
 require("../connexion.php");
 
 if(isset($_GET['id'])) {
-    // Imprimer un détail spécifique
+
     $id = $_GET['id'];
     $r = "SELECT vd.*, v.datevente, v.montanttotal, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet, p.telephone, p.email,
           pr.nomproduit, pr.marque, pr.prixdevente
@@ -27,7 +25,7 @@ if(isset($_GET['id'])) {
           AND v.idpatient = p.idpatient
           AND vd.idproduit = pr.idproduit";
 } else {
-    // Imprimer tous les détails
+
     $r = "SELECT vd.iddetail, vd.quantite, vd.prixunitaire,
           v.id_vente, v.datevente, CONCAT(p.nom, ' ', p.prenom) as patient_nom_complet,
           pr.nomproduit, pr.marque
@@ -40,22 +38,22 @@ if(isset($_GET['id'])) {
 
 $res = mysqli_query($con, $r);
 
-// Vérifier si la requête a réussi
+
 if (!$res) {
     mysqli_close($con);
     exit('Erreur de requête: ' . mysqli_error($con));
 }
 
-// Créer un objet FPDF
+
 $pdf = new FPDF();
 $pdf->AliasNbPages();
 
 if(isset($_GET['id'])) {
-    // Format détaillé pour un détail spécifique
+  
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
     
-    // Ajouter une image en haut de la page
+ 
     $pdf->Image('../images/lap2.png', 10, 10, 0, 5);
     $pdf->Ln(10);
     
@@ -65,7 +63,7 @@ if(isset($_GET['id'])) {
     if($detail = mysqli_fetch_assoc($res)) {
         $pdf->SetFont('Arial', '', 12);
         
-        // Informations générales
+      
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 8, 'INFORMATIONS GENERALES', 0, 1, 'L');
         $pdf->SetFont('Arial', '', 10);

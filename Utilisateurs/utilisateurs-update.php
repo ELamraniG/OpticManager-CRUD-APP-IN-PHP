@@ -1,7 +1,6 @@
 <?php
 	extract($_POST);
 	
-	// Handle password update - only update if password is provided
 	if(!empty($motdepasse)){
 		$r = "update utilisateurs set 
 		nomutilisateur='".$nomutilisateur."',

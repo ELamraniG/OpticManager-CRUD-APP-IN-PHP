@@ -12,3 +12,4 @@
 	require("../fonctions.php");
 	redirection("consultations-list.php");
 ?>
+

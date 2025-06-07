@@ -11,7 +11,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
     $search_term = mysqli_real_escape_string($con, $_GET['q']);
     $search_performed = true;
     
-    // Search in Patients
+
     $patients_query = "SELECT 'Patient' as type, idpatient as id, CONCAT(nom, ' ', prenom) as title, 
                        telephone as info, 'Patients/patients-form-update.php' as edit_link
                        FROM patients 
@@ -21,7 +21,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
                        OR email LIKE '%$search_term%'
                        LIMIT 10";
     
-    // Search in Clients
+
     $clients_query = "SELECT 'Client' as type, idl as id, CONCAT(nom, ' ', prenom) as title, 
                       telephone as info, 'Client/client-form-update.php' as edit_link
                       FROM client 
@@ -31,7 +31,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
                       OR email LIKE '%$search_term%'
                       LIMIT 10";
     
-    // Search in Products
+
     $products_query = "SELECT 'Produit' as type, idproduit as id, nomproduit as title, 
                        CONCAT(marque, ' - Stock: ', qteenstock) as info, 'Produit/produit-form-update.php' as edit_link
                        FROM produit 
@@ -39,8 +39,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
                        OR marque LIKE '%$search_term%'
                        OR notes LIKE '%$search_term%'
                        LIMIT 10";
-    
-    // Search in Fournisseurs
+
     $fournisseurs_query = "SELECT 'Fournisseur' as type, idf as id, nom as title, 
                            CONCAT(contact, ' - ', tel) as info, 'Fournisseur/fournisseur-form-update.php' as edit_link
                            FROM fournisseur 
@@ -49,8 +48,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
                            OR tel LIKE '%$search_term%'
                            OR email LIKE '%$search_term%'
                            LIMIT 10";
-    
-    // Execute searches and combine results
+
     $queries = array($patients_query, $clients_query, $products_query, $fournisseurs_query);
     
     foreach ($queries as $query) {
@@ -71,7 +69,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
         </div>
     </div>
 
-    <!-- Search Form -->
+
     <div class="card shadow mb-4">
         <div class="card-body">
             <form method="GET" action="">
@@ -103,7 +101,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
 
     <?php if ($search_performed): ?>
         <?php if (!empty($search_results)): ?>
-            <!-- Search Results -->
+
             <div class="card shadow">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
@@ -173,7 +171,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
             </div>
             
         <?php else: ?>
-            <!-- No Results -->
+ 
             <div class="card shadow">
                 <div class="card-body text-center py-5">
                     <i class="fas fa-search-minus text-muted" style="font-size: 4rem;"></i>
@@ -194,7 +192,7 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
         <?php endif; ?>
         
     <?php else: ?>
-        <!-- Search Tips -->
+
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -240,12 +238,12 @@ if (isset($_GET['q']) && !empty($_GET['q'])) {
 </div>
 
 <script>
-// Auto-focus on search input
+
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('input[name="q"]').focus();
 });
 
-// Handle Enter key for search
+
 document.querySelector('input[name="q"]').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         this.form.submit();

@@ -3,34 +3,33 @@ require("../head.php");
 require("../connexion.php");
 require("../fonctions.php");
 
-// Get basic statistics
+
 $total_patients = mysqli_num_rows(mysqli_query($con, "SELECT * FROM patients"));
 $total_clients = mysqli_num_rows(mysqli_query($con, "SELECT * FROM client"));
 $total_produits = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
 $total_fournisseurs = mysqli_num_rows(mysqli_query($con, "SELECT * FROM fournisseur"));
 
-// Stock alerts - products below threshold
+
 $stock_alerts = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte FROM produit WHERE qteenstock <= seuildalerte");
 $nbr_alerts = mysqli_num_rows($stock_alerts);
 
-// Additional statistics
+
 $total_consultations = mysqli_num_rows(mysqli_query($con, "SELECT * FROM consultations"));
 $total_ordonnances = mysqli_num_rows(mysqli_query($con, "SELECT * FROM ordonnances"));
 $consultations_today = mysqli_num_rows(mysqli_query($con, "SELECT * FROM consultations WHERE DATE(dateconsultation) = CURDATE()"));
 $consultations_this_month = mysqli_num_rows(mysqli_query($con, "SELECT * FROM consultations WHERE MONTH(dateconsultation) = MONTH(CURDATE()) AND YEAR(dateconsultation) = YEAR(CURDATE())"));
 
-// Stock statistics
+
 $total_stock_value_query = mysqli_query($con, "SELECT SUM(prixdevente * qteenstock) as total_value FROM produit");
 $total_stock_value = mysqli_fetch_assoc($total_stock_value_query);
 $stock_value = $total_stock_value['total_value'] ? $total_stock_value['total_value'] : 0;
 
-// Recent consultations (last 10)
+
 $recent_consultations = mysqli_query($con, "SELECT p.nom, p.prenom, c.dateconsultation, c.motif 
                                            FROM consultations c 
                                            JOIN patients p ON c.idpatient = p.idpatient 
                                            ORDER BY c.dateconsultation DESC LIMIT 10");
 
-// Low stock products
 $low_stock = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte, marque 
                                 FROM produit 
                                 WHERE qteenstock <= seuildalerte 
@@ -44,7 +43,7 @@ $low_stock = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte, ma
                 <i class="fas fa-tachometer-alt"></i> Tableau de Bord
             </h1>
         </div>
-    </div>    <!-- Statistics Cards Row 1 -->
+    </div>   
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -119,7 +118,6 @@ $low_stock = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte, ma
         </div>
     </div>
 
-    <!-- Statistics Cards Row 2 -->
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -194,9 +192,8 @@ $low_stock = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte, ma
         </div>
     </div>
 
-    <!-- Content Row -->
     <div class="row">
-        <!-- Stock Alerts -->
+
         <div class="col-xl-6 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -247,7 +244,7 @@ $low_stock = mysqli_query($con, "SELECT nomproduit, qteenstock, seuildalerte, ma
             </div>
         </div>
 
-        <!-- Recent Consultations -->
+  
         <div class="col-xl-6 col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

@@ -3,7 +3,7 @@ require("../head.php");
 require("../connexion.php");
 require("../fonctions.php");
 
-// Handle user status changes
+
 if (isset($_POST['toggle_user'])) {
     $user_id = $_POST['user_id'];
     $current_status = $_POST['current_status'];
@@ -19,18 +19,16 @@ if (isset($_POST['toggle_user'])) {
     }
 }
 
-// Get all users with their information
 $r = "SELECT idutilisateur, nomutilisateur, role, nomcomplet, actif
       FROM utilisateurs 
       ORDER BY role ASC, nomutilisateur ASC";
 $res = mysqli_query($con, $r);
 $nbr_users = mysqli_num_rows($res);
 
-// Count users by status
 $active_users = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHERE actif = 1"));
 $inactive_users = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHERE actif = 0"));
 
-// Count users by role
+
 $admins = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHERE role = 'admin'"));
 $opticiens = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHERE role = 'opticien'"));
 $assistants = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHERE role = 'assistant'"));
@@ -67,7 +65,6 @@ $assistants = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHE
         </div>
     </div>
 
-    <!-- Statistics Cards -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card bg-success text-white">
@@ -129,7 +126,6 @@ $assistants = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHE
         </div>
     </div>
 
-    <!-- Users Management Table -->
     <div class="card shadow">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -202,7 +198,6 @@ $assistants = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHE
         </div>
     </div>
 
-    <!-- Quick Actions Panel -->
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="card">
@@ -244,14 +239,12 @@ $assistants = mysqli_num_rows(mysqli_query($con, "SELECT * FROM utilisateurs WHE
 <script>
 function activateAllUsers() {
     if (confirm('Êtes-vous sûr de vouloir activer tous les utilisateurs?')) {
-        // This would require AJAX implementation
         alert('Fonctionnalité à implémenter avec AJAX');
     }
 }
 
 function deactivateAssistants() {
     if (confirm('Êtes-vous sûr de vouloir désactiver tous les assistants?')) {
-        // This would require AJAX implementation
         alert('Fonctionnalité à implémenter avec AJAX');
     }
 }

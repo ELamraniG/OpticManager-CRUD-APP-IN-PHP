@@ -15,6 +15,7 @@ require("../fonctions.php");
         <span class="nbr"><?php echo $nbr_service; ?></span>
     </div>
 
+    
     <a href=consultations-form-add.php class='btn btn-success ttip' data-bs-toggle='tooltip' title='Ajouter une consultation'><i class='fa-solid fa-plus'></i></a>
 
     <a href=consultations-print.php class='btn btn-secondary' data-bs-toggle='tooltip' title='Imprimer toutes les consultations'><i class="fa-solid fa-print"></i></a>

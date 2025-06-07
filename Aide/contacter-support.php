@@ -11,14 +11,14 @@ require("../head.php");
                 </div>
                 <div class="card-body p-5">
                     <div class="text-center">
-                        <!-- Photo du développeur -->
+                      
                         <div class="mb-4">
                             <img src="../images/developer.jpg" alt="Photo du développeur" class="img-fluid rounded-circle shadow-sm" style="max-height: 150px; width: auto;" onerror="this.src='../images/logo_bg.png'">
                         </div>
                         
                         <h3 class="text-primary mb-4">Contactez-moi</h3>
                         
-                        <!-- WhatsApp Section -->
+                        
                         <div class="card mb-4 border-success">
                             <div class="card-body">
                                 <h5 class="card-title text-success">
@@ -36,7 +36,7 @@ require("../head.php");
                             </div>
                         </div>
                         
-                        <!-- GitHub Section -->
+                    
                         <div class="card mb-4 border-dark">
                             <div class="card-body">
                                 <h5 class="card-title text-dark">
@@ -48,7 +48,7 @@ require("../head.php");
                             </div>
                         </div>
                         
-                        <!-- Portfolio Section -->
+                 
                         <div class="card mb-4 border-info">
                             <div class="card-body">
                                 <h5 class="card-title text-info">
@@ -60,7 +60,7 @@ require("../head.php");
                             </div>
                         </div>
                         
-                        <!-- Additional Contact Methods -->
+                 
                         <div class="row mt-4">
                             <div class="col-md-6">
                                 <div class="card border-warning h-100">
