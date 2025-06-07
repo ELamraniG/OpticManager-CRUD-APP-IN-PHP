@@ -1,26 +1,23 @@
-/* OPTI'RENT - Cabinet d'Optique - Main Stylesheet */
 
-/* Reset styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* General styles */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
     color: #333;
 }
 
-/* Container adjustments */
+
 .container-fluid {
     margin-top: 52px;
     padding: 20px;
 }
 
-/* Table styles */
 .table {
     width: 100%;
     background: white;
@@ -50,7 +47,7 @@ body {
     width: 30px;
 }
 
-/* Form elements */
+
 input, select, textarea {
     margin-bottom: 10px;
     border: 1px solid #ddd;
@@ -65,7 +62,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
-/* Buttons */
+
 .btn {
     border-radius: 6px;
     padding: 8px 16px;
@@ -98,7 +95,7 @@ input:focus, select:focus, textarea:focus {
     border: none;
 }
 
-/* Icons */
+
 .iconrouge {
     color: #6c757d;
     transition: color 0.2s ease;
@@ -108,7 +105,7 @@ input:focus, select:focus, textarea:focus {
     color: #495057;
 }
 
-/* Header list styling */
+
 .entete-list {
     display: flex; 
     justify-content: space-between;
@@ -120,7 +117,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Number badge */
+
 .nbr {
     border: 1px solid #28a745;
     padding: 10px;
@@ -138,7 +135,7 @@ input:focus, select:focus, textarea:focus {
     justify-content: center;
 }
 
-/* Delete confirmation modal */
+
 .cledelete {
     width: 400px;
     text-align: center;
@@ -150,7 +147,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Authentication styles */
+
 .authentification {
     width: 50%;
     margin: auto;
@@ -166,7 +163,7 @@ input:focus, select:focus, textarea:focus {
     margin: 0 auto 20px;
 }
 
-/* Navigation enhancements */
+
 .navbar {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
@@ -248,7 +245,7 @@ input:focus, select:focus, textarea:focus {
     border-color: #e9ecef;
 }
 
-/* Cards */
+
 .card {
     border: none;
     border-radius: 12px;
@@ -268,20 +265,19 @@ input:focus, select:focus, textarea:focus {
     color: #495057;
 }
 
-/* Alerts */
+
 .alert {
     border: none;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Loading states */
+
 .loading {
     opacity: 0.6;
     pointer-events: none;
 }
 
-/* Responsive improvements */
 @media (max-width: 768px) {
     .container-fluid {
         padding: 10px;
@@ -304,7 +300,6 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
-/* Utility classes */
 .text-gradient {
     background: linear-gradient(135deg, #4a90e2, #357abd);
     -webkit-background-clip: text;

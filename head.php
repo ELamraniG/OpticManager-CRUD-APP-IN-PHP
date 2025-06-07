@@ -9,6 +9,9 @@ if ($v_session != 1) {
     echo "<div class='alert alert-danger'><i class='fa-solid fa-triangle-exclamation'></i> <b>optique manager</b> : Echec de connexion... | Vous n'avez pas le droit d'accéder à cette page sans authentification...</div>";
     exit();
 }
+
+// Include notifications
+include_once('get_notifications.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,10 +43,60 @@ if ($v_session != 1) {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    
-    <title>OPTIRENT</title>
+      <title>OPTIRENT</title>
 
     <link rel="stylesheet" type="text/css" href="../style.css">
+      <style>
+    /* Notification dropdown styles */
+    .notification-dropdown {
+        min-width: 350px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .notification-item {
+        transition: background-color 0.2s ease;
+        border-left: 3px solid transparent;
+    }
+    
+    .notification-item:hover {
+        background-color: #f8f9fa !important;
+        border-left-color: #007bff;
+    }
+    
+    .notification-badge {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+        .notification-dropdown {
+            min-width: 280px;
+            max-width: 90vw;
+        }
+    }
+    
+    /* Bell icon hover effect */
+    #notificationDropdown:hover .fas.fa-bell {
+        animation: swing 1s ease-in-out;
+    }
+    
+    @keyframes swing {
+        15% { transform: translateX(5px); }
+        30% { transform: translateX(-5px); }
+        45% { transform: translateX(3px); }
+        60% { transform: translateX(-3px); }
+        75% { transform: translateX(1px); }
+        90% { transform: translateX(-1px); }
+        100% { transform: translateX(0px); }
+    }
+    </style>
 </head>
 
 <body>
@@ -125,10 +178,7 @@ if ($user_role == 'opticien') {
                         <li><a class="dropdown-item" href="../Patients/patient-finder.php"><i class="fas fa-search me-2"></i>Recherche Patients</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="../Rendezvous/appointment-manager.php"><i class="fas fa-calendar-alt me-2"></i>Gestionnaire RDV</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Produit/product-catalog.php"><i class="fas fa-eye me-2"></i>Catalogue Produits</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../Dashboard/notifications.php"><i class="fas fa-bell me-2"></i>Centre de Notifications</a></li>
+                        <li><hr class="dropdown-divider"></li>                        <li><a class="dropdown-item" href="../Produit/product-catalog.php"><i class="fas fa-eye me-2"></i>Catalogue Produits</a></li>
                     </ul>
                 </li>                  <li class="nav-item">
                     <a class="nav-link px-2" href="../Dashboard/statistics.php">
@@ -189,8 +239,55 @@ if ($user_role == 'opticien') {
                 </li>
                 <?php endif; ?>
             </ul>
-            
-            <ul class="navbar-nav">
+              <ul class="navbar-nav">               
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link px-2 position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        <?php if(!empty($notifications) && $high_priority_count > 0): ?>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge" style="font-size: 0.6rem;">
+                            <?php echo count($notifications); ?>
+                        </span>
+                        <?php endif; ?>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 notification-dropdown">
+                        <li class="dropdown-header d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-bell me-2"></i>Notifications</span>
+                            <span class="badge bg-primary"><?php echo count($notifications); ?></span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <?php if(!empty($notifications)): ?>
+                            <?php foreach($notifications as $notif): ?>
+                            <li>
+                                <a class="dropdown-item py-2 notification-item" href="<?php echo $notif['action']; ?>">
+                                    <div class="d-flex">
+                                        <div class="me-3 pt-1">
+                                            <i class="<?php echo $notif['icon']; ?>"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold small"><?php echo $notif['title']; ?></div>
+                                            <div class="text-muted small"><?php echo $notif['message']; ?></div>
+                                            <div class="text-muted" style="font-size: 0.7rem;"><?php echo $notif['time']; ?></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <?php endforeach; ?>
+                            <li class="text-center">
+                                <a class="dropdown-item small text-primary" href="../Stock/stock-alerts.php">
+                                    <i class="fas fa-eye me-1"></i>Voir toutes les alertes
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="text-center py-3">
+                                <i class="fas fa-check-circle text-success fa-2x"></i>
+                                <div class="small text-muted mt-2">Aucune notification</div>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link px-2" href="#">
                         <i class="fa-solid fa-user me-1"></i><?php echo ucfirst($user_role); ?>

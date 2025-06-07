@@ -23,17 +23,7 @@ while($row = mysqli_fetch_assoc($result)) {
     );
 }
 
-$query = "SELECT p.nomproduit, SUM(vd.quantite) as total_vendu 
-          FROM produit p 
-          JOIN vente_details vd ON p.idproduit = vd.idproduit 
-          GROUP BY p.idproduit 
-          ORDER BY total_vendu DESC 
-          LIMIT 5";
-$result = mysqli_query($con, $query);
-$produits_vendus = array();
-while($row = mysqli_fetch_assoc($result)) {
-    $produits_vendus[] = $row;
-}
+
 
 $query = "SELECT 
             CASE 
@@ -183,64 +173,15 @@ while($row = mysqli_fetch_assoc($result)) {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-4">
-             
-                <div class="col-md-6">
+            </div>            <div class="row mt-4">
+                <div class="col-md-12">
                     <div class="card analytics-card p-4">
                         <h5><i class="fas fa-chart-pie me-2"></i>Répartition des patients par âge</h5>
                         <div class="chart-container">
                             <canvas id="ageChart"></canvas>
                         </div>
                     </div>
-                </div>
-
-      
-                <div class="col-md-6">
-                    <div class="card analytics-card p-4">
-                        <h5><i class="fas fa-trophy me-2"></i>Top 5 des produits</h5>
-                        <div class="chart-container">
-                            <canvas id="produitsChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row mt-4 mb-5">
-                <div class="col-12">
-                    <div class="card analytics-card">
-                        <div class="card-header">
-                            <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions rapides</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <a href="../Dashboard/dashboard.php" class="btn btn-outline-primary w-100 mb-2">
-                                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="../Stock/inventory-manager.php" class="btn btn-outline-warning w-100 mb-2">
-                                        <i class="fas fa-boxes me-2"></i>Gérer le stock
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="../Patients/patient-finder.php" class="btn btn-outline-info w-100 mb-2">
-                                        <i class="fas fa-search me-2"></i>Rechercher patient
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="../Consultations/consultation-history.php" class="btn btn-outline-success w-100 mb-2">
-                                        <i class="fas fa-history me-2"></i>Historique
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </div>            </div>
         </div>
     </div>
 
@@ -318,38 +259,7 @@ while($row = mysqli_fetch_assoc($result)) {
             options: {
                 responsive: true,
                 maintainAspectRatio: false
-            }
-        });
-
-       
-        var produitsData = <?php echo json_encode($produits_vendus); ?>;
-        var produitsCtx = document.getElementById('produitsChart').getContext('2d');
-        new Chart(produitsCtx, {
-            type: 'horizontalBar',
-            data: {
-                labels: produitsData.map(function(item) { 
-                    return item.nomproduit.length > 20 ? item.nomproduit.substring(0, 20) + '...' : item.nomproduit;
-                }),
-                datasets: [{
-                    label: 'Quantité vendue',
-                    data: produitsData.map(function(item) { return item.total_vendu; }),
-                    backgroundColor: '#e74a3b',
-                    borderColor: '#e74a3b',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+            }        });
     </script>
 
 
