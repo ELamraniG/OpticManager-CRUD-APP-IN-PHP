@@ -1,9 +1,7 @@
 <?php
-	$id=$_GET['id'];
-	require("../connexion.php");
+	$id=$_GET['id'];	require("../connexion.php");
 	$res = mysqli_query($con, "select * from commande where idcommande = ".$id );
 	$data = mysqli_fetch_assoc($res);
-	mysqli_close($con);
 	require("../head.php");
 	require("../fonctions.php");
 ?>

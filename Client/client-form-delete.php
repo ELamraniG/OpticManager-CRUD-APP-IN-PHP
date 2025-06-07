@@ -1,10 +1,8 @@
 <?php
 	$id=$_GET['id'];
-	$r = "select * from client where idl = '".$id."'";
-	require("../connexion.php");
+	$r = "select * from client where idl = '".$id."'";	require("../connexion.php");
 	$res = mysqli_query($con, $r);
 	$data = mysqli_fetch_assoc($res);
-	mysqli_close($con);
 	require("../head.php");
 	require("../fonctions.php");
 ?>
@@ -60,4 +58,7 @@
 			redirection("client-list.php");
 		}
 	}
+?>
+<?php
+    require("../footer.php");
 ?>
