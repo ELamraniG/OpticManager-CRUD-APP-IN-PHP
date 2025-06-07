@@ -86,17 +86,8 @@ while($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics - OptiRent</title>
-    
-    <!-- Use same Bootstrap version as head.php -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- jQuery (required for dropdowns) -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    
-    <!-- Chart.js for older browsers -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
-    
+    <!-- Remove Bootstrap/jQuery - use only from head.php -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .analytics-card {
             border: none;
@@ -121,10 +112,6 @@ while($row = mysqli_fetch_assoc($result)) {
             color: white;
             padding: 30px 0;
             margin-bottom: 30px;
-        }
-        /* Ensure navbar is positioned correctly */
-        body {
-            padding-top: 0;
         }
     </style>
 </head>
@@ -272,9 +259,9 @@ while($row = mysqli_fetch_assoc($result)) {
     </div>
 
     <script>
-        // Configuration des graphiques pour Chart.js v2
-        Chart.defaults.global.defaultFontColor = '#666';
-        Chart.defaults.global.defaultFontFamily = 'Arial, sans-serif';
+        // Configuration des graphiques
+        Chart.defaults.color = '#666';
+        Chart.defaults.font.family = 'Arial, sans-serif';
 
         // Graphique des consultations
         var consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
@@ -381,7 +368,7 @@ while($row = mysqli_fetch_assoc($result)) {
         });
     </script>
 
-    <!-- Bootstrap JS (required for dropdowns) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Remove this line - Bootstrap is already loaded in head.php -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>

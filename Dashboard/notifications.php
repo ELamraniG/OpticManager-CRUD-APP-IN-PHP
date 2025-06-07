@@ -5,7 +5,7 @@ if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
     exit();
 }
 
-include('../connexion.php');
+require("../connexion.php");
 
 // Récupérer les notifications
 $notifications = array();
@@ -129,8 +129,14 @@ $low_count = countNotificationsByPriority($notifications, 'low');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centre de Notifications - OptiRent</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Use same versions as head.php -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- jQuery for dropdown functionality -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    
     <style>
         .notification-card {
             border: none;
@@ -201,156 +207,163 @@ $low_count = countNotificationsByPriority($notifications, 'low');
             font-size: 0.8rem;
             color: #6c757d;
         }
+        /* Fix for navbar spacing */
+        body {
+            padding-top: 0;
+        }
     </style>
 </head>
 <body class="bg-light">
     <?php include('../head.php'); ?>
 
-    <div class="page-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1><i class="fas fa-bell me-3"></i>Centre de Notifications</h1>
-                    <p class="mb-0">Surveillez les alertes et événements importants de votre cabinet</p>
-                </div>
-                <div class="col-md-4 text-end">
-                    <button class="btn btn-light btn-lg" onclick="location.reload()">
-                        <i class="fas fa-sync-alt me-2"></i>Actualiser
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Statistiques rapides -->
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="stats-card">
-                    <i class="fas fa-exclamation-circle fa-2x text-danger mb-2"></i>
-                    <h4 class="text-danger"><?php echo $high_count; ?></h4>
-                    <small class="text-muted">Alertes Critiques</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card">
-                    <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
-                    <h4 class="text-warning"><?php echo $medium_count; ?></h4>
-                    <small class="text-muted">Alertes Moyennes</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card">
-                    <i class="fas fa-info-circle fa-2x text-info mb-2"></i>
-                    <h4 class="text-info"><?php echo $low_count; ?></h4>
-                    <small class="text-muted">Informations</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stats-card">
-                    <i class="fas fa-bell fa-2x text-primary mb-2"></i>
-                    <h4 class="text-primary"><?php echo count($notifications); ?></h4>
-                    <small class="text-muted">Total Notifications</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- Liste des notifications -->
-        <div class="row">
-            <div class="col-12">
-                <?php if(empty($notifications)): ?>
-                    <div class="card notification-card">
-                        <div class="card-body no-notifications">
-                            <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
-                            <h4>Aucune notification</h4>
-                            <p class="text-muted">Tout semble fonctionner parfaitement !</p>
-                            <a href="../home/home.php" class="btn btn-primary btn-action">
-                                <i class="fas fa-tachometer-alt me-2"></i>Retour au Dashboard
-                            </a>
-                        </div>
+    <!-- Add proper spacing after navbar -->
+    <div style="margin-top: 70px;">
+        <div class="page-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1><i class="fas fa-bell me-3"></i>Centre de Notifications</h1>
+                        <p class="mb-0">Surveillez les alertes et événements importants de votre cabinet</p>
                     </div>
-                <?php else: ?>
-                    <?php foreach($notifications as $notification): ?>
-                        <div class="card notification-card priority-<?php echo $notification['priority']; ?>">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="notification-icon icon-<?php echo $notification['priority']; ?>">
-                                            <i class="<?php echo $notification['icon']; ?>"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="d-flex justify-content-between align-items-start">
-                                            <div>
-                                                <h5 class="mb-1"><?php echo htmlspecialchars($notification['title']); ?></h5>
-                                                <p class="mb-1"><?php echo htmlspecialchars($notification['message']); ?></p>
-                                                <small class="notification-time">
-                                                    <i class="fas fa-clock me-1"></i>
-                                                    Maintenant
-                                                </small>
+                    <div class="col-md-4 text-end">
+                        <button class="btn btn-light btn-lg" onclick="location.reload()">
+                            <i class="fas fa-sync-alt me-2"></i>Actualiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Statistiques rapides -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-exclamation-circle fa-2x text-danger mb-2"></i>
+                        <h4 class="text-danger"><?php echo $high_count; ?></h4>
+                        <small class="text-muted">Alertes Critiques</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                        <h4 class="text-warning"><?php echo $medium_count; ?></h4>
+                        <small class="text-muted">Alertes Moyennes</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-info-circle fa-2x text-info mb-2"></i>
+                        <h4 class="text-info"><?php echo $low_count; ?></h4>
+                        <small class="text-muted">Informations</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-bell fa-2x text-primary mb-2"></i>
+                        <h4 class="text-primary"><?php echo count($notifications); ?></h4>
+                        <small class="text-muted">Total Notifications</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liste des notifications -->
+            <div class="row">
+                <div class="col-12">
+                    <?php if(empty($notifications)): ?>
+                        <div class="card notification-card">
+                            <div class="card-body no-notifications">
+                                <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                                <h4>Aucune notification</h4>
+                                <p class="text-muted">Tout semble fonctionner parfaitement !</p>
+                                <a href="../home/home.php" class="btn btn-primary btn-action">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Retour au Dashboard
+                                </a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach($notifications as $notification): ?>
+                            <div class="card notification-card priority-<?php echo $notification['priority']; ?>">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="notification-icon icon-<?php echo $notification['priority']; ?>">
+                                                <i class="<?php echo $notification['icon']; ?>"></i>
                                             </div>
-                                            <div class="text-end">
-                                                <a href="<?php echo $notification['action']; ?>" 
-                                                   class="btn btn-outline-primary btn-action">
-                                                    <i class="fas fa-arrow-right me-1"></i>
-                                                    <?php echo $notification['action_text']; ?>
-                                                </a>
-                                                <?php if($notification['priority'] == 'high'): ?>
-                                                    <div class="mt-2">
-                                                        <span class="badge bg-danger">
-                                                            <i class="fas fa-exclamation me-1"></i>Urgent
-                                                        </span>
-                                                    </div>
-                                                <?php endif; ?>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div>
+                                                    <h5 class="mb-1"><?php echo htmlspecialchars($notification['title']); ?></h5>
+                                                    <p class="mb-1"><?php echo htmlspecialchars($notification['message']); ?></p>
+                                                    <small class="notification-time">
+                                                        <i class="fas fa-clock me-1"></i>
+                                                        Maintenant
+                                                    </small>
+                                                </div>
+                                                <div class="text-end">
+                                                    <a href="<?php echo $notification['action']; ?>" 
+                                                       class="btn btn-outline-primary btn-action">
+                                                        <i class="fas fa-arrow-right me-1"></i>
+                                                        <?php echo $notification['action_text']; ?>
+                                                    </a>
+                                                    <?php if($notification['priority'] == 'high'): ?>
+                                                        <div class="mt-2">
+                                                            <span class="badge bg-danger">
+                                                                <i class="fas fa-exclamation me-1"></i>Urgent
+                                                            </span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
 
-        <!-- Actions rapides -->
-        <div class="row mt-4 mb-5">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions Rapides</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <a href="../home/home.php" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                                </a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="../Stock/inventory-manager.php" class="btn btn-outline-warning w-100 mb-2">
-                                    <i class="fas fa-boxes me-2"></i>Stock
-                                </a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="../Patients/patient-finder.php" class="btn btn-outline-info w-100 mb-2">
-                                    <i class="fas fa-search me-2"></i>Patients
-                                </a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="../Consultations/consultation-history.php" class="btn btn-outline-success w-100 mb-2">
-                                    <i class="fas fa-history me-2"></i>Historique
-                                </a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="../Dashboard/dashboard.php" class="btn btn-outline-secondary w-100 mb-2">
-                                    <i class="fas fa-chart-line me-2"></i>Analytics
-                                </a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="../Ordonnances/ordonnances-form-add.php" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-prescription me-2"></i>Ordonnance
-                                </a>
+            <!-- Actions rapides -->
+            <div class="row mt-4 mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions Rapides</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a href="../home/home.php" class="btn btn-outline-primary w-100 mb-2">
+                                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="../Stock/inventory-manager.php" class="btn btn-outline-warning w-100 mb-2">
+                                        <i class="fas fa-boxes me-2"></i>Stock
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="../Patients/patient-finder.php" class="btn btn-outline-info w-100 mb-2">
+                                        <i class="fas fa-search me-2"></i>Patients
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="../Consultations/consultation-history.php" class="btn btn-outline-success w-100 mb-2">
+                                        <i class="fas fa-history me-2"></i>Historique
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="../Dashboard/statistics.php" class="btn btn-outline-secondary w-100 mb-2">
+                                        <i class="fas fa-chart-line me-2"></i>Statistics
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="../Ordonnances/ordonnances-form-add.php" class="btn btn-outline-primary w-100 mb-2">
+                                        <i class="fas fa-prescription me-2"></i>Ordonnance
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -359,7 +372,8 @@ $low_count = countNotificationsByPriority($notifications, 'low');
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (required for dropdowns) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
     <script>
         // Auto-refresh toutes les 5 minutes

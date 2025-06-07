@@ -115,8 +115,7 @@ $stats = mysqli_fetch_assoc($result_stats);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue Produits - OptiRent</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Remove Bootstrap/FA - use only from head.php -->
     <style>
         .product-card {
             border: none;
@@ -368,8 +367,6 @@ $stats = mysqli_fetch_assoc($result_stats);
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    
     <script>
         let currentView = 'grid';
         let searchTimeout;

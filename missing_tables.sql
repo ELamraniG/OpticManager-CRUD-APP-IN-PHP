@@ -19,10 +19,10 @@ CREATE TABLE `commandes_fournisseur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for commandes_fournisseur
-INSERT INTO `commandes_fournisseur` (`idcommande`, `idfournisseur`, `datecommande`, `statut`) VALUES
-(1, 'FOU001', '2024-06-01', 'livree'),
-(2, 'FOU002', '2024-06-03', 'en_attente'),
-(3, 'FOU001', '2024-06-05', 'annulee');
+INSERT INTO `commandes_fournisseur` (`idfournisseur`, `datecommande`, `statut`) VALUES
+('FOU001', '2024-06-01', 'livree'),
+('FOU002', '2024-06-03', 'en_attente'),
+('FOU001', '2024-06-05', 'annulee');
 
 -- =============================================
 -- TABLE: patients
@@ -41,10 +41,10 @@ CREATE TABLE `patients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for patients
-INSERT INTO `patients` (`idpatient`, `nom`, `prenom`, `datenaissance`, `sexe`, `telephone`, `email`, `adresse`, `datecreation`) VALUES
-(1, 'Durand', 'Sophie', '1992-05-12', 'Femme', '+33123456789', 'sophie.durand@email.com', '123 Rue de la Santé, Paris', '2024-06-01'),
-(2, 'Moreau', 'Laurent', '1985-09-23', 'Homme', '+33987654321', 'laurent.moreau@email.com', '456 Avenue des Roses, Lyon', '2024-06-02'),
-(3, 'Leroy', 'Camille', '1978-12-08', 'Femme', '+33456789123', 'camille.leroy@email.com', '789 Boulevard Central, Marseille', '2024-06-03');
+INSERT INTO `patients` (`nom`, `prenom`, `datenaissance`, `sexe`, `telephone`, `email`, `adresse`, `datecreation`) VALUES
+('Durand', 'Sophie', '1992-05-12', 'Femme', '+33123456789', 'sophie.durand@email.com', '123 Rue de la Santé, Paris', '2024-06-01'),
+('Moreau', 'Laurent', '1985-09-23', 'Homme', '+33987654321', 'laurent.moreau@email.com', '456 Avenue des Roses, Lyon', '2024-06-02'),
+('Leroy', 'Camille', '1978-12-08', 'Femme', '+33456789123', 'camille.leroy@email.com', '789 Boulevard Central, Marseille', '2024-06-03');
 
 -- =============================================
 -- TABLE: consultations
@@ -62,10 +62,10 @@ CREATE TABLE `consultations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for consultations
-INSERT INTO `consultations` (`idconsultation`, `idpatient`, `dateconsultation`, `motif`, `observations`, `prescriptionpdf`) VALUES
-(1, 1, '2024-06-10', 'Contrôle de vue annuel', 'Vision stable, légère myopie', 'prescription_001.pdf'),
-(2, 2, '2024-06-12', 'Fatigue oculaire', 'Presbytie naissante détectée', 'prescription_002.pdf'),
-(3, 3, '2024-06-15', 'Renouvellement lunettes', 'Prescription inchangée', NULL);
+INSERT INTO `consultations` (`idpatient`, `dateconsultation`, `motif`, `observations`, `prescriptionpdf`) VALUES
+(1, '2024-06-10', 'Contrôle de vue annuel', 'Vision stable, légère myopie', 'prescription_001.pdf'),
+(2, '2024-06-12', 'Fatigue oculaire', 'Presbytie naissante détectée', 'prescription_002.pdf'),
+(3, '2024-06-15', 'Renouvellement lunettes', 'Prescription inchangée', NULL);
 
 -- =============================================
 -- TABLE: ordonnances
@@ -85,13 +85,13 @@ CREATE TABLE `ordonnances` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for ordonnances
-INSERT INTO `ordonnances` (`idordonnance`, `idconsultation`, `oeil`, `sphere`, `cylindre`, `axe`, `addition`, `typecorrection`) VALUES
-(1, 1, 'Droit', -2.5, -0.5, 90, NULL, 'verre'),
-(2, 1, 'Gauche', -2.25, -0.75, 85, NULL, 'verre'),
-(3, 2, 'Droit', 0.5, 0, 0, 1.5, 'verre'),
-(4, 2, 'Gauche', 0.75, 0, 0, 1.5, 'verre'),
-(5, 3, 'Droit', -1.5, 0, 0, NULL, 'lentille'),
-(6, 3, 'Gauche', -1.75, 0, 0, NULL, 'lentille');
+INSERT INTO `ordonnances` (`idconsultation`, `oeil`, `sphere`, `cylindre`, `axe`, `addition`, `typecorrection`) VALUES
+(1, 'Droit', -2.5, -0.5, 90, NULL, 'verre'),
+(1, 'Gauche', -2.25, -0.75, 85, NULL, 'verre'),
+(2, 'Droit', 0.5, 0, 0, 1.5, 'verre'),
+(2, 'Gauche', 0.75, 0, 0, 1.5, 'verre'),
+(3, 'Droit', -1.5, 0, 0, NULL, 'lentille'),
+(3, 'Gauche', -1.75, 0, 0, NULL, 'lentille');
 
 -- =============================================
 -- TABLE: ventes
@@ -109,10 +109,10 @@ CREATE TABLE `ventes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for ventes
-INSERT INTO `ventes` (`id_vente`, `idpatient`, `datevente`, `montanttotal`, `modepaiement`, `statutpaiement`) VALUES
-(1, 1, '2024-06-10 14:30:00', 189.99, 'carte', 'paye'),
-(2, 2, '2024-06-12 16:15:00', 245.50, 'mutuelle', 'en_attente'),
-(3, 3, '2024-06-15 10:45:00', 79.99, 'especes', 'paye');
+INSERT INTO `ventes` (`idpatient`, `datevente`, `montanttotal`, `modepaiement`, `statutpaiement`) VALUES
+(1, '2024-06-10 14:30:00', 189.99, 'carte', 'paye'),
+(2, '2024-06-12 16:15:00', 245.50, 'mutuelle', 'en_attente'),
+(3, '2024-06-15 10:45:00', 79.99, 'especes', 'paye');
 
 -- =============================================
 -- TABLE: vente_details
@@ -131,12 +131,12 @@ CREATE TABLE `vente_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for vente_details
-INSERT INTO `vente_details` (`iddetail`, `idvente`, `idproduit`, `quantite`, `prixunitaire`) VALUES
-(1, 1, 1, 1, 89.99),
-(2, 1, 3, 2, 29.99),
-(3, 2, 2, 1, 149.99),
-(4, 2, 1, 1, 89.99),
-(5, 3, 3, 1, 29.99);
+INSERT INTO `vente_details` (`idvente`, `idproduit`, `quantite`, `prixunitaire`) VALUES
+(1, 1, 1, 89.99),
+(1, 3, 2, 29.99),
+(2, 2, 1, 149.99),
+(2, 1, 1, 89.99),
+(3, 3, 1, 29.99);
 
 -- =============================================
 -- TABLE: utilisateurs
@@ -153,10 +153,10 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for utilisateurs
-INSERT INTO `utilisateurs` (`idutilisateur`, `nomutilisateur`, `motdepasse`, `role`, `nomcomplet`, `actif`) VALUES
-(1, 'admin', MD5('admin123'), 'admin', 'Administrateur Principal', 1),
-(2, 'opticien1', MD5('opticien123'), 'opticien', 'Dr. Jean Dubois', 1),
-(3, 'assistant1', MD5('assistant123'), 'assistant', 'Marie Dupont', 1);
+INSERT INTO `utilisateurs` (`nomutilisateur`, `motdepasse`, `role`, `nomcomplet`, `actif`) VALUES
+('admin', MD5('admin123'), 'admin', 'Administrateur Principal', 1),
+('opticien1', MD5('opticien123'), 'opticien', 'Dr. Jean Dubois', 1),
+('assistant1', MD5('assistant123'), 'assistant', 'Marie Dupont', 1);
 
 -- =============================================
 -- ADDITIONAL VIEWS FOR THE NEW TABLES

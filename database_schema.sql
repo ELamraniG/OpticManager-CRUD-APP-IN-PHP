@@ -71,10 +71,10 @@ CREATE TABLE `produit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for produit
-INSERT INTO `produit` (`idproduit`, `idc`, `idf`, `nomproduit`, `marque`, `notes`, `prixdachat`, `tvaappliquee`, `prixdevente`, `qteenstock`, `seuildalerte`) VALUES
-(1, 'CAT001', 'FOU001', 'Lunettes de vue classiques', 'RayBan', 'Modèle populaire', 45.00, 20.00, 89.99, 50, 10),
-(2, 'CAT002', 'FOU001', 'Lunettes de soleil sport', 'Oakley', 'Protection UV maximale', 75.00, 20.00, 149.99, 25, 5),
-(3, 'CAT003', 'FOU002', 'Lentilles mensuelles', 'Acuvue', 'Confort toute la journée', 15.00, 20.00, 29.99, 100, 20);
+INSERT INTO `produit` (`idc`, `idf`, `nomproduit`, `marque`, `notes`, `prixdachat`, `tvaappliquee`, `prixdevente`, `qteenstock`, `seuildalerte`) VALUES
+('CAT001', 'FOU001', 'Lunettes de vue classiques', 'RayBan', 'Modèle populaire', 45.00, 20.00, 89.99, 50, 10),
+('CAT002', 'FOU001', 'Lunettes de soleil sport', 'Oakley', 'Protection UV maximale', 75.00, 20.00, 149.99, 25, 5),
+('CAT003', 'FOU002', 'Lentilles mensuelles', 'Acuvue', 'Confort toute la journée', 15.00, 20.00, 29.99, 100, 20);
 
 -- =============================================
 -- TABLE: cabinet
@@ -141,10 +141,10 @@ CREATE TABLE `rendezvous` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for rendezvous
-INSERT INTO `rendezvous` (`idrendezvous`, `daterendezvous`, `heurerendezvous`, `idclient`, `idcabinet`, `notes`, `niveaudecredibilite`) VALUES
-(1, '2024-06-10', '09:30:00', 'CLI001', 'CAB001', 'Contrôle annuel', 'Élevé'),
-(2, '2024-06-12', '14:15:00', 'CLI002', 'CAB002', 'Consultation spécialisée', 'Moyen'),
-(3, '2024-06-15', '11:00:00', 'CLI003', 'CAB001', 'Suivi post-opératoire', 'Élevé');
+INSERT INTO `rendezvous` (`daterendezvous`, `heurerendezvous`, `idclient`, `idcabinet`, `notes`, `niveaudecredibilite`) VALUES
+('2024-06-10', '09:30:00', 'CLI001', 'CAB001', 'Contrôle annuel', 'Élevé'),
+('2024-06-12', '14:15:00', 'CLI002', 'CAB002', 'Consultation spécialisée', 'Moyen'),
+('2024-06-15', '11:00:00', 'CLI003', 'CAB001', 'Suivi post-opératoire', 'Élevé');
 
 -- =============================================
 -- TABLE: commande
@@ -163,10 +163,10 @@ CREATE TABLE `commande` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Sample data for commande
-INSERT INTO `commande` (`idcommande`, `datecommande`, `idclient`, `idproduit`, `statut`) VALUES
-(1, '2024-06-01', 'CLI001', 1, 'Livré'),
-(2, '2024-06-03', 'CLI002', 3, 'En cours'),
-(3, '2024-06-05', 'CLI003', 2, 'En attente');
+INSERT INTO `commande` (`datecommande`, `idclient`, `idproduit`, `statut`) VALUES
+('2024-06-01', 'CLI001', 1, 'Livré'),
+('2024-06-03', 'CLI002', 3, 'En cours'),
+('2024-06-05', 'CLI003', 2, 'En attente');
 
 -- =============================================
 -- ADDITIONAL USEFUL QUERIES

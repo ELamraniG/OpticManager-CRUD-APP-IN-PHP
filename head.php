@@ -139,14 +139,28 @@ if ($user_role == 'opticien') {
                     </ul>
                 </li>
                   <li class="nav-item">
-                    <a class="nav-link px-3" href="../Dashboard/analytics.php">
-                        <i class='bx bx-pie-chart-alt-2 me-1'></i>Analytics
+                    <a class="nav-link px-3" href="../Dashboard/statistics.php">
+                        <i class='bx bx-pie-chart-alt-2 me-1'></i>Statistics
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3" href="#">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarParamsDropdown" role="button" data-bs-toggle="dropdown">
                         <i class='bx bx-cog me-1'></i>Paramètres
                     </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a class="dropdown-item" href="../Utilisateurs/utilisateurs-list.php"><i class="fas fa-user-cog me-2"></i>Gestion des Utilisateurs</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarAideDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class='bx bx-help-circle me-1'></i>Aide
+                    </a>
+                    <ul class="dropdown-menu shadow border-0">
+                        <li><a class="dropdown-item" href="../Aide/a-propos.php"><i class="fas fa-info-circle me-2"></i>À propos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../Aide/contacter-support.php"><i class="fas fa-headset me-2"></i>Contacter le support</a></li>
+                    </ul>
                 </li>
                 
                 <?php elseif ($user_role == 'opticien'): ?>                <li class="nav-item dropdown">
