@@ -25,18 +25,12 @@ function moncrypte($mdp)
 
 function get_image($photo)
 {
-	#get file name by *['name'] through $FILES
     $nom = $_FILES['photo']['name'];
-    #we get type by *['type']
     $type = $_FILES['photo']['type'];
     if ($type == "image/jpeg" || $type == "image/png" || $type == "image/jpg")
     {
-            #get a temporary file from the upload
             $name_tmp = $_FILES['photo']['tmp_name'];
-            #lead the uploaded file and move it to your file
             $dossier = "../images/employe-profile/";
-            #we have to encode file name to upload it correctly without special chars
-            #using utf8_decode
             if (move_uploaded_file($name_tmp, $dossier.utf8_decode($nom)))
                 return $nom;
             else
