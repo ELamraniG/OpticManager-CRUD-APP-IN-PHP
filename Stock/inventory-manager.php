@@ -2,19 +2,6 @@
 require("../head.php");
 require("../connexion.php");
 
-// Handle alert threshold updates
-if (isset($_POST['update_threshold'])) {
-    $product_id = mysqli_real_escape_string($con, $_POST['product_id']);
-    $new_threshold = mysqli_real_escape_string($con, $_POST['new_threshold']);
-    
-    $update_query = "UPDATE produit SET seuildalerte = '$new_threshold' WHERE idproduit = '$product_id'";
-    if (mysqli_query($con, $update_query)) {
-        $success_message = "Seuil d'alerte mis à jour avec succès !";
-    } else {
-        $error_message = "Erreur lors de la mise à jour du seuil.";
-    }
-}
-
 // Get filter parameters
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 $category_filter = isset($_GET['category']) ? mysqli_real_escape_string($con, $_GET['category']) : '';
@@ -58,25 +45,11 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
 ?>
 
 <div class="container" style="margin-top: 100px;">
-    <?php if (isset($success_message)): ?>
-        <div class="alert alert-success alert-dismissible fade show">
-            <?php echo $success_message; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-    
-    <?php if (isset($error_message)): ?>
-        <div class="alert alert-danger alert-dismissible fade show">
-            <?php echo $error_message; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
     <!-- Header with Statistics -->
     <div class="row mb-4">
         <div class="col-md-8">
-            <h1 class="display-4"><i class="fas fa-warehouse"></i> Gestion Inventaire</h1>
-            <p class="lead">Surveillance et gestion des stocks en temps réel</p>
+            <h1 class="display-4"><i class="fas fa-warehouse"></i> Inventaire</h1>
+            <p class="lead">Consultation des stocks en temps réel</p>
         </div>
         <div class="col-md-4">
             <div class="card bg-light">
@@ -103,22 +76,22 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
     <!-- Filters -->
     <div class="card shadow mb-4">
         <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-filter"></i> Filtres et Actions</h5>
+            <h5 class="mb-0"><i class="fas fa-filter"></i> Filtres</h5>
         </div>
         <div class="card-body">
             <form method="GET" action="" class="row align-items-end">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label">État du stock :</label>
-                    <select name="filter" class="form-select">
+                    <select name="filter" class="form-control">
                         <option value="all" <?php echo $filter == 'all' ? 'selected' : ''; ?>>Tous les produits</option>
                         <option value="low_stock" <?php echo $filter == 'low_stock' ? 'selected' : ''; ?>>Stock faible</option>
                         <option value="out_of_stock" <?php echo $filter == 'out_of_stock' ? 'selected' : ''; ?>>Rupture de stock</option>
                         <option value="in_stock" <?php echo $filter == 'in_stock' ? 'selected' : ''; ?>>En stock</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label">Catégorie :</label>
-                    <select name="category" class="form-select">
+                    <select name="category" class="form-control">
                         <option value="">Toutes les catégories</option>
                         <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
                             <option value="<?php echo $category['idc']; ?>" 
@@ -128,18 +101,10 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
                         <?php endwhile; ?>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i> Filtrer
                     </button>
-                </div>
-                <div class="col-md-4 text-end">
-                    <a href="../Produit/produit-form-add.php" class="btn btn-success me-2">
-                        <i class="fas fa-plus"></i> Nouveau Produit
-                    </a>
-                    <a href="../Stock/stock-quick-update.php" class="btn btn-info">
-                        <i class="fas fa-edit"></i> Mise à Jour Rapide
-                    </a>
                 </div>
             </form>
         </div>
@@ -156,7 +121,7 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
         <div class="card-body">
             <?php if ($nbr_service > 0): ?>
                 <div class="table-responsive">
-                    <table id="inventoryTable" class="table table-striped table-hover">
+                    <table class="table table-striped table-hover">
                         <thead class="table-dark">
                             <tr>
                                 <th>Produit</th>
@@ -166,7 +131,6 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
                                 <th>Stock Actuel</th>
                                 <th>Seuil d'Alerte</th>
                                 <th>Statut</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -201,41 +165,15 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
                                         <strong><?php echo number_format($data['prixdevente'], 2); ?> DH</strong>
                                     </td>
                                     <td class="text-center">
-                                        <span class="badge bg-<?php echo $status_class; ?> fs-6">
+                                        <span class="badge bg-<?php echo $status_class; ?>">
                                             <?php echo $data['qteenstock']; ?>
                                         </span>
                                     </td>
-                                    <td class="text-center">
-                                        <form method="POST" class="d-inline" onsubmit="return confirm('Modifier le seuil d\'alerte ?')">
-                                            <input type="hidden" name="product_id" value="<?php echo $data['idproduit']; ?>">
-                                            <div class="input-group input-group-sm" style="width: 100px;">
-                                                <input type="number" name="new_threshold" value="<?php echo $data['seuildalerte']; ?>" 
-                                                       class="form-control" min="0" required>
-                                                <button type="submit" name="update_threshold" class="btn btn-outline-secondary">
-                                                    <i class="fas fa-save"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </td>
+                                    <td class="text-center"><?php echo $data['seuildalerte']; ?></td>
                                     <td class="text-center">
                                         <span class="badge bg-<?php echo $status_class; ?>">
                                             <i class="fas <?php echo $status_icon; ?>"></i> <?php echo $stock_status; ?>
                                         </span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="../Produit/produit-form-update.php?id=<?php echo $data['idproduit']; ?>" 
-                                               class="btn btn-outline-primary" title="Modifier">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <?php if ($data['qteenstock'] <= $data['seuildalerte']): ?>
-                                                <button class="btn btn-outline-success" 
-                                                        onclick="quickStockUpdate(<?php echo $data['idproduit']; ?>, '<?php echo addslashes($data['nomproduit']); ?>', <?php echo $data['qteenstock']; ?>)"
-                                                        title="Réapprovisionner">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -253,75 +191,6 @@ $out_of_stock_count = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit 
         </div>
     </div>
 </div>
-
-<!-- Quick Stock Update Modal -->
-<div class="modal fade" id="quickStockModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-plus"></i> Réapprovisionnement Rapide</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-info">
-                    <strong id="quickModalProductName"></strong><br>
-                    Stock actuel: <span id="quickModalCurrentStock" class="badge bg-primary"></span>
-                </div>
-                <div class="form-group">
-                    <label>Quantité à ajouter :</label>
-                    <input type="number" id="quickStockQuantity" class="form-control" min="1" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-success" onclick="performQuickUpdate()">
-                    <i class="fas fa-plus"></i> Ajouter Stock
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-let quickUpdateProductId = null;
-
-function quickStockUpdate(productId, productName, currentStock) {
-    quickUpdateProductId = productId;
-    document.getElementById('quickModalProductName').textContent = productName;
-    document.getElementById('quickModalCurrentStock').textContent = currentStock;
-    document.getElementById('quickStockQuantity').value = '';
-    
-    new bootstrap.Modal(document.getElementById('quickStockModal')).show();
-}
-
-function performQuickUpdate() {
-    const quantity = document.getElementById('quickStockQuantity').value;
-    
-    if (!quantity || quantity < 1) {
-        alert('Veuillez saisir une quantité valide');
-        return;
-    }
-    
-    // Redirect to stock update page with parameters
-    window.location.href = `../Stock/stock-quick-update.php?action=quick_add&product_id=${quickUpdateProductId}&quantity=${quantity}`;
-}
-
-// Initialize DataTable
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('inventoryTable')) {
-        $('#inventoryTable').DataTable({
-            "pageLength": 25,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json"
-            },
-            "order": [[4, "asc"]], // Sort by stock quantity ascending
-            "columnDefs": [
-                { "orderable": false, "targets": [7] } // Disable sorting for actions column
-            ]
-        });
-    }
-});
-</script>
 
 <?php
 mysqli_close($con);

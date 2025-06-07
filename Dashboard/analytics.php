@@ -86,9 +86,17 @@ while($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics - OptiRent</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Use same Bootstrap version as head.php -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- jQuery (required for dropdowns) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    
+    <!-- Chart.js for older browsers -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+    
     <style>
         .analytics-card {
             border: none;
@@ -114,140 +122,147 @@ while($row = mysqli_fetch_assoc($result)) {
             padding: 30px 0;
             margin-bottom: 30px;
         }
+        /* Ensure navbar is positioned correctly */
+        body {
+            padding-top: 0;
+        }
     </style>
 </head>
 <body class="bg-light">
     <?php include('../head.php'); ?>
 
-    <div class="page-header">
+    <!-- Add proper spacing after navbar -->
+    <div style="margin-top: 70px;">
+        <div class="page-header">
+            <div class="container">
+                <h1><i class="fas fa-chart-line me-3"></i>Analytics & Statistiques</h1>
+                <p class="mb-0">Analyse détaillée des performances de votre cabinet</p>
+            </div>
+        </div>
+
         <div class="container">
-            <h1><i class="fas fa-chart-line me-3"></i>Analytics & Statistiques</h1>
-            <p class="mb-0">Analyse détaillée des performances de votre cabinet</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Indicateurs clés -->
-        <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="card analytics-card text-center p-3">
-                    <i class="fas fa-users stat-icon text-primary"></i>
-                    <h4><?php 
-                        $query = "SELECT COUNT(*) as total FROM patients";
-                        $result = mysqli_query($con, $query);
-                        $total_data = mysqli_fetch_assoc($result);
-                        echo $total_data['total'];
-                    ?></h4>
-                    <p class="text-muted mb-0">Patients Total</p>
+            <!-- Indicateurs clés -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card analytics-card text-center p-3">
+                        <i class="fas fa-users stat-icon text-primary"></i>
+                        <h4><?php 
+                            $query = "SELECT COUNT(*) as total FROM patients";
+                            $result = mysqli_query($con, $query);
+                            $total_data = mysqli_fetch_assoc($result);
+                            echo $total_data['total'];
+                        ?></h4>
+                        <p class="text-muted mb-0">Patients Total</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card analytics-card text-center p-3">
-                    <i class="fas fa-calendar stat-icon text-success"></i>
-                    <h4><?php 
-                        $query = "SELECT COUNT(*) as total FROM consultations WHERE MONTH(dateconsultation) = MONTH(NOW())";
-                        $result = mysqli_query($con, $query);
-                        $total_data = mysqli_fetch_assoc($result);
-                        echo $total_data['total'];
-                    ?></h4>
-                    <p class="text-muted mb-0">Consultations ce mois</p>
+                <div class="col-md-3">
+                    <div class="card analytics-card text-center p-3">
+                        <i class="fas fa-calendar stat-icon text-success"></i>
+                        <h4><?php 
+                            $query = "SELECT COUNT(*) as total FROM consultations WHERE MONTH(dateconsultation) = MONTH(NOW())";
+                            $result = mysqli_query($con, $query);
+                            $total_data = mysqli_fetch_assoc($result);
+                            echo $total_data['total'];
+                        ?></h4>
+                        <p class="text-muted mb-0">Consultations ce mois</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card analytics-card text-center p-3">
-                    <i class="fas fa-exclamation-triangle stat-icon text-warning"></i>
-                    <h4><?php echo $stock_critique; ?></h4>
-                    <p class="text-muted mb-0">Produits en rupture</p>
+                <div class="col-md-3">
+                    <div class="card analytics-card text-center p-3">
+                        <i class="fas fa-exclamation-triangle stat-icon text-warning"></i>
+                        <h4><?php echo $stock_critique; ?></h4>
+                        <p class="text-muted mb-0">Produits en rupture</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card analytics-card text-center p-3">
-                    <i class="fas fa-euro-sign stat-icon text-info"></i>
-                    <h4><?php 
-                        $query = "SELECT SUM(montanttotal) as total FROM ventes WHERE MONTH(datevente) = MONTH(NOW())";
-                        $result = mysqli_query($con, $query);
-                        $ca_data = mysqli_fetch_assoc($result);
-                        $ca = $ca_data['total'];
-                        echo number_format($ca ? $ca : 0, 0, ',', ' ');
-                    ?>€</h4>
-                    <p class="text-muted mb-0">CA ce mois</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Graphiques -->
-        <div class="row">
-            <!-- Consultations mensuelles -->
-            <div class="col-md-6">
-                <div class="card analytics-card p-4">
-                    <h5><i class="fas fa-chart-line me-2"></i>Consultations par mois</h5>
-                    <div class="chart-container">
-                        <canvas id="consultationsChart"></canvas>
+                <div class="col-md-3">
+                    <div class="card analytics-card text-center p-3">
+                        <i class="fas fa-euro-sign stat-icon text-info"></i>
+                        <h4><?php 
+                            $query = "SELECT SUM(montanttotal) as total FROM ventes WHERE MONTH(datevente) = MONTH(NOW())";
+                            $result = mysqli_query($con, $query);
+                            $ca_data = mysqli_fetch_assoc($result);
+                            $ca = $ca_data['total'];
+                            echo number_format($ca ? $ca : 0, 0, ',', ' ');
+                        ?>€</h4>
+                        <p class="text-muted mb-0">CA ce mois</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Chiffre d'affaires -->
-            <div class="col-md-6">
-                <div class="card analytics-card p-4">
-                    <h5><i class="fas fa-chart-bar me-2"></i>Chiffre d'affaires mensuel</h5>
-                    <div class="chart-container">
-                        <canvas id="caChart"></canvas>
+            <!-- Graphiques -->
+            <div class="row">
+                <!-- Consultations mensuelles -->
+                <div class="col-md-6">
+                    <div class="card analytics-card p-4">
+                        <h5><i class="fas fa-chart-line me-2"></i>Consultations par mois</h5>
+                        <div class="chart-container">
+                            <canvas id="consultationsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chiffre d'affaires -->
+                <div class="col-md-6">
+                    <div class="card analytics-card p-4">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Chiffre d'affaires mensuel</h5>
+                        <div class="chart-container">
+                            <canvas id="caChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row mt-4">
-            <!-- Répartition par âge -->
-            <div class="col-md-6">
-                <div class="card analytics-card p-4">
-                    <h5><i class="fas fa-chart-pie me-2"></i>Répartition des patients par âge</h5>
-                    <div class="chart-container">
-                        <canvas id="ageChart"></canvas>
+            <div class="row mt-4">
+                <!-- Répartition par âge -->
+                <div class="col-md-6">
+                    <div class="card analytics-card p-4">
+                        <h5><i class="fas fa-chart-pie me-2"></i>Répartition des patients par âge</h5>
+                        <div class="chart-container">
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produits les plus vendus -->
+                <div class="col-md-6">
+                    <div class="card analytics-card p-4">
+                        <h5><i class="fas fa-trophy me-2"></i>Top 5 des produits</h5>
+                        <div class="chart-container">
+                            <canvas id="produitsChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Produits les plus vendus -->
-            <div class="col-md-6">
-                <div class="card analytics-card p-4">
-                    <h5><i class="fas fa-trophy me-2"></i>Top 5 des produits</h5>
-                    <div class="chart-container">
-                        <canvas id="produitsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Actions rapides -->
-        <div class="row mt-4 mb-5">
-            <div class="col-12">
-                <div class="card analytics-card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions rapides</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="../Dashboard/dashboard.php" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="../Stock/inventory-manager.php" class="btn btn-outline-warning w-100 mb-2">
-                                    <i class="fas fa-boxes me-2"></i>Gérer le stock
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="../Patients/patient-finder.php" class="btn btn-outline-info w-100 mb-2">
-                                    <i class="fas fa-search me-2"></i>Rechercher patient
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="../Consultations/consultation-history.php" class="btn btn-outline-success w-100 mb-2">
-                                    <i class="fas fa-history me-2"></i>Historique
-                                </a>
+            <!-- Actions rapides -->
+            <div class="row mt-4 mb-5">
+                <div class="col-12">
+                    <div class="card analytics-card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions rapides</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a href="../Dashboard/dashboard.php" class="btn btn-outline-primary w-100 mb-2">
+                                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="../Stock/inventory-manager.php" class="btn btn-outline-warning w-100 mb-2">
+                                        <i class="fas fa-boxes me-2"></i>Gérer le stock
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="../Patients/patient-finder.php" class="btn btn-outline-info w-100 mb-2">
+                                        <i class="fas fa-search me-2"></i>Rechercher patient
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="../Consultations/consultation-history.php" class="btn btn-outline-success w-100 mb-2">
+                                        <i class="fas fa-history me-2"></i>Historique
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,9 +272,9 @@ while($row = mysqli_fetch_assoc($result)) {
     </div>
 
     <script>
-        // Configuration des graphiques
-        Chart.defaults.color = '#666';
-        Chart.defaults.font.family = 'Arial, sans-serif';
+        // Configuration des graphiques pour Chart.js v2
+        Chart.defaults.global.defaultFontColor = '#666';
+        Chart.defaults.global.defaultFontFamily = 'Arial, sans-serif';
 
         // Graphique des consultations
         var consultationsData = <?php echo json_encode($consultations_mensuelle); ?>;
@@ -273,7 +288,6 @@ while($row = mysqli_fetch_assoc($result)) {
                     data: consultationsData.map(function(item) { return item.total; }),
                     borderColor: '#4e73df',
                     backgroundColor: 'rgba(78, 115, 223, 0.1)',
-                    tension: 0.3,
                     fill: true
                 }]
             },
@@ -281,9 +295,11 @@ while($row = mysqli_fetch_assoc($result)) {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         });
@@ -307,9 +323,11 @@ while($row = mysqli_fetch_assoc($result)) {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         });
@@ -338,7 +356,9 @@ while($row = mysqli_fetch_assoc($result)) {
         new Chart(produitsCtx, {
             type: 'horizontalBar',
             data: {
-                labels: produitsData.map(function(item) { return item.nomproduit.substring(0, 20) + '...'; }),
+                labels: produitsData.map(function(item) { 
+                    return item.nomproduit.length > 20 ? item.nomproduit.substring(0, 20) + '...' : item.nomproduit;
+                }),
                 datasets: [{
                     label: 'Quantité vendue',
                     data: produitsData.map(function(item) { return item.total_vendu; }),
@@ -351,14 +371,17 @@ while($row = mysqli_fetch_assoc($result)) {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    x: {
-                        beginAtZero: true
-                    }
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
         });
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (required for dropdowns) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

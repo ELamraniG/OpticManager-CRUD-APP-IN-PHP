@@ -1,11 +1,11 @@
 <?php
 session_start();
-if(!isset($_SESSION['isadmin']) || $_SESSION['isadmin'] != 1) {
-    header('Location: ../');
+if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
+    header('Location: ../index-main.php');
     exit();
 }
 
-include('../cnx.php');
+include('../connexion.php');
 
 // Récupérer les notifications
 $notifications = array();
@@ -29,7 +29,8 @@ while($row = mysqli_fetch_assoc($result)) {
 // 2. Rendez-vous du jour
 $query = "SELECT COUNT(*) as nb_rdv FROM rendezvous WHERE DATE(daterendezvous) = CURDATE()";
 $result = mysqli_query($con, $query);
-$nb_rdv = mysqli_fetch_assoc($result)['nb_rdv'];
+$nb_rdv_row = mysqli_fetch_assoc($result);
+$nb_rdv = $nb_rdv_row['nb_rdv'];
 if($nb_rdv > 0) {
     $notifications[] = array(
         'type' => 'rdv',
@@ -46,7 +47,8 @@ if($nb_rdv > 0) {
 // 3. Consultations récentes sans ordonnance
 $query = "SELECT COUNT(*) as nb FROM consultations WHERE prescriptionpdf IS NULL AND dateconsultation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
 $result = mysqli_query($con, $query);
-$nb_sans_ord = mysqli_fetch_assoc($result)['nb'];
+$nb_sans_ord_row = mysqli_fetch_assoc($result);
+$nb_sans_ord = $nb_sans_ord_row['nb'];
 if($nb_sans_ord > 0) {
     $notifications[] = array(
         'type' => 'ordonnance',
@@ -63,7 +65,8 @@ if($nb_sans_ord > 0) {
 // 4. Nouveaux patients cette semaine
 $query = "SELECT COUNT(*) as nb FROM patients WHERE datecreation >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
 $result = mysqli_query($con, $query);
-$nouveaux_patients = mysqli_fetch_assoc($result)['nb'];
+$nouveaux_patients_row = mysqli_fetch_assoc($result);
+$nouveaux_patients = $nouveaux_patients_row['nb'];
 if($nouveaux_patients > 0) {
     $notifications[] = array(
         'type' => 'patient',
@@ -77,28 +80,47 @@ if($nouveaux_patients > 0) {
     );
 }
 
-// 5. Ventes importantes du jour
-$query = "SELECT SUM(montant_total) as total_jour FROM ventes WHERE DATE(date_vente) = CURDATE()";
+// 5. Ventes importantes du jour (si la table existe)
+$query = "SELECT SUM(montanttotal) as total_jour FROM ventes WHERE DATE(datevente) = CURDATE()";
 $result = mysqli_query($con, $query);
-$ventes_jour = mysqli_fetch_assoc($result)['total_jour'];
-if($ventes_jour > 500) {
-    $notifications[] = array(
-        'type' => 'vente',
-        'priority' => 'low',
-        'icon' => 'fas fa-euro-sign',
-        'title' => 'Excellentes ventes',
-        'message' => 'Chiffre d\'affaires du jour: ' . number_format($ventes_jour, 2) . '€',
-        'action' => '../Ventes/ventes-list.php',
-        'action_text' => 'Voir les ventes',
-        'date' => date('Y-m-d H:i:s')
-    );
+if($result) {
+    $ventes_jour_row = mysqli_fetch_assoc($result);
+    $ventes_jour = $ventes_jour_row['total_jour'];
+    if($ventes_jour > 500) {
+        $notifications[] = array(
+            'type' => 'vente',
+            'priority' => 'low',
+            'icon' => 'fas fa-euro-sign',
+            'title' => 'Excellentes ventes',
+            'message' => 'Chiffre d\'affaires du jour: ' . number_format($ventes_jour, 2) . '€',
+            'action' => '../Ventes/ventes-list.php',
+            'action_text' => 'Voir les ventes',
+            'date' => date('Y-m-d H:i:s')
+        );
+    }
 }
 
-// Trier par priorité
-$priority_order = array('high' => 1, 'medium' => 2, 'low' => 3);
-usort($notifications, function($a, $b) use ($priority_order) {
+// Fonction pour trier par priorité (compatible avec PHP ancien)
+function sortByPriority($a, $b) {
+    $priority_order = array('high' => 1, 'medium' => 2, 'low' => 3);
     return $priority_order[$a['priority']] - $priority_order[$b['priority']];
-});
+}
+usort($notifications, 'sortByPriority');
+
+// Fonctions pour compter les notifications par priorité
+function countNotificationsByPriority($notifications, $priority) {
+    $count = 0;
+    foreach($notifications as $notification) {
+        if($notification['priority'] == $priority) {
+            $count++;
+        }
+    }
+    return $count;
+}
+
+$high_count = countNotificationsByPriority($notifications, 'high');
+$medium_count = countNotificationsByPriority($notifications, 'medium');
+$low_count = countNotificationsByPriority($notifications, 'low');
 ?>
 
 <!DOCTYPE html>
@@ -206,21 +228,21 @@ usort($notifications, function($a, $b) use ($priority_order) {
             <div class="col-md-3">
                 <div class="stats-card">
                     <i class="fas fa-exclamation-circle fa-2x text-danger mb-2"></i>
-                    <h4 class="text-danger"><?php echo count(array_filter($notifications, function($n) { return $n['priority'] == 'high'; })); ?></h4>
+                    <h4 class="text-danger"><?php echo $high_count; ?></h4>
                     <small class="text-muted">Alertes Critiques</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stats-card">
                     <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
-                    <h4 class="text-warning"><?php echo count(array_filter($notifications, function($n) { return $n['priority'] == 'medium'; })); ?></h4>
+                    <h4 class="text-warning"><?php echo $medium_count; ?></h4>
                     <small class="text-muted">Alertes Moyennes</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stats-card">
                     <i class="fas fa-info-circle fa-2x text-info mb-2"></i>
-                    <h4 class="text-info"><?php echo count(array_filter($notifications, function($n) { return $n['priority'] == 'low'; })); ?></h4>
+                    <h4 class="text-info"><?php echo $low_count; ?></h4>
                     <small class="text-muted">Informations</small>
                 </div>
             </div>
@@ -242,7 +264,7 @@ usort($notifications, function($a, $b) use ($priority_order) {
                             <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
                             <h4>Aucune notification</h4>
                             <p class="text-muted">Tout semble fonctionner parfaitement !</p>
-                            <a href="../Dashboard/dashboard.php" class="btn btn-primary btn-action">
+                            <a href="../home/home.php" class="btn btn-primary btn-action">
                                 <i class="fas fa-tachometer-alt me-2"></i>Retour au Dashboard
                             </a>
                         </div>
@@ -301,7 +323,7 @@ usort($notifications, function($a, $b) use ($priority_order) {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <a href="../Dashboard/dashboard.php" class="btn btn-outline-primary w-100 mb-2">
+                                <a href="../home/home.php" class="btn btn-outline-primary w-100 mb-2">
                                     <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                                 </a>
                             </div>
@@ -321,7 +343,7 @@ usort($notifications, function($a, $b) use ($priority_order) {
                                 </a>
                             </div>
                             <div class="col-md-2">
-                                <a href="../Dashboard/analytics.php" class="btn btn-outline-secondary w-100 mb-2">
+                                <a href="../Dashboard/dashboard.php" class="btn btn-outline-secondary w-100 mb-2">
                                     <i class="fas fa-chart-line me-2"></i>Analytics
                                 </a>
                             </div>
@@ -346,18 +368,20 @@ usort($notifications, function($a, $b) use ($priority_order) {
         }, 300000);
 
         // Animation d'entrée pour les cartes
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.notification-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.3s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
+        window.onload = function() {
+            var cards = document.querySelectorAll('.notification-card');
+            for(var i = 0; i < cards.length; i++) {
+                cards[i].style.opacity = '0';
+                cards[i].style.transform = 'translateY(20px)';
+                (function(index) {
+                    setTimeout(function() {
+                        cards[index].style.transition = 'all 0.3s ease';
+                        cards[index].style.opacity = '1';
+                        cards[index].style.transform = 'translateY(0)';
+                    }, index * 100);
+                })(i);
+            }
+        };
     </script>
 </body>
 </html>

@@ -1,11 +1,11 @@
 <?php
 session_start();
-if(!isset($_SESSION['isadmin']) || $_SESSION['isadmin'] != 1) {
-    header('Location: ../');
+if(!isset($_SESSION['v_session']) || $_SESSION['v_session'] != 1) {
+    header('Location: ../index-main.php');
     exit();
 }
 
-include('../cnx.php');
+include('../connexion.php');
 
 // Traitement des actions AJAX
 if(isset($_POST['action'])) {
@@ -40,7 +40,7 @@ if(isset($_POST['action'])) {
         
         $where_clause = !empty($where_conditions) ? 'WHERE ' . implode(' AND ', $where_conditions) : '';
         
-        $query = "SELECT p.*, c.nom as categorie_nom 
+        $query = "SELECT p.*, c.titrec as categorie_nom 
                   FROM produit p 
                   LEFT JOIN categorie c ON p.idc = c.idc
                   $where_clause
@@ -60,7 +60,7 @@ if(isset($_POST['action'])) {
     if($_POST['action'] == 'get_product_details') {
         $id = mysqli_real_escape_string($con, $_POST['id']);
         
-        $query = "SELECT p.*, c.nom as categorie_nom, f.nom as fournisseur_nom
+        $query = "SELECT p.*, c.titrec as categorie_nom, f.nom as fournisseur_nom
                   FROM produit p 
                   LEFT JOIN categorie c ON p.idc = c.idc
                   LEFT JOIN fournisseur f ON p.idf = f.idf
@@ -70,11 +70,11 @@ if(isset($_POST['action'])) {
         $product = mysqli_fetch_assoc($result);
         
         // Récupérer l'historique des ventes
-        $query_sales = "SELECT vd.quantite, vd.prix_unitaire, v.date_vente
+        $query_sales = "SELECT vd.quantite, vd.prix_unitaire, v.datevente
                         FROM vente_details vd
                         JOIN ventes v ON vd.idvente = v.idvente
                         WHERE vd.idproduit = '$id'
-                        ORDER BY v.date_vente DESC
+                        ORDER BY v.datevente DESC
                         LIMIT 10";
         
         $result_sales = mysqli_query($con, $query_sales);
@@ -91,7 +91,7 @@ if(isset($_POST['action'])) {
 }
 
 // Récupérer les catégories pour le filtre
-$query_categories = "SELECT * FROM categorie ORDER BY nom";
+$query_categories = "SELECT * FROM categorie ORDER BY titrec";
 $result_categories = mysqli_query($con, $query_categories);
 $categories = array();
 while($row = mysqli_fetch_assoc($result_categories)) {
@@ -261,7 +261,7 @@ $stats = mysqli_fetch_assoc($result_stats);
                             <option value="">Toutes les catégories</option>
                             <?php foreach($categories as $category): ?>
                                 <option value="<?php echo $category['idc']; ?>">
-                                    <?php echo htmlspecialchars($category['nom']); ?>
+                                    <?php echo htmlspecialchars($category['titrec']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -566,7 +566,7 @@ $stats = mysqli_fetch_assoc($result_stats);
             if (product.sales_history && product.sales_history.length > 0) {
                 salesHtml = '<h6 class="mt-4">Historique des ventes récentes</h6><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Date</th><th>Quantité</th><th>Prix</th></tr></thead><tbody>';
                 product.sales_history.forEach(sale => {
-                    salesHtml += `<tr><td>${sale.date_vente}</td><td>${sale.quantite}</td><td>${parseFloat(sale.prix_unitaire).toFixed(2)}€</td></tr>`;
+                    salesHtml += `<tr><td>${sale.datevente}</td><td>${sale.quantite}</td><td>${parseFloat(sale.prix_unitaire).toFixed(2)}€</td></tr>`;
                 });
                 salesHtml += '</tbody></table></div>';
             } else {
@@ -618,8 +618,8 @@ $stats = mysqli_fetch_assoc($result_stats);
                                 <p class="small text-muted">Seuil d'alerte: ${product.seuildalerte}</p>
                                 
                                 <div class="mt-3">
-                                    <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="window.location.href='../Stock/stock-quick-update.php?id=${product.idproduit}'">
-                                        <i class="fas fa-edit me-1"></i>Modifier stock
+                                    <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="window.location.href='../Stock/inventory-manager.php'">
+                                        <i class="fas fa-warehouse me-1"></i>Voir Stock
                                     </button>
                                 </div>
                             </div>

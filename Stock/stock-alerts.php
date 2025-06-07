@@ -31,22 +31,6 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
         </div>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <a href="../Produit/produit-list.php" class="btn btn-primary">
-                <i class="fas fa-boxes"></i> Voir tous les produits
-            </a>
-            <a href="../Produit/produit-form-add.php" class="btn btn-success">
-                <i class="fas fa-plus"></i> Ajouter produit
-            </a>
-        </div>
-        <div class="col-md-6 text-end">
-            <button class="btn btn-warning" onclick="window.print()">
-                <i class="fas fa-print"></i> Imprimer les alertes
-            </button>
-        </div>
-    </div>
-
     <?php if ($nbr_alerts > 0): ?>
     <div class="card shadow">
         <div class="card-body">
@@ -66,7 +50,6 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
                         <th>Stock Actuel</th>
                         <th>Seuil d'Alerte</th>
                         <th>Statut</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,16 +70,8 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
                             <?php if ($data['qteenstock'] == 0): ?>
                                 <span class="badge bg-danger">RUPTURE</span>
                             <?php elseif ($data['qteenstock'] <= $data['seuildalerte']): ?>
-                                <span class="badge bg-warning text-dark">STOCK FAIBLE</span>
+                                <span class="badge bg-warning">STOCK FAIBLE</span>
                             <?php endif; ?>
-                        </td>
-                        <td>
-                            <a href="../Produit/produit-form-update.php?id=<?php echo urlencode($data['idproduit']); ?>" 
-                               class="btn btn-sm btn-primary" 
-                               data-bs-toggle="tooltip" 
-                               title="Modifier le stock">
-                                <i class="fas fa-edit"></i>
-                            </a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -111,9 +86,6 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
             <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
             <h3 class="mt-3 text-success">Excellent!</h3>
             <p class="lead text-muted">Aucune alerte de stock pour le moment. Tous vos produits sont bien approvisionnés.</p>
-            <a href="../Produit/produit-list.php" class="btn btn-primary">
-                <i class="fas fa-boxes"></i> Voir tous les produits
-            </a>
         </div>
     </div>
     <?php endif; ?>
@@ -181,13 +153,6 @@ $total_products = mysqli_num_rows(mysqli_query($con, "SELECT * FROM produit"));
         </div>
     </div>
 </div>
-
-<script>
-// Auto-refresh every 5 minutes
-setTimeout(function(){
-    location.reload();
-}, 300000);
-</script>
 
 <?php
 mysqli_close($con);
