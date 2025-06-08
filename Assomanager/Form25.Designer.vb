@@ -140,14 +140,14 @@ Partial Class menu
         Me.panelservice.Location = New System.Drawing.Point(-64, 128)
         Me.panelservice.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.panelservice.Name = "panelservice"
-        Me.panelservice.Size = New System.Drawing.Size(204, 99)
+        Me.panelservice.Size = New System.Drawing.Size(285, 99)
         Me.panelservice.TabIndex = 36
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(11, 50)
+        Me.Label1.Location = New System.Drawing.Point(131, 56)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 25)
         Me.Label1.TabIndex = 24
@@ -157,7 +157,7 @@ Partial Class menu
         '
         Me.cptservice.AutoSize = True
         Me.cptservice.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cptservice.Location = New System.Drawing.Point(8, 13)
+        Me.cptservice.Location = New System.Drawing.Point(110, 10)
         Me.cptservice.Name = "cptservice"
         Me.cptservice.Size = New System.Drawing.Size(120, 39)
         Me.cptservice.TabIndex = 23
@@ -212,17 +212,17 @@ Partial Class menu
         Me.panelemploye.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panelemploye.Controls.Add(Me.Label2)
         Me.panelemploye.Controls.Add(Me.cptemploye)
-        Me.panelemploye.Location = New System.Drawing.Point(162, 128)
+        Me.panelemploye.Location = New System.Drawing.Point(338, 128)
         Me.panelemploye.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.panelemploye.Name = "panelemploye"
-        Me.panelemploye.Size = New System.Drawing.Size(204, 99)
+        Me.panelemploye.Size = New System.Drawing.Size(218, 99)
         Me.panelemploye.TabIndex = 37
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(5, 50)
+        Me.Label2.Location = New System.Drawing.Point(50, 50)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(88, 25)
         Me.Label2.TabIndex = 24
@@ -244,17 +244,17 @@ Partial Class menu
         Me.panelaffectation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panelaffectation.Controls.Add(Me.Label3)
         Me.panelaffectation.Controls.Add(Me.cptaffectation)
-        Me.panelaffectation.Location = New System.Drawing.Point(391, 128)
+        Me.panelaffectation.Location = New System.Drawing.Point(574, 128)
         Me.panelaffectation.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.panelaffectation.Name = "panelaffectation"
-        Me.panelaffectation.Size = New System.Drawing.Size(204, 99)
+        Me.panelaffectation.Size = New System.Drawing.Size(242, 99)
         Me.panelaffectation.TabIndex = 38
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(5, 50)
+        Me.Label3.Location = New System.Drawing.Point(68, 49)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(104, 25)
         Me.Label3.TabIndex = 24
@@ -390,17 +390,17 @@ Partial Class menu
         Me.panelutilisateur.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panelutilisateur.Controls.Add(Me.Label7)
         Me.panelutilisateur.Controls.Add(Me.cptutilisateur)
-        Me.panelutilisateur.Location = New System.Drawing.Point(846, 128)
+        Me.panelutilisateur.Location = New System.Drawing.Point(835, 128)
         Me.panelutilisateur.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.panelutilisateur.Name = "panelutilisateur"
-        Me.panelutilisateur.Size = New System.Drawing.Size(204, 99)
+        Me.panelutilisateur.Size = New System.Drawing.Size(253, 99)
         Me.panelutilisateur.TabIndex = 42
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(5, 52)
+        Me.Label7.Location = New System.Drawing.Point(71, 56)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(97, 25)
         Me.Label7.TabIndex = 24
@@ -410,7 +410,7 @@ Partial Class menu
         '
         Me.cptutilisateur.AutoSize = True
         Me.cptutilisateur.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cptutilisateur.Location = New System.Drawing.Point(3, 10)
+        Me.cptutilisateur.Location = New System.Drawing.Point(24, 10)
         Me.cptutilisateur.Name = "cptutilisateur"
         Me.cptutilisateur.Size = New System.Drawing.Size(208, 39)
         Me.cptutilisateur.TabIndex = 23
@@ -442,7 +442,7 @@ Partial Class menu
         Me.heuresysteme.AutoSize = True
         Me.heuresysteme.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.heuresysteme.ForeColor = System.Drawing.Color.Black
-        Me.heuresysteme.Location = New System.Drawing.Point(14, 142)
+        Me.heuresysteme.Location = New System.Drawing.Point(72, 142)
         Me.heuresysteme.Name = "heuresysteme"
         Me.heuresysteme.Size = New System.Drawing.Size(230, 39)
         Me.heuresysteme.TabIndex = 24
@@ -495,10 +495,10 @@ Partial Class menu
         Me.paneldateheure.Controls.Add(Me.joursysteme)
         Me.paneldateheure.Controls.Add(Me.heuresysteme)
         Me.paneldateheure.Controls.Add(Me.datesysteme)
-        Me.paneldateheure.Location = New System.Drawing.Point(865, 128)
+        Me.paneldateheure.Location = New System.Drawing.Point(1111, 128)
         Me.paneldateheure.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.paneldateheure.Name = "paneldateheure"
-        Me.paneldateheure.Size = New System.Drawing.Size(374, 284)
+        Me.paneldateheure.Size = New System.Drawing.Size(301, 284)
         Me.paneldateheure.TabIndex = 40
         '
         'datesysteme
@@ -552,8 +552,8 @@ Partial Class menu
         'EtatDesServicesToolStripMenuItem
         '
         Me.EtatDesServicesToolStripMenuItem.Name = "EtatDesServicesToolStripMenuItem"
-        Me.EtatDesServicesToolStripMenuItem.Size = New System.Drawing.Size(275, 24)
-        Me.EtatDesServicesToolStripMenuItem.Text = "Les employés d'un service"
+        Me.EtatDesServicesToolStripMenuItem.Size = New System.Drawing.Size(310, 24)
+        Me.EtatDesServicesToolStripMenuItem.Text = "les participents dans un evenement"
         '
         'ToolStripSeparator8
         '
@@ -563,8 +563,8 @@ Partial Class menu
         'EtatDesEmployésParServiceToolStripMenuItem
         '
         Me.EtatDesEmployésParServiceToolStripMenuItem.Name = "EtatDesEmployésParServiceToolStripMenuItem"
-        Me.EtatDesEmployésParServiceToolStripMenuItem.Size = New System.Drawing.Size(275, 24)
-        Me.EtatDesEmployésParServiceToolStripMenuItem.Text = "Les affectations d'un employé"
+        Me.EtatDesEmployésParServiceToolStripMenuItem.Size = New System.Drawing.Size(310, 24)
+        Me.EtatDesEmployésParServiceToolStripMenuItem.Text = "Les membre dún categorie"
         '
         'MenuStrip1
         '

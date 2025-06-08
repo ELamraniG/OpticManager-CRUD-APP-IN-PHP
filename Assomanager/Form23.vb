@@ -274,7 +274,7 @@ Public Class Form23
         End Try
     End Sub
 
-    Private Sub ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Click
+    Public Sub ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Click
         etat = 2
         Dim evenement_recherche As String
         evenement_recherche = InputBox("Entrez le titre de l'événement à rechercher", "Imprimer participants par événement", "")

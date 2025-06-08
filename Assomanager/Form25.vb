@@ -146,7 +146,7 @@ Public Class menu
         'Ouvrir la fenêtre correspondate en la réduisant dans la barre des taches et sans l'afficher
 
         ' Créer une nouvelle instance de la fenêtre 
-        Dim frm As New Form1()
+        Dim frm As New Form23()
 
         ' Masquer la fenêtre dans la barre des tâches
         frm.ShowInTaskbar = False
@@ -158,16 +158,16 @@ Public Class menu
         frm.Show()
 
         ' Appeler la méthode d'impression xxxx_Click pour imprimer 
-        ' frm.ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(sender, e)
+        frm.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(sender, e)
 
     End Sub
 
     Private Sub EtatDesEmployésParServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EtatDesEmployésParServiceToolStripMenuItem.Click
-        Dim frm As New Form1()
+        Dim frm As New Form17()
         frm.ShowInTaskbar = False
         frm.WindowState = FormWindowState.Minimized
         frm.Show()
-        ' frm.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem_Click(sender, e)
+        frm.ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(sender, e)
     End Sub
 
 
@@ -365,5 +365,9 @@ Public Class menu
 
     Private Sub ToolStripMenuItem7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem7.Click
         Form5.ShowDialog()
+    End Sub
+
+    Private Sub paneldateheure_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles paneldateheure.Paint
+
     End Sub
 End Class

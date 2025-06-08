@@ -78,7 +78,7 @@ Public Class Form1
     Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
         Dim nomachercher As String
         nomachercher = InputBox("Entrez le nom à chercher ", "Rechercher par le nom", "")
-        requete = "select * from role where nomrole like '%" + nomachercher + "%'"
+        requete = "select * from roles where nomrole like '%" + nomachercher + "%'"
         connexion()
         Dim da As New OleDbDataAdapter
         da = New OleDbDataAdapter(requete, con)

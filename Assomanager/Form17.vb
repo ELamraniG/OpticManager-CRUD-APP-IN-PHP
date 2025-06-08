@@ -234,7 +234,7 @@ Public Class Form17
         e.Graphics.DrawString("Entreprise : Liste des membres", font_titre, Brushes.Black, cl, 1100)
     End Sub
 
-    Private Sub ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerListeDesEmployésDunServiceToolStripMenuItem.Click
+    Public Sub ImprimerListeDesEmployésDunServiceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImprimerListeDesEmployésDunServiceToolStripMenuItem.Click
         etat = 2
         Dim categorie_recherche As String
         categorie_recherche = InputBox("Entrez l'ID de la catégorie à rechercher", "Imprimer liste des membres par catégorie", "")
