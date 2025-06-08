@@ -77,7 +77,7 @@ Partial Class Form17
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(154, 20)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(160, 20)
         Me.ToolStripStatusLabel2.Text = "| Gestion des membres"
         '
         'ToolStripSeparator1
@@ -105,6 +105,9 @@ Partial Class Form17
         Me.cpt.Name = "cpt"
         Me.cpt.Size = New System.Drawing.Size(113, 28)
         Me.cpt.Text = "ToolStripLabel1"
+        '
+        'PrintDocument1
+        '
         '
         'ToolStripSeparator2
         '
@@ -177,29 +180,29 @@ Partial Class Form17
         'ImprimerTousLesServicesToolStripMenuItem
         '
         Me.ImprimerTousLesServicesToolStripMenuItem.Name = "ImprimerTousLesServicesToolStripMenuItem"
-        Me.ImprimerTousLesServicesToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
+        Me.ImprimerTousLesServicesToolStripMenuItem.Size = New System.Drawing.Size(356, 24)
         Me.ImprimerTousLesServicesToolStripMenuItem.Text = "Imprimer tous les membres"
         '
         'ToolStripSeparator5
         '
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(336, 6)
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(353, 6)
         '
         'ImprimerListeDesEmployésDunServiceToolStripMenuItem
         '
         Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Name = "ImprimerListeDesEmployésDunServiceToolStripMenuItem"
-        Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
+        Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Size = New System.Drawing.Size(356, 24)
         Me.ImprimerListeDesEmployésDunServiceToolStripMenuItem.Text = "Imprimer liste des membres par catégorie"
         '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(336, 6)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(353, 6)
         '
         'ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem
         '
         Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Name = "ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem"
-        Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Size = New System.Drawing.Size(339, 24)
+        Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Size = New System.Drawing.Size(356, 24)
         Me.ImprimerHistoriqueDesAffectationsDunEmployéToolStripMenuItem.Text = "Imprimer liste des membres par statut"
         '
         'PrintPreviewDialog1
@@ -248,7 +251,7 @@ Partial Class Form17
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Name = "Form17"
-        Me.Text = "Form17"
+        Me.Text = "membres"
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.toolbar.ResumeLayout(False)
         Me.toolbar.PerformLayout()
