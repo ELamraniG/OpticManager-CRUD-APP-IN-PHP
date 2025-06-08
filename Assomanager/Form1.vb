@@ -104,31 +104,37 @@ Public Class Form1
         Dim fontColonne As New Font("Arial", 10, FontStyle.Regular)
         Dim ln As Integer = 80
         Dim cl As Integer = 50
-        Dim imageToPrint As Image = Image.FromFile("images/logo.png")
-        e.Graphics.DrawImage(imageToPrint, 40, 40, 40, 40)
+        
+        ' Handle image loading with error checking
+        Try
+            If System.IO.File.Exists("images/logo.png") Then
+                Dim imageToPrint As Image = Image.FromFile("images/logo.png")
+                e.Graphics.DrawImage(imageToPrint, 40, 40, 40, 40)
+            End If
+        Catch ex As Exception
+            ' Continue without image if there's an error
+        End Try
+        
         e.Graphics.DrawString("Liste des roles", fontTitre, Brushes.Black, 90, 50)
         Dim ligne As New Pen(Color.Black)
         ln = ln + 30
-
 
         With e.Graphics
             .DrawString("Id Role", fontTColonne, Brushes.Black, cl, ln)
             .DrawString("Nom", fontTColonne, Brushes.Black, cl + 150, ln)
         End With
         ln = ln + 30
-        'e.Graphics.DrawLine(ligne, cl, ln, 750, ln)
+        
         Dim c1, c2 As String
         For i = 0 To dgv.Rows.Count - 1
-            c1 = dgv.Rows(i).Cells(0).Value
-            c2 = dgv.Rows(i).Cells(1).Value
+            c1 = dgv.Rows(i).Cells(0).Value.ToString()
+            c2 = dgv.Rows(i).Cells(1).Value.ToString()
             With e.Graphics
                 .DrawString(c1, fontColonne, Brushes.Black, cl, ln)
                 .DrawString(c2, fontTColonne, Brushes.Black, cl + 150, ln)
             End With
             ln = ln + 30
-            'e.Graphics.DrawLine(ligne, cl, ln, 750, ln)
         Next
-        'e.Graphics.DrawLine(ligne, cl, 1100, 750, 1100)
         e.Graphics.DrawString("Entreprise | Liste des roles", fontTitre, Brushes.Black, cl, 1100)
     End Sub
 
