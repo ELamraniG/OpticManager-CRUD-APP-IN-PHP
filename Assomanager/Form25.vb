@@ -218,7 +218,7 @@ Public Class menu
                 ToolStrip1.Enabled = True
                 barredoutils.Checked = True
                 ToolStripStatusLabel2.Text = "ESPACE ADMINISTRATEUR"
-                
+
                 ' Enable all menu items for admin
                 AccueilToolStripMenuItem.Enabled = True
                 ToolStripMenuItem1.Enabled = True
@@ -230,7 +230,7 @@ Public Class menu
                 RapportsToolStripMenuItem.Enabled = True
                 ParamètresToolStripMenuItem.Enabled = True
                 AideToolStripMenuItem.Enabled = True
-                
+
             ElseIf typeutilisateur = "tre" Then
                 ' Treasurer sees only: Gestion des adherent, Activities Evenement, Les Documents
                 panelaffectation.Visible = False
@@ -239,7 +239,7 @@ Public Class menu
                 panelutilisateur.Visible = False
                 ToolStrip1.Visible = False
                 ToolStripStatusLabel2.Text = "ESPACE TRESORIER"
-                
+
                 ' Enable only allowed menus, disable others
                 AccueilToolStripMenuItem.Enabled = True
                 ToolStripMenuItem1.Enabled = True ' Gestion des adherent - ALLOWED
@@ -251,7 +251,7 @@ Public Class menu
                 RapportsToolStripMenuItem.Enabled = False ' DISABLED
                 ParamètresToolStripMenuItem.Enabled = False ' DISABLED
                 AideToolStripMenuItem.Enabled = True
-                
+
             ElseIf typeutilisateur = "mem" Then
                 ' Member sees only: Les Documents
                 panelaffectation.Visible = False
@@ -260,7 +260,7 @@ Public Class menu
                 panelutilisateur.Visible = False
                 ToolStrip1.Visible = False
                 ToolStripStatusLabel2.Text = "ESPACE MEMBRE"
-                
+
                 ' Enable only documents menu, disable others
                 AccueilToolStripMenuItem.Enabled = True
                 ToolStripMenuItem1.Enabled = False ' Gestion des adherent - DISABLED
@@ -272,7 +272,7 @@ Public Class menu
                 RapportsToolStripMenuItem.Enabled = False ' DISABLED
                 ParamètresToolStripMenuItem.Enabled = False ' DISABLED
                 AideToolStripMenuItem.Enabled = True
-                
+
             Else
                 ' Default case for other roles - disable most functionality
                 panelaffectation.Visible = False
@@ -281,7 +281,7 @@ Public Class menu
                 panelutilisateur.Visible = False
                 ToolStrip1.Visible = False
                 ToolStripStatusLabel2.Text = "ESPACE " + typeutilisateur.ToUpper
-                
+
                 AccueilToolStripMenuItem.Enabled = True
                 ToolStripMenuItem1.Enabled = False
                 ToolStripMenuItem17.Enabled = False
@@ -293,7 +293,7 @@ Public Class menu
                 ParamètresToolStripMenuItem.Enabled = False
                 AideToolStripMenuItem.Enabled = True
             End If
-            
+
             panelauthentification.Visible = False
         Else
             ' Aucune ligne retournée, affichage du message d'échec de connexion
@@ -319,7 +319,7 @@ Public Class menu
         panelemploye.Visible = False
         panelservice.Visible = False
         panelutilisateur.Visible = False
-        
+
         ' Reset all menu items to enabled when disconnecting
         AccueilToolStripMenuItem.Enabled = True
         ToolStripMenuItem1.Enabled = True
@@ -331,7 +331,7 @@ Public Class menu
         RapportsToolStripMenuItem.Enabled = True
         ParamètresToolStripMenuItem.Enabled = True
         AideToolStripMenuItem.Enabled = True
-        
+
         nomuser.Text = Nothing
         prenomuser.Text = Nothing
         typeuser.Text = Nothing
@@ -353,7 +353,7 @@ Public Class menu
     End Sub
 
     Private Sub PolitiqueDeConfidentialitéToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PolitiqueDeConfidentialitéToolStripMenuItem.Click
-        Form1.ShowDialog()
+        Form26.ShowDialog()
 
     End Sub
 
@@ -364,16 +364,16 @@ Public Class menu
     End Sub
 
     Private Sub AProposToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AProposToolStripMenuItem.Click
-        Form1.ShowDialog()
+        Form27.ShowDialog()
     End Sub
 
     Private Sub AideEnLigneToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AideEnLigneToolStripMenuItem.Click
-        Form1.ShowDialog()
+        Form28.ShowDialog()
 
     End Sub
 
     Private Sub TutorielsVidéoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TutorielsVidéoToolStripMenuItem.Click
-        Form1.ShowDialog()
+        Form29.ShowDialog()
 
     End Sub
 
