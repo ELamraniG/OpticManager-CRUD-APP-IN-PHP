@@ -1,0 +1,26 @@
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\bin\Debug\TP13.exe
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\bin\Debug\TP13.pdb
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\bin\Debug\TP13.xml
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.Form1.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.Form2.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.Resources.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.vbproj.GenerateResource.Cache
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.exe
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.xml
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.pdb
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.employe.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13\TP12\obj\x86\Debug\TP13.Employe_form.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.exe
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.xml
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.pdb
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\bin\Debug\TP13.exe
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\bin\Debug\TP13.pdb
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\bin\Debug\TP13.xml
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.Employe_form.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.employe.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.Resources.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.Form2.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.Form1.resources
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP13 ma version\TP12\obj\x86\Debug\TP13.vbproj.GenerateResource.Cache
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP14\TP12\obj\x86\Debug\TP13.xml
+C:\2022-2023\MES COURS\SEMESTRE2\vbnet\TP14\TP12\obj\x86\Debug\TP13.pdb

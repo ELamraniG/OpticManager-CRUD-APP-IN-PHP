@@ -107,20 +107,18 @@ Public Class menu
     End Sub
 
     Private Sub service_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles service.Click, GestionDesServicesToolStripMenuItem.Click
-        Dim myForm As New Form17()
-        Form1.ShowDialog()
-        ' afficher_lespanels()
+        Form15.ShowDialog()
     End Sub
 
 
-    Private Sub employe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles employe.Click, GestionDesEmployésToolStripMenuItem.Click
+    Private Sub employe_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles employe.Click
         Dim myForm As New Form17()
         myForm.ShowDialog()
         '' afficher_lespanels()
     End Sub
 
 
-    Private Sub affecter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles affecter.Click, AffecttationDeSemployésToolStripMenuItem.Click
+    Private Sub affecter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles affecter.Click
         Dim myForm As New Form7()
         myForm.ShowDialog()
         '' afficher_lespanels()
@@ -180,63 +178,37 @@ Public Class menu
 
     Private Sub seconnecter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles seconnecter.Click
         'Rechercher si le login et le mot de passe sont dans la table user
-        requete = "select utilisateurs.*, nom, prenom from utilisateurs, employe where" & _
-                " utilisateurs.idemploye = employe.idemploye " & _
-                " and ucase(login) = '" + login.Text.ToUpper + "'" & _
-                " and ucase(motdepasseutilisateur) = '" + motdepasse.Text.ToUpper + "'"
+        requete = "SELECT nom, motdepasse, email, statut, idrole FROM utilisateurs WHERE " & _
+           "nom = '" & login.Text & "' " & _
+           "AND motdepasse = '" & motdepasse.Text & "'"
+
         connexion()
         cmdsql()
         Dim data As IDataReader
         data = cmd.ExecuteReader()
         Dim typeutilisateur As String = Nothing
-        Dim menuorganisation As String = Nothing
-        Dim gestiondesservices As String = Nothing
-        Dim gestiondesemployes As String = Nothing
-        Dim affectationdesemployes As String = Nothing
-        Dim pointage As String = Nothing
-        Dim pointageindividuel As String = Nothing
-        Dim pointageautomatique As String = Nothing
-        Dim rapport As String = Nothing
-        Dim rapportdepointage As String = Nothing
-        Dim lespointagesdunemploye As String = Nothing
-        Dim lespointagesdunservice As String = Nothing
-        Dim rapportdaffectation As String = Nothing
-        Dim lesemployesdunservice As String = Nothing
-        Dim lesaffectationdunemploye As String = Nothing
-        Dim parametre As String = Nothing
-        Dim gestiondesutilisateurs As String = Nothing
-        Dim configurationdelapplication As String = Nothing
         Dim nom As String = Nothing
         Dim prenom As String = Nothing
+
         If data.Read() Then
             ' L'utilisateur existe, on récupère les informations
-            typeutilisateur = data(4).ToString
-            menuorganisation = data(5).ToString
-            gestiondesservices = data(6).ToString
-            gestiondesemployes = data(7).ToString
-            affectationdesemployes = data(8).ToString
-            pointage = data(9).ToString
-            pointageindividuel = data(10).ToString
-            pointageautomatique = data(11).ToString
-            rapport = data(12).ToString
-            rapportdepointage = data(13).ToString
-            lespointagesdunemploye = data(14).ToString
-            lespointagesdunservice = data(15).ToString
-            rapportdaffectation = data(16).ToString
-            lesemployesdunservice = data(17).ToString
-            lesaffectationdunemploye = data(18).ToString
-            parametre = data(19).ToString
-            gestiondesutilisateurs = data(20).ToString
-            configurationdelapplication = data(21).ToString
-            nom = data(22).ToString
-            prenom = data(23).ToString
+            nom = data(0).ToString()  ' nom
+            ' motdepasse = data(1).ToString() ' motdepasse - not needed
+            ' email = data(2).ToString() ' email - not needed
+            ' statut = data(3).ToString() ' statut - not needed
+            typeutilisateur = data(4).ToString() ' idrole
+
+            ' Set default values since we don't have prenom in the current table structure
+            prenom = "" ' or get from a separate query if needed
+
             nomuser.Text = nom
             prenomuser.Text = prenom
             typeuser.Text = typeutilisateur
             nomuser.Left = (paneldateheure.Width - nomuser.Width) / 2
             prenomuser.Left = (paneldateheure.Width - prenomuser.Width) / 2
             typeuser.Left = (paneldateheure.Width - typeuser.Width) / 2
-            If typeutilisateur = "admin" Then
+
+            If typeutilisateur = "adm" Then
                 MenuStrip1.Enabled = True
                 panelaffectation.Visible = True
                 panelemploye.Visible = True
@@ -247,17 +219,16 @@ Public Class menu
                 barredoutils.Checked = True
                 ToolStripStatusLabel2.Text = "ESPACE ADMINISTRATEUR"
             Else
+                ' For non-admin users, enable basic access
                 MenuStrip1.Enabled = True
-                OrganisationToolStripMenuItem.Enabled = (menuorganisation = "1")
-                GestionDesServicesToolStripMenuItem.Enabled = (gestiondesservices = "1")
-                GestionDesEmployésToolStripMenuItem.Enabled = (gestiondesemployes = "1")
-                AffecttationDeSemployésToolStripMenuItem.Enabled = (affectationdesemployes = "1")
-                RapportsToolStripMenuItem.Enabled = (rapport = "1")
-                RapportDaffectaionToolStripMenuItem.Enabled = (rapportdaffectation = "1")
-                EtatDesServicesToolStripMenuItem.Enabled = (lesemployesdunservice = "1")
-                EtatDesEmployésParServiceToolStripMenuItem.Enabled = (lesaffectationdunemploye = "1")
-                ParamètresToolStripMenuItem.Enabled = (parametre = "1")
-                GestionDesUtilisateursToolStripMenuItem.Enabled = (gestiondesutilisateurs = "1")
+                ' Enable basic menu items - you may need to adjust based on your role system
+                OrganisationToolStripMenuItem.Enabled = True
+                GestionDesServicesToolStripMenuItem.Enabled = True
+                ''GestionDesEmployésToolStripMenuItem.Enabled = True
+                '' AffecttationDeSemployésToolStripMenuItem.Enabled = True
+                RapportsToolStripMenuItem.Enabled = True
+                ParamètresToolStripMenuItem.Enabled = False ' Restrict parameters for non-admin
+                GestionDesUtilisateursToolStripMenuItem.Enabled = False ' Restrict user management
                 ToolStripStatusLabel2.Text = "ESPACE " + typeutilisateur.ToUpper
             End If
             panelauthentification.Visible = False
@@ -350,9 +321,7 @@ Public Class menu
 
     End Sub
 
-    Private Sub pauto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles pauto.Click
 
-    End Sub
 
     Private Sub AccueilToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AccueilToolStripMenuItem.Click
 
@@ -360,5 +329,41 @@ Public Class menu
 
     Private Sub AideToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AideToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub OrganisationToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrganisationToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ToolStripMenuItem13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem13.Click
+
+    End Sub
+
+    Private Sub ToolStripMenuItem18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem18.Click
+        Form11.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem19.Click
+        Form23.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem14.Click
+        Form21.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem15.Click
+        Form9.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem10.Click
+        Form13.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem6.Click
+        Form3.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripMenuItem7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem7.Click
+        Form5.ShowDialog()
     End Sub
 End Class

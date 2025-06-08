@@ -40,14 +40,11 @@ Partial Class menu
         Me.cptaffectation = New System.Windows.Forms.Label()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.employe = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.service = New System.Windows.Forms.ToolStripButton()
         Me.affecter = New System.Windows.Forms.ToolStripButton()
-        Me.pauto = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.motdepasse = New System.Windows.Forms.TextBox()
         Me.prenomuser = New System.Windows.Forms.Label()
         Me.typeuser = New System.Windows.Forms.Label()
@@ -68,14 +65,11 @@ Partial Class menu
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.AProposToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AffecttationDeSemployésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.RapportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RapportDaffectaionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EtatDesServicesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.EtatDesEmployésParServiceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GestionDesEmployésToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.AccueilToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DéconnecterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -101,6 +95,31 @@ Partial Class menu
         Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConditionsDutilisationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator18 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem13 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem14 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator19 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator20 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem18 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator21 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripMenuItem19 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator22 = New System.Windows.Forms.ToolStripSeparator()
         Me.panelservice.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.panelemploye.SuspendLayout()
@@ -169,10 +188,10 @@ Partial Class menu
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 660)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 717)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(2, 0, 12, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(1093, 25)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1448, 25)
         Me.StatusStrip1.TabIndex = 31
         '
         'ToolStripStatusLabel1
@@ -270,11 +289,6 @@ Partial Class menu
         Me.employe.Size = New System.Drawing.Size(52, 52)
         Me.employe.Text = "Gestion des employés"
         '
-        'ToolStripSeparator7
-        '
-        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-        Me.ToolStripSeparator7.Size = New System.Drawing.Size(6, 55)
-        '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
@@ -304,24 +318,10 @@ Partial Class menu
         Me.affecter.Size = New System.Drawing.Size(52, 52)
         Me.affecter.Text = "Affectation"
         '
-        'pauto
-        '
-        Me.pauto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.pauto.Image = CType(resources.GetObject("pauto.Image"), System.Drawing.Image)
-        Me.pauto.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.pauto.Name = "pauto"
-        Me.pauto.Size = New System.Drawing.Size(52, 52)
-        Me.pauto.Text = "Pointage Automatique"
-        '
         'ToolStripSeparator5
         '
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
         Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 55)
-        '
-        'ToolStripSeparator6
-        '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 55)
         '
         'motdepasse
         '
@@ -516,10 +516,10 @@ Partial Class menu
         'ToolStrip1
         '
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(48, 48)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.service, Me.ToolStripSeparator3, Me.employe, Me.ToolStripSeparator4, Me.affecter, Me.ToolStripSeparator5, Me.ToolStripSeparator6, Me.pauto, Me.ToolStripSeparator7, Me.ToolStripButton6})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.service, Me.ToolStripSeparator3, Me.employe, Me.ToolStripSeparator4, Me.affecter, Me.ToolStripSeparator5, Me.ToolStripButton6})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 28)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1093, 55)
+        Me.ToolStrip1.Size = New System.Drawing.Size(1448, 55)
         Me.ToolStrip1.TabIndex = 33
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -533,18 +533,6 @@ Partial Class menu
         Me.AProposToolStripMenuItem.Name = "AProposToolStripMenuItem"
         Me.AProposToolStripMenuItem.Size = New System.Drawing.Size(257, 24)
         Me.AProposToolStripMenuItem.Text = "A propos"
-        '
-        'AffecttationDeSemployésToolStripMenuItem
-        '
-        Me.AffecttationDeSemployésToolStripMenuItem.Image = CType(resources.GetObject("AffecttationDeSemployésToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.AffecttationDeSemployésToolStripMenuItem.Name = "AffecttationDeSemployésToolStripMenuItem"
-        Me.AffecttationDeSemployésToolStripMenuItem.Size = New System.Drawing.Size(205, 24)
-        Me.AffecttationDeSemployésToolStripMenuItem.Text = "Categoriemembres"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(202, 6)
         '
         'RapportsToolStripMenuItem
         '
@@ -578,20 +566,13 @@ Partial Class menu
         Me.EtatDesEmployésParServiceToolStripMenuItem.Size = New System.Drawing.Size(275, 24)
         Me.EtatDesEmployésParServiceToolStripMenuItem.Text = "Les affectations d'un employé"
         '
-        'GestionDesEmployésToolStripMenuItem
-        '
-        Me.GestionDesEmployésToolStripMenuItem.Image = CType(resources.GetObject("GestionDesEmployésToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.GestionDesEmployésToolStripMenuItem.Name = "GestionDesEmployésToolStripMenuItem"
-        Me.GestionDesEmployésToolStripMenuItem.Size = New System.Drawing.Size(205, 24)
-        Me.GestionDesEmployésToolStripMenuItem.Text = "Roles"
-        '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AccueilToolStripMenuItem, Me.OrganisationToolStripMenuItem, Me.RapportsToolStripMenuItem, Me.ParamètresToolStripMenuItem, Me.AideToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AccueilToolStripMenuItem, Me.ToolStripMenuItem1, Me.ToolStripMenuItem17, Me.ToolStripMenuItem13, Me.ToolStripMenuItem9, Me.ToolStripMenuItem5, Me.OrganisationToolStripMenuItem, Me.RapportsToolStripMenuItem, Me.ParamètresToolStripMenuItem, Me.AideToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
-        Me.MenuStrip1.Size = New System.Drawing.Size(1093, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1448, 28)
         Me.MenuStrip1.TabIndex = 32
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -622,17 +603,17 @@ Partial Class menu
         '
         'OrganisationToolStripMenuItem
         '
-        Me.OrganisationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GestionDesServicesToolStripMenuItem, Me.ToolStripSeparator1, Me.GestionDesEmployésToolStripMenuItem, Me.ToolStripSeparator2, Me.AffecttationDeSemployésToolStripMenuItem})
+        Me.OrganisationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GestionDesServicesToolStripMenuItem, Me.ToolStripSeparator1})
         Me.OrganisationToolStripMenuItem.Name = "OrganisationToolStripMenuItem"
-        Me.OrganisationToolStripMenuItem.Size = New System.Drawing.Size(161, 24)
-        Me.OrganisationToolStripMenuItem.Text = "Gestion des adherent"
+        Me.OrganisationToolStripMenuItem.Size = New System.Drawing.Size(119, 24)
+        Me.OrganisationToolStripMenuItem.Text = "Administrateur"
         '
         'GestionDesServicesToolStripMenuItem
         '
         Me.GestionDesServicesToolStripMenuItem.Image = CType(resources.GetObject("GestionDesServicesToolStripMenuItem.Image"), System.Drawing.Image)
         Me.GestionDesServicesToolStripMenuItem.Name = "GestionDesServicesToolStripMenuItem"
-        Me.GestionDesServicesToolStripMenuItem.Size = New System.Drawing.Size(205, 24)
-        Me.GestionDesServicesToolStripMenuItem.Text = "Membres"
+        Me.GestionDesServicesToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+        Me.GestionDesServicesToolStripMenuItem.Text = "Utilisateurs"
         '
         'ToolStripSeparator1
         '
@@ -740,11 +721,167 @@ Partial Class menu
         Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
         Me.ToolStripSeparator12.Size = New System.Drawing.Size(254, 6)
         '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripSeparator6, Me.ToolStripMenuItem3, Me.ToolStripSeparator7, Me.ToolStripMenuItem4})
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(161, 24)
+        Me.ToolStripMenuItem1.Text = "Gestion des adherent"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(205, 24)
+        Me.ToolStripMenuItem2.Text = "Roles"
+        '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Image = CType(resources.GetObject("ToolStripMenuItem3.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(205, 24)
+        Me.ToolStripMenuItem3.Text = "Membres"
+        '
+        'ToolStripSeparator7
+        '
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem4
+        '
+        Me.ToolStripMenuItem4.Image = CType(resources.GetObject("ToolStripMenuItem4.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(205, 24)
+        Me.ToolStripMenuItem4.Text = "Categoriemembres"
+        '
+        'ToolStripMenuItem5
+        '
+        Me.ToolStripMenuItem5.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem6, Me.ToolStripSeparator15, Me.ToolStripMenuItem7, Me.ToolStripSeparator16})
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(219, 24)
+        Me.ToolStripMenuItem5.Text = "Configuration de l'Assosiation"
+        '
+        'ToolStripMenuItem6
+        '
+        Me.ToolStripMenuItem6.Image = CType(resources.GetObject("ToolStripMenuItem6.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(210, 24)
+        Me.ToolStripMenuItem6.Text = "Type assosiation"
+        Me.ToolStripMenuItem6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'ToolStripSeparator15
+        '
+        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
+        Me.ToolStripSeparator15.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem7
+        '
+        Me.ToolStripMenuItem7.Image = CType(resources.GetObject("ToolStripMenuItem7.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(210, 24)
+        Me.ToolStripMenuItem7.Text = "Parametre generaux"
+        '
+        'ToolStripSeparator16
+        '
+        Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
+        Me.ToolStripSeparator16.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem9
+        '
+        Me.ToolStripMenuItem9.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem10, Me.ToolStripSeparator17, Me.ToolStripSeparator18})
+        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
+        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(121, 24)
+        Me.ToolStripMenuItem9.Text = "Les Documents"
+        '
+        'ToolStripMenuItem10
+        '
+        Me.ToolStripMenuItem10.Image = CType(resources.GetObject("ToolStripMenuItem10.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
+        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(153, 24)
+        Me.ToolStripMenuItem10.Text = "Documents"
+        '
+        'ToolStripSeparator17
+        '
+        Me.ToolStripSeparator17.Name = "ToolStripSeparator17"
+        Me.ToolStripSeparator17.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripSeparator18
+        '
+        Me.ToolStripSeparator18.Name = "ToolStripSeparator18"
+        Me.ToolStripSeparator18.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem13
+        '
+        Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripSeparator19, Me.ToolStripMenuItem15, Me.ToolStripSeparator20})
+        Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
+        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(178, 24)
+        Me.ToolStripMenuItem13.Text = "Finance de l'Assosiation"
+        '
+        'ToolStripMenuItem14
+        '
+        Me.ToolStripMenuItem14.Image = CType(resources.GetObject("ToolStripMenuItem14.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
+        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(224, 24)
+        Me.ToolStripMenuItem14.Text = "Depense"
+        '
+        'ToolStripSeparator19
+        '
+        Me.ToolStripSeparator19.Name = "ToolStripSeparator19"
+        Me.ToolStripSeparator19.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem15
+        '
+        Me.ToolStripMenuItem15.Image = CType(resources.GetObject("ToolStripMenuItem15.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(224, 24)
+        Me.ToolStripMenuItem15.Text = "Categorie de depense"
+        '
+        'ToolStripSeparator20
+        '
+        Me.ToolStripSeparator20.Name = "ToolStripSeparator20"
+        Me.ToolStripSeparator20.Size = New System.Drawing.Size(202, 6)
+        '
+        'ToolStripMenuItem17
+        '
+        Me.ToolStripMenuItem17.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem18, Me.ToolStripSeparator21, Me.ToolStripMenuItem19, Me.ToolStripSeparator22})
+        Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
+        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(158, 24)
+        Me.ToolStripMenuItem17.Text = "Activities Evenement"
+        '
+        'ToolStripMenuItem18
+        '
+        Me.ToolStripMenuItem18.Image = CType(resources.GetObject("ToolStripMenuItem18.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
+        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(154, 24)
+        Me.ToolStripMenuItem18.Text = "Evenement"
+        '
+        'ToolStripSeparator21
+        '
+        Me.ToolStripSeparator21.Name = "ToolStripSeparator21"
+        Me.ToolStripSeparator21.Size = New System.Drawing.Size(151, 6)
+        '
+        'ToolStripMenuItem19
+        '
+        Me.ToolStripMenuItem19.Image = CType(resources.GetObject("ToolStripMenuItem19.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
+        Me.ToolStripMenuItem19.Size = New System.Drawing.Size(154, 24)
+        Me.ToolStripMenuItem19.Text = "Participents"
+        '
+        'ToolStripSeparator22
+        '
+        Me.ToolStripSeparator22.Name = "ToolStripSeparator22"
+        Me.ToolStripSeparator22.Size = New System.Drawing.Size(151, 6)
+        '
         'menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1093, 685)
+        Me.ClientSize = New System.Drawing.Size(1448, 742)
         Me.Controls.Add(Me.panelservice)
         Me.Controls.Add(Me.tnomentreprise)
         Me.Controls.Add(Me.tsigle)
@@ -796,14 +933,11 @@ Partial Class menu
     Friend WithEvents cptaffectation As System.Windows.Forms.Label
     Friend WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
     Friend WithEvents employe As System.Windows.Forms.ToolStripButton
-    Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents service As System.Windows.Forms.ToolStripButton
     Friend WithEvents affecter As System.Windows.Forms.ToolStripButton
-    Friend WithEvents pauto As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents motdepasse As System.Windows.Forms.TextBox
     Friend WithEvents prenomuser As System.Windows.Forms.Label
     Friend WithEvents typeuser As System.Windows.Forms.Label
@@ -824,14 +958,11 @@ Partial Class menu
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents AProposToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents AffecttationDeSemployésToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents RapportsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RapportDaffectaionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EtatDesServicesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents EtatDesEmployésParServiceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GestionDesEmployésToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents AccueilToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DéconnecterToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -857,4 +988,29 @@ Partial Class menu
     Friend WithEvents ToolStripSeparator14 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ConditionsDutilisationToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator12 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem17 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem18 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator21 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem19 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator22 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem13 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem14 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator19 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem15 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator20 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem9 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem10 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator17 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator18 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem5 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem6 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator15 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem7 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator16 As System.Windows.Forms.ToolStripSeparator
 End Class
