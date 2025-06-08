@@ -193,9 +193,6 @@ Public Class menu
         If data.Read() Then
             ' L'utilisateur existe, on récupère les informations
             nom = data(0).ToString()  ' nom
-            ' motdepasse = data(1).ToString() ' motdepasse - not needed
-            ' email = data(2).ToString() ' email - not needed
-            ' statut = data(3).ToString() ' statut - not needed
             typeutilisateur = data(4).ToString() ' idrole
 
             ' Set default values since we don't have prenom in the current table structure
@@ -208,8 +205,11 @@ Public Class menu
             prenomuser.Left = (paneldateheure.Width - prenomuser.Width) / 2
             typeuser.Left = (paneldateheure.Width - typeuser.Width) / 2
 
+            ' Enable basic menu access for all users
+            MenuStrip1.Enabled = True
+            
             If typeutilisateur = "adm" Then
-                MenuStrip1.Enabled = True
+                ' Admin sees everything
                 panelaffectation.Visible = True
                 panelemploye.Visible = True
                 panelservice.Visible = True
@@ -218,19 +218,82 @@ Public Class menu
                 ToolStrip1.Enabled = True
                 barredoutils.Checked = True
                 ToolStripStatusLabel2.Text = "ESPACE ADMINISTRATEUR"
-            Else
-                ' For non-admin users, enable basic access
-                MenuStrip1.Enabled = True
-                ' Enable basic menu items - you may need to adjust based on your role system
+                
+                ' Enable all menu items for admin
+                AccueilToolStripMenuItem.Enabled = True
+                ToolStripMenuItem1.Enabled = True
+                ToolStripMenuItem17.Enabled = True
+                ToolStripMenuItem13.Enabled = True
+                ToolStripMenuItem9.Enabled = True
+                ToolStripMenuItem5.Enabled = True
                 OrganisationToolStripMenuItem.Enabled = True
-                GestionDesServicesToolStripMenuItem.Enabled = True
-                ''GestionDesEmployésToolStripMenuItem.Enabled = True
-                '' AffecttationDeSemployésToolStripMenuItem.Enabled = True
                 RapportsToolStripMenuItem.Enabled = True
-                ParamètresToolStripMenuItem.Enabled = False ' Restrict parameters for non-admin
-                GestionDesUtilisateursToolStripMenuItem.Enabled = False ' Restrict user management
+                ParamètresToolStripMenuItem.Enabled = True
+                AideToolStripMenuItem.Enabled = True
+                
+            ElseIf typeutilisateur = "tre" Then
+                ' Treasurer sees only: Gestion des adherent, Activities Evenement, Les Documents
+                panelaffectation.Visible = False
+                panelemploye.Visible = False
+                panelservice.Visible = False
+                panelutilisateur.Visible = False
+                ToolStrip1.Visible = False
+                ToolStripStatusLabel2.Text = "ESPACE TRESORIER"
+                
+                ' Enable only allowed menus, disable others
+                AccueilToolStripMenuItem.Enabled = True
+                ToolStripMenuItem1.Enabled = True ' Gestion des adherent - ALLOWED
+                ToolStripMenuItem17.Enabled = True ' Activities Evenement - ALLOWED
+                ToolStripMenuItem13.Enabled = False ' Finance - DISABLED
+                ToolStripMenuItem9.Enabled = True ' Les Documents - ALLOWED
+                ToolStripMenuItem5.Enabled = False ' Configuration - DISABLED
+                OrganisationToolStripMenuItem.Enabled = False ' DISABLED
+                RapportsToolStripMenuItem.Enabled = False ' DISABLED
+                ParamètresToolStripMenuItem.Enabled = False ' DISABLED
+                AideToolStripMenuItem.Enabled = True
+                
+            ElseIf typeutilisateur = "mem" Then
+                ' Member sees only: Les Documents
+                panelaffectation.Visible = False
+                panelemploye.Visible = False
+                panelservice.Visible = False
+                panelutilisateur.Visible = False
+                ToolStrip1.Visible = False
+                ToolStripStatusLabel2.Text = "ESPACE MEMBRE"
+                
+                ' Enable only documents menu, disable others
+                AccueilToolStripMenuItem.Enabled = True
+                ToolStripMenuItem1.Enabled = False ' Gestion des adherent - DISABLED
+                ToolStripMenuItem17.Enabled = False ' Activities Evenement - DISABLED
+                ToolStripMenuItem13.Enabled = False ' Finance - DISABLED
+                ToolStripMenuItem9.Enabled = True ' Les Documents - ALLOWED
+                ToolStripMenuItem5.Enabled = False ' Configuration - DISABLED
+                OrganisationToolStripMenuItem.Enabled = False ' DISABLED
+                RapportsToolStripMenuItem.Enabled = False ' DISABLED
+                ParamètresToolStripMenuItem.Enabled = False ' DISABLED
+                AideToolStripMenuItem.Enabled = True
+                
+            Else
+                ' Default case for other roles - disable most functionality
+                panelaffectation.Visible = False
+                panelemploye.Visible = False
+                panelservice.Visible = False
+                panelutilisateur.Visible = False
+                ToolStrip1.Visible = False
                 ToolStripStatusLabel2.Text = "ESPACE " + typeutilisateur.ToUpper
+                
+                AccueilToolStripMenuItem.Enabled = True
+                ToolStripMenuItem1.Enabled = False
+                ToolStripMenuItem17.Enabled = False
+                ToolStripMenuItem13.Enabled = False
+                ToolStripMenuItem9.Enabled = False
+                ToolStripMenuItem5.Enabled = False
+                OrganisationToolStripMenuItem.Enabled = False
+                RapportsToolStripMenuItem.Enabled = False
+                ParamètresToolStripMenuItem.Enabled = False
+                AideToolStripMenuItem.Enabled = True
             End If
+            
             panelauthentification.Visible = False
         Else
             ' Aucune ligne retournée, affichage du message d'échec de connexion
@@ -256,6 +319,19 @@ Public Class menu
         panelemploye.Visible = False
         panelservice.Visible = False
         panelutilisateur.Visible = False
+        
+        ' Reset all menu items to enabled when disconnecting
+        AccueilToolStripMenuItem.Enabled = True
+        ToolStripMenuItem1.Enabled = True
+        ToolStripMenuItem17.Enabled = True
+        ToolStripMenuItem13.Enabled = True
+        ToolStripMenuItem9.Enabled = True
+        ToolStripMenuItem5.Enabled = True
+        OrganisationToolStripMenuItem.Enabled = True
+        RapportsToolStripMenuItem.Enabled = True
+        ParamètresToolStripMenuItem.Enabled = True
+        AideToolStripMenuItem.Enabled = True
+        
         nomuser.Text = Nothing
         prenomuser.Text = Nothing
         typeuser.Text = Nothing
