@@ -1,0 +1,4 @@
+C:\Users\m\Desktop\vbsolutions\workingvb2\Assomanager\obj\x86\Release\Assomanager.Form1.resources
+C:\Users\m\Desktop\vbsolutions\workingvb2\Assomanager\obj\x86\Release\Assomanager.Form2.resources
+C:\Users\m\Desktop\vbsolutions\workingvb2\Assomanager\obj\x86\Release\Assomanager.Resources.resources
+C:\Users\m\Desktop\vbsolutions\workingvb2\Assomanager\obj\x86\Release\Assomanager.vbproj.GenerateResource.Cache

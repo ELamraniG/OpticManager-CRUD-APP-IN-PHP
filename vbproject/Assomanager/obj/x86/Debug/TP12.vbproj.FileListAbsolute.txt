@@ -1,0 +1,10 @@
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.exe
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.xml
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.pdb
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\bin\Debug\Assomanager.exe
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\bin\Debug\Assomanager.pdb
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\bin\Debug\Assomanager.xml
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.Form1.resources
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.Form2.resources
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\Assomanager.Resources.resources
+C:\Users\m\Desktop\vbsolutions\projectvbmain\TP12\obj\x86\Debug\TP12.vbproj.GenerateResource.Cache
