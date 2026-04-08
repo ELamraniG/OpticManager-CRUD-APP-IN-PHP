@@ -1,4 +1,4 @@
-# 💎 1. OPTIRENT (OpticManager)
+# 💎  OPTIRENT (OpticManager)
 **A Comprehensive Optical Clinic & Retail Management Suite**
 
 Optirent is a feature-rich web application designed to handle the end-to-end operations of optical stores and clinics. It bridges the gap between medical consultation and retail sales.
@@ -42,17 +42,6 @@ The system implements a secure permission hierarchy:
 
 ---
 
-## 🏢 2. AssoManager (VB.NET)
-**Windows Desktop CRUD Suite for Association Management**
-
-AssoManager is a robust Windows application built for non-profit organizations and sports clubs to manage their community and financial health.
-
-- **Member CRM**: Lifecycle management for members, volunteers, and executives.
-- **Financial Ledger**: Track *cotisations* (subscriptions), pending payments, and association expenses.
-- **Event Orchestration**: Attendance tracking and scheduling for tournaments and assemblies.
-- **Tech Stack**: Visual Basic .NET, Windows Forms, SQL Server.
-
----
 
 ## 🚀 Getting Started
 
