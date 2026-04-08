@@ -1,10 +1,4 @@
-# 🚀 Professional Software Portfolio
-
-This repository showcases two production-grade management systems built with different architectures, demonstrating full-stack web development and desktop application design.
-
----
-
-## 💎 1. OPTIRENT (OpticManager)
+# 💎 1. OPTIRENT (OpticManager)
 **A Comprehensive Optical Clinic & Retail Management Suite**
 
 Optirent is a feature-rich web application designed to handle the end-to-end operations of optical stores and clinics. It bridges the gap between medical consultation and retail sales.
