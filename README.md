@@ -19,3 +19,4 @@ Fonctions principales :
 3. Ouvrir `index-main.php`.
 
 Le projet utilise PHP, MySQL et Bootstrap.
+
